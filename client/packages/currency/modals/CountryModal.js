@@ -12,29 +12,7 @@ let sideBarService = new SideBarService();
 
 Template.CountryModal.onCreated(function () {
   const templateObject = Template.instance();
-  templateObject.tableheaderrecords = new ReactiveVar([]);
   templateObject.countryData = new ReactiveVar();
-  templateObject.selectedFile = new ReactiveVar();
-  templateObject.getDataTableList = function(data) {
-    // let linestatus = '';
-    // if (data.Active == true) {
-    //   linestatus = "";
-    // } else if (data.Active == false) {
-    //   linestatus = "In-Active";
-    // }
-    let dataList = [
-      data.Country || "",
-      data.CountryID || ""
-    ];
-    return dataList;
-  }
-
-  let headerStructure = [
-    { index: 0, label: 'Country', class: 'colCountry', active: true, display: true, width: "200" },
-    { index: 1, label: 'Country ID', class: 'colCountryID', active: false, display: true, width: "100" },
-  ];
-
-  templateObject.tableheaderrecords.set(headerStructure);
 });
 
 Template.CountryModal.onRendered(function () {
@@ -78,8 +56,8 @@ Template.CountryModal.onRendered(function () {
 
 Template.CountryModal.events({
   "keyup #searchCountry": (e) => {
-    let ariaControls = $(e.currentTarget).attr("aria-controls");
-    let searchedValue = $(e.currentTarget).val().trim().toLowerCase();
+    const ariaControls = $(e.currentTarget).attr("aria-controls");
+    const searchedValue = $(e.currentTarget).val().trim().toLowerCase();
 
     if (!searchedValue) {
       $(`#${ariaControls} tbody tr td`).css("display", "");
@@ -88,7 +66,7 @@ Template.CountryModal.events({
        * Search
        */
       $(`#${ariaControls} tbody tr`).each((index, element) => {
-        let _value = $(element).find("td").text().toLowerCase();
+        const _value = $(element).find("td").text().toLowerCase();
         $(element).css(
           "display",
           _value.includes(searchedValue) == true ? "" : "none"
@@ -98,13 +76,10 @@ Template.CountryModal.events({
   },
   "click #tblCountryPopList tbody tr": (e) => {
     $("#searchCountry").val('');
-    let listContainerNode = $("#searchCountry").attr("aria-controls");
+    const listContainerNode = $("#searchCountry").attr("aria-controls");
     $(`#${listContainerNode} tbody tr`).css("display", "");
 
-    // const countryName = $(e.currentTarget).attr("value");
-    let countryName = $(e.currentTarget).find("td").text();
-    
-    console.log("////////////",countryName)
+    const countryName = $(e.currentTarget).attr("value");
 
     $(e.currentTarget).parents(".modal").modal("hide");
     
@@ -118,37 +93,5 @@ Template.CountryModal.helpers({
   isCurrencyEnable: () => FxGlobalFunctions.isCurrencyEnabled(),
   countryList: () => {
     return Template.instance().countryData.get();
-  },
-  datatablerecords : () => {
-    return Template.instance().datatablerecords.get();
-  },
-  tableheaderrecords: () => {
-    return Template.instance().tableheaderrecords.get();
-  },
-  apiFunction:function() {
-    let sideBarService = new SideBarService();
-    return sideBarService.getCountry;
-  },
-  searchAPI: function() {
-    return sideBarService.getCountry;
-  },
-  service: ()=>{
-    let sideBarService = new SideBarService();
-    return sideBarService;
-
-  },
-  datahandler: function () {
-    let templateObject = Template.instance();
-    return function(data) {
-      let dataReturn =  templateObject.getDataTableList(data)
-      return dataReturn
-    }
-  },
-  exDataHandler: function() {
-    let templateObject = Template.instance();
-    return function(data) {
-      let dataReturn =  templateObject.getDataTableList(data)
-      return dataReturn
-    }
   },
 });
