@@ -12,16 +12,17 @@ let sideBarService = new SideBarService();
 
 Template.CountryModal.onCreated(function () {
   const templateObject = Template.instance();
+  templateObject.currencies = new ReactiveVar([]);
   templateObject.tableheaderrecords = new ReactiveVar([]);
   templateObject.countryData = new ReactiveVar();
   templateObject.selectedFile = new ReactiveVar();
   templateObject.getDataTableList = function(data) {
-    // let linestatus = '';
-    // if (data.Active == true) {
-    //   linestatus = "";
-    // } else if (data.Active == false) {
-    //   linestatus = "In-Active";
-    // }
+    let linestatus = '';
+    if (data.Active == true) {
+      linestatus = "";
+    } else if (data.Active == false) {
+      linestatus = "In-Active";
+    }
     let dataList = [
       data.Country || "",
       data.CountryID || ""
@@ -43,37 +44,37 @@ Template.CountryModal.onRendered(function () {
   var countryService = new CountryService();
   let countries = [];
 
-  templateObject.getCountryData = function () {
-    getVS1Data("TCountries").then(function (dataObject) {
-        if (dataObject.length == 0) {
-          countryService.getCountry().then((data) => {
-            for (let i = 0; i < data.tcountries.length; i++) {
-              countries.push(data.tcountries[i].Country);
-            }
-            countries.sort((a, b) => a.localeCompare(b));
-            templateObject.countryData.set(countries);
-          });
-        } else {
-          let data = JSON.parse(dataObject[0].data);
-          let useData = data.tcountries;
-          for (let i = 0; i < useData.length; i++) {
-            countries.push(useData[i].Country);
-          }
-          countries.sort((a, b) => a.localeCompare(b));
-          templateObject.countryData.set(countries);
-        }
-      }).catch(function (err) {
-        countryService.getCountry().then((data) => {
-          for (let i = 0; i < data.tcountries.length; i++) {
-            countries.push(data.tcountries[i].Country);
-          }
-          countries.sort((a, b) => a.localeCompare(b));
-          templateObject.countryData.set(countries);
-        });
-      });
+  // templateObject.getCountryData = function () {
+  //   getVS1Data("TCountries").then(function (dataObject) {
+  //       if (dataObject.length == 0) {
+  //         countryService.getCountry().then((data) => {
+  //           for (let i = 0; i < data.tcountries.length; i++) {
+  //             countries.push(data.tcountries[i].Country);
+  //           }
+  //           countries.sort((a, b) => a.localeCompare(b));
+  //           templateObject.countryData.set(countries);
+  //         });
+  //       } else {
+  //         let data = JSON.parse(dataObject[0].data);
+  //         let useData = data.tcountries;
+  //         for (let i = 0; i < useData.length; i++) {
+  //           countries.push(useData[i].Country);
+  //         }
+  //         countries.sort((a, b) => a.localeCompare(b));
+  //         templateObject.countryData.set(countries);
+  //       }
+  //     }).catch(function (err) {
+  //       countryService.getCountry().then((data) => {
+  //         for (let i = 0; i < data.tcountries.length; i++) {
+  //           countries.push(data.tcountries[i].Country);
+  //         }
+  //         countries.sort((a, b) => a.localeCompare(b));
+  //         templateObject.countryData.set(countries);
+  //       });
+  //     });
 
-  };
-  templateObject.getCountryData();
+  // };
+  // templateObject.getCountryData();
 });
 
 Template.CountryModal.events({
@@ -98,14 +99,13 @@ Template.CountryModal.events({
   },
   "click #tblCountryPopList tbody tr": (e) => {
     $("#searchCountry").val('');
-    let listContainerNode = $("#searchCountry").attr("aria-controls");
+    const listContainerNode = $("#searchCountry").attr("aria-controls");
     $(`#${listContainerNode} tbody tr`).css("display", "");
 
-    // const countryName = $(e.currentTarget).attr("value");
-    let countryName = $(e.currentTarget).find("td").text();
+    // let countryName = $(e.currentTarget).attr("value");
+    const countryName = $(e.currentTarget).find("td").text();
     
     console.log("////////////",countryName)
-
     $(e.currentTarget).parents(".modal").modal("hide");
     
     $("#sedtCountry").val(countryName);
@@ -152,7 +152,8 @@ Template.CountryModal.helpers({
     }
   },
 
-  // apiParams: function() {
-  //   return ['limitCount', 'limitFrom', 'deleteFilter'];
-  // },
+  apiParams: function() {
+    return ['limitCount', 'limitFrom', 'deleteFilter'];
+  },
+
 });
