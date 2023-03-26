@@ -762,13 +762,13 @@ Template.currencypop.onRendered(function () {
   // };
   //templateObject.getCountryData();
 
-  // $(document).on("click", ".table-remove", function () {
-  //   event.stopPropagation();
-  //   event.stopPropagation();
-  //   var targetID = $(event.target).closest("tr").attr("id"); // table row ID
-  //   $("#selectDeleteLineID").val(targetID);
-  //   $("#deleteLineModal").modal("toggle");
-  // });
+  $(document).on("click", ".table-remove", function () {
+    event.stopPropagation();
+    event.stopPropagation();
+    var targetID = $(event.target).closest("tr").attr("id"); // table row ID
+    $("#selectDeleteLineID").val(targetID);
+    $("#deleteLineModal").modal("toggle");
+  });
 
   // $("#tblCurrencyPopList tbody").on("click", "tr .colCode, tr .colCurrency, tr .colSymbol, tr .colBuyRate, tr .colSellRate, tr .colCountry, tr .colRateLastModified, tr .colDescription", function () {
   //   var listData = $(this).closest("tr").find(".colCurrencyID").text();
@@ -811,54 +811,47 @@ Template.currencypop.onRendered(function () {
 });
 
 Template.currencypop.events({
-  // $(document).on("click", ".table-remove", function () {
-  //   event.stopPropagation();
-  //   event.stopPropagation();
-  //   var targetID = $(event.target).closest("tr").attr("id"); // table row ID
-  //   $("#selectDeleteLineID").val(targetID);
-  //   $("#deleteLineModal").modal("toggle");
-  // });
 
-  // 'click #tblCurrencyPopList tbody tr': function (event) {
-  //   var listData = $(this).closest("tr").find("td.colCurrencyID").text();
-  //   if (listData) {
-  //     $("#add-currency-title").text("Edit Currency");
-  //     $("#sedtCountry").prop("readonly", true);
-  //     if (listData !== "") {
-  //       listData = Number(listData);
-  //       //taxRateService.getOneCurrency(listData).then(function (data) {
+  'click #tblCurrencyPopList tbody tr': function (event) {
+    var listData = $(this).closest("tr").find("td.colCurrencyID").text();
+    if (listData) {
+      $("#add-currency-title").text("Edit Currency");
+      $("#sedtCountry").prop("readonly", true);
+      if (listData !== "") {
+        listData = Number(listData);
+        //taxRateService.getOneCurrency(listData).then(function (data) {
 
-  //       var currencyid = listData || "";
-  //       var country = $(event.target).closest("tr").find(".colCountry").text() || "";
-  //       var currencyCode = $(event.target).closest("tr").find(".colCode").text() || "";
-  //       var currencySymbol = $(event.target).closest("tr").find(".colSymbol").text() || "";
-  //       var currencyName = $(event.target).closest("tr").find(".colCurrency").text() || "";
-  //       var currencyDesc = $(event.target).closest("tr").find(".colDescription").text() || "";
-  //       var currencyBuyRate = $(event.target).closest("tr").find(".colBuyRate").text() || 0;
-  //       var currencySellRate = $(event.target).closest("tr").find(".colSellRate").text() || 0;
-  //       //data.fields.Rate || '';
-  //       $("#edtCurrencyID").val(currencyid);
-  //       $("#sedtCountry").val(country);
-  //       $("#sedtCountry").attr("readonly", true);
-  //       $("#sedtCountry").attr("disabled", "disabled");
-  //       $("#currencyCode").val(currencyCode);
-  //       $("#currencySymbol").val(currencySymbol);
-  //       $("#edtCurrencyName").val(currencyName);
-  //       $("#edtCurrencyDesc").val(currencyDesc);
-  //       $("#edtBuyRate").val(currencyBuyRate);
-  //       $("#edtSellRate").val(currencySellRate);
+        var currencyid = listData || "";
+        var country = $(event.target).closest("tr").find(".colCountry").text() || "";
+        var currencyCode = $(event.target).closest("tr").find(".colCode").text() || "";
+        var currencySymbol = $(event.target).closest("tr").find(".colSymbol").text() || "";
+        var currencyName = $(event.target).closest("tr").find(".colCurrency").text() || "";
+        var currencyDesc = $(event.target).closest("tr").find(".colDescription").text() || "";
+        var currencyBuyRate = $(event.target).closest("tr").find(".colBuyRate").text() || 0;
+        var currencySellRate = $(event.target).closest("tr").find(".colSellRate").text() || 0;
+        //data.fields.Rate || '';
+        $("#edtCurrencyID").val(currencyid);
+        $("#sedtCountry").val(country);
+        $("#sedtCountry").attr("readonly", true);
+        $("#sedtCountry").attr("disabled", "disabled");
+        $("#currencyCode").val(currencyCode);
+        $("#currencySymbol").val(currencySymbol);
+        $("#edtCurrencyName").val(currencyName);
+        $("#edtCurrencyDesc").val(currencyDesc);
+        $("#edtBuyRate").val(currencyBuyRate);
+        $("#edtSellRate").val(currencySellRate);
 
-  //       //});
+        //});
 
-  //       $(this).closest("tr").attr("data-target", "#myModal");
-  //       $(this).closest("tr").attr("data-toggle", "modal");
-  //     }
-  //   }
-  // },
-
-  "click #btnNewInvoice": function (event) {
-    // FlowRouter.go('/invoicecard');
+        $(this).closest("tr").attr("data-target", "#myModal");
+        $(this).closest("tr").attr("data-toggle", "modal");
+      }
+    }
   },
+
+  // "click #btnNewInvoice": function (event) {
+  //   // FlowRouter.go('/invoicecard');
+  // },
   // "click .chkDatatable": function (event) {
   //   var columns = $("#tblCurrencyPopList th");
   //   let columnDataValue = $(event.target).closest("div").find(".divcolumn").text();
@@ -1245,11 +1238,11 @@ Template.currencypop.helpers({
 
   apiFunction:function() {
     let sideBarService = new SideBarService();
-    return sideBarService.getCurrencies;
+    return sideBarService.getCurrencyDataList;
   },
 
   searchAPI: function() {
-    return sideBarService.getCurrencies;
+    return sideBarService.getCurrencyDataList;
   },
 
   service: ()=>{
