@@ -8,7 +8,7 @@
                 <input type="hidden" style="width: 100%; display:none;" id="selectLineID" name="selectLineID" readonly>
                 <div class="card-body p-1 rounded">
                     <div class="table-responsive">
-                        <table id="tblStatusPopList" style="width:100%" class="dataTable table table-hover table-striped table-bordered tblStatusPopList">
+                        <!-- <table id="tblStatusPopList" style="width:100%" class="dataTable table table-hover table-striped table-bordered tblStatusPopList">
                             <thead>
                                 <tr class="dnd-moved">
                                     <th class="th colStatusName" style="">Status Name</th>
@@ -42,7 +42,22 @@
                                     {{/each}}
                                 {{/if}}
                             </tbody>
-                        </table>
+                        </table> -->
+                        {{>datatablelist
+                            tablename="tblStatusPopList"
+                            apiName= apiFunction
+                            indexeddbname = 'TLeadStatusType'
+                            tableheaderrecords = tableheaderrecords
+                            exportfilename = 'Lead Status Type'
+                            istransaction = false
+                            apiParams= apiParams
+                            datahandler = datahandler
+                            service=service
+                            lowercaseDataName='tleadstatustype'
+                            exIndexDBName = 'tleadstatustype'
+                            exdatahandler = exDataHandler
+                            searchAPI = searchAPI
+                    }}
                     </div>
                 </div>
             </div>
