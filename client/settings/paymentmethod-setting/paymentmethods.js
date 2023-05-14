@@ -740,6 +740,8 @@ Template.paymentmethodSettings.events({
     let templateObject = Template.instance();
     let objDetails;
     let isCreditCard = false;
+    var filename = $("#attachment-upload")[0].files[0]["name"];
+    var fileType = filename.split(".").pop().toLowerCase();
     if (fileType == "csv" || fileType == "txt" || fileType == "xlsx") {
     Papa.parse(templateObject.selectedFile.get(), {
       complete: function (results) {
@@ -750,24 +752,24 @@ Template.paymentmethodSettings.events({
           ) {
             let dataLength = results.data.length * 500;
             setTimeout(function () {
-              $(".importTemplateModal").hide();
-              $(".modal-backdrop").hide();
-              FlowRouter.go("/paymentmethodSettings?success=true");
-              $(".fullScreenSpin").css("display", "none");
-              // sideBarService
-              //   .getPaymentMethodData()
-              //   .then(function(dataReload) {
-              //       addVS1Data("TPaymentMethod", JSON.stringify(dataReload))
-              //           .then(function(datareturn) {
-              //               window.open("/paymentmethodSettings", "_self");
-              //           })
-              //           .catch(function(err) {
-              //               window.open("/paymentmethodSettings", "_self");
-              //           });
-              //   })
-              //   .catch(function(err) {
-              //       window.open("/paymentmethodSettings", "_self");
-              //   });
+              // $(".importTemplateModal").hide();
+              // $(".modal-backdrop").hide();
+              // FlowRouter.go("/paymentmethodSettings?success=true");
+              // $(".fullScreenSpin").css("display", "none");
+              sideBarService
+                .getPaymentMethodData()
+                .then(function(dataReload) {
+                    addVS1Data("TPaymentMethod", JSON.stringify(dataReload))
+                        .then(function(datareturn) {
+                            window.open("/paymentmethodSettings", "_self");
+                        })
+                        .catch(function(err) {
+                            window.open("/paymentmethodSettings", "_self");
+                        });
+                })
+                .catch(function(err) {
+                    window.open("/paymentmethodSettings", "_self");
+                });
 
             }, parseInt(dataLength));
             for (let i = 0; i < results.data.length - 1; i++) {
