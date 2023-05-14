@@ -445,199 +445,199 @@ Template.paymentmethodSettings.events({
         );
         e.preventDefault();
       } else {
-    //     if (paymentMethodID == "") {
-    //         objDetails = {
-    //             type: "TPaymentMethod",
-    //             fields: {
-    //                 PaymentMethodName: paymentName,
-    //                 IsCreditCard: isCreditCard,
-    //                 Active: true
-    //             }
-    //         }
-    //     } else {
-    //         objDetails = {
-    //             type: "TPaymentMethod",
-    //             fields: {
-    //                 ID: paymentMethodID,
-    //                 PaymentMethodName: paymentName,
-    //                 IsCreditCard: isCreditCard,
-    //                 Active: true
-    //             }
-    //         }
-    //     }
-
-    //     taxRateService.savePaymentMethod(objDetails).then(function(result) {
-    //         sideBarService.getPaymentMethodData().then(function(dataReload) {
-    //             addVS1Data('TPaymentMethod', JSON.stringify(dataReload)).then(function(datareturn) {
-    //               sideBarService.getPaymentMethodDataList(initialBaseDataLoad, 0, false).then(async function(dataLeadList) {
-    //                   await addVS1Data('TPaymentMethodList', JSON.stringify(dataLeadList)).then(function(datareturn) {
-    //                     location.reload(true);
-    //                   }).catch(function(err) {
-    //                       location.reload(true);
-    //                   });
-    //               }).catch(function(err) {
-    //                   location.reload(true);
-    //               });
-    //             }).catch(function(err) {
-    //                 location.reload(true);
-    //             });
-    //         }).catch(function(err) {
-    //             location.reload(true);
-    //         });
-    //     }).catch(function(err) {
-    //         swal({
-    //             title: 'Oooops...',
-    //             text: err,
-    //             type: 'error',
-    //             showCancelButton: false,
-    //             confirmButtonText: 'Try Again'
-    //         }).then((result) => {
-    //             if (result.value) {
-    //                 // Meteor._reload.reload();
-    //             } else if (result.dismiss === 'cancel') {}
-    //         });
-    //         $('.fullScreenSpin').css('display', 'none');
-    //     });
-    // }
-
-      if (paymentMethodID == "") {
-        taxRateService
-          .checkPaymentMethodByName(paymentName)
-          .then(function (data) {
-            paymentMethodID = data.tpaymentmethod[0].Id;
+        if (paymentMethodID == "") {
             objDetails = {
-              type: "TPaymentMethod",
-              fields: {
-                PayMethodID: parseInt(paymentMethodID),
-                Active: true,
-                IsCreditCard: isCreditCard,
-              },
-            };
-
-            taxRateService
-              .savePaymentMethod(objDetails)
-              .then(function (objDetails) {
-                sideBarService
-                  .getPaymentMethodDataVS1()
-                  .then(function (dataReload) {
-                    addVS1Data("TPaymentMethodList", JSON.stringify(dataReload))
-                      .then(function (datareturn) {
-                        location.reload(true);
-                      })
-                      .catch(function (err) {
-                        location.reload(true);
-                      });
-                  })
-                  .catch(function (err) {
-                    location.reload(true);
-                  });
-              })
-              .catch(function (err) {
-                swal({
-                  title: "Oooops...",
-                  text: err,
-                  type: "error",
-                  showCancelButton: false,
-                  confirmButtonText: "Try Again",
-                }).then((result) => {
-                  if (result.value) {
-                    Meteor._reload.reload();
-                  } else if (result.dismiss === "cancel") {
-                  }
-                });
-                $(".fullScreenSpin").css("display", "none");
-              });
-          })
-          .catch(function (err) {
+                type: "TPaymentMethod",
+                fields: {
+                    PaymentMethodName: paymentName,
+                    IsCreditCard: isCreditCard,
+                    Active: true
+                }
+            }
+        } else {
             objDetails = {
-              type: "TPaymentMethod",
-              fields: {
-                Active: true,
-                Name: paymentName,
-                IsCreditCard: isCreditCard,
-                PublishOnVS1: true,
-              },
-            };
+                type: "TPaymentMethod",
+                fields: {
+                    ID: paymentMethodID,
+                    PaymentMethodName: paymentName,
+                    IsCreditCard: isCreditCard,
+                    Active: true
+                }
+            }
+        }
 
-            taxRateService
-              .savePaymentMethod(objDetails)
-              .then(function (objDetails) {
-                sideBarService
-                  .getPaymentMethodDataVS1()
-                  .then(function (dataReload) {
-                    addVS1Data("TPaymentMethodList", JSON.stringify(dataReload))
-                      .then(function (datareturn) {
+        taxRateService.savePaymentMethod(objDetails).then(function(result) {
+            sideBarService.getPaymentMethodData().then(function(dataReload) {
+                addVS1Data('TPaymentMethod', JSON.stringify(dataReload)).then(function(datareturn) {
+                  sideBarService.getPaymentMethodDataList(initialBaseDataLoad, 0, false).then(async function(dataLeadList) {
+                      await addVS1Data('TPaymentMethodList', JSON.stringify(dataLeadList)).then(function(datareturn) {
                         location.reload(true);
-                      })
-                      .catch(function (err) {
-                        location.reload(true);
+                      }).catch(function(err) {
+                          location.reload(true);
                       });
-                  })
-                  .catch(function (err) {
-                    location.reload(true);
+                  }).catch(function(err) {
+                      location.reload(true);
                   });
-              })
-              .catch(function (err) {
-                swal({
-                  title: "Oooops...",
-                  text: err,
-                  type: "error",
-                  showCancelButton: false,
-                  confirmButtonText: "Try Again",
-                }).then((result) => {
-                  if (result.value) {
-                    Meteor._reload.reload();
-                  } else if (result.dismiss === "cancel") {
-                  }
+                }).catch(function(err) {
+                    location.reload(true);
                 });
-                $(".fullScreenSpin").css("display", "none");
-              });
-          });
-      } else {
-        objDetails = {
-          type: "TPaymentMethod",
-          fields: {
-            PayMethodID: parseInt(paymentMethodID),
-            Active: true,
-            Name: paymentName,
-            IsCreditCard: isCreditCard,
-          },
-        };
-
-        taxRateService
-          .savePaymentMethod(objDetails)
-          .then(function (objDetails) {
-            sideBarService
-              .getPaymentMethodDataVS1()
-              .then(function (dataReload) {
-                addVS1Data("TPaymentMethodList", JSON.stringify(dataReload))
-                  .then(function (datareturn) {
-                    location.reload(true);
-                  })
-                  .catch(function (err) {
-                    location.reload(true);
-                  });
-              })
-              .catch(function (err) {
+            }).catch(function(err) {
                 location.reload(true);
-              });
-          })
-          .catch(function (err) {
-            swal({
-              title: "Oooops...",
-              text: err,
-              type: "error",
-              showCancelButton: false,
-              confirmButtonText: "Try Again",
-            }).then((result) => {
-              if (result.value) {
-                Meteor._reload.reload();
-              } else if (result.dismiss === "cancel") {
-              }
             });
-            $(".fullScreenSpin").css("display", "none");
-          });
-      }
+        }).catch(function(err) {
+            swal({
+                title: 'Oooops...',
+                text: err,
+                type: 'error',
+                showCancelButton: false,
+                confirmButtonText: 'Try Again'
+            }).then((result) => {
+                if (result.value) {
+                    // Meteor._reload.reload();
+                } else if (result.dismiss === 'cancel') {}
+            });
+            $('.fullScreenSpin').css('display', 'none');
+        });
+    }
+
+      // if (paymentMethodID == "") {
+      //   taxRateService
+      //     .checkPaymentMethodByName(paymentName)
+      //     .then(function (data) {
+      //       paymentMethodID = data.tpaymentmethod[0].Id;
+      //       objDetails = {
+      //         type: "TPaymentMethod",
+      //         fields: {
+      //           PayMethodID: parseInt(paymentMethodID),
+      //           Active: true,
+      //           IsCreditCard: isCreditCard,
+      //         },
+      //       };
+
+      //       taxRateService
+      //         .savePaymentMethod(objDetails)
+      //         .then(function (objDetails) {
+      //           sideBarService
+      //             .getPaymentMethodDataVS1()
+      //             .then(function (dataReload) {
+      //               addVS1Data("TPaymentMethodList", JSON.stringify(dataReload))
+      //                 .then(function (datareturn) {
+      //                   location.reload(true);
+      //                 })
+      //                 .catch(function (err) {
+      //                   location.reload(true);
+      //                 });
+      //             })
+      //             .catch(function (err) {
+      //               location.reload(true);
+      //             });
+      //         })
+      //         .catch(function (err) {
+      //           swal({
+      //             title: "Oooops...",
+      //             text: err,
+      //             type: "error",
+      //             showCancelButton: false,
+      //             confirmButtonText: "Try Again",
+      //           }).then((result) => {
+      //             if (result.value) {
+      //               Meteor._reload.reload();
+      //             } else if (result.dismiss === "cancel") {
+      //             }
+      //           });
+      //           $(".fullScreenSpin").css("display", "none");
+      //         });
+      //     })
+      //     .catch(function (err) {
+      //       objDetails = {
+      //         type: "TPaymentMethod",
+      //         fields: {
+      //           Active: true,
+      //           Name: paymentName,
+      //           IsCreditCard: isCreditCard,
+      //           PublishOnVS1: true,
+      //         },
+      //       };
+
+      //       taxRateService
+      //         .savePaymentMethod(objDetails)
+      //         .then(function (objDetails) {
+      //           sideBarService
+      //             .getPaymentMethodDataVS1()
+      //             .then(function (dataReload) {
+      //               addVS1Data("TPaymentMethodList", JSON.stringify(dataReload))
+      //                 .then(function (datareturn) {
+      //                   location.reload(true);
+      //                 })
+      //                 .catch(function (err) {
+      //                   location.reload(true);
+      //                 });
+      //             })
+      //             .catch(function (err) {
+      //               location.reload(true);
+      //             });
+      //         })
+      //         .catch(function (err) {
+      //           swal({
+      //             title: "Oooops...",
+      //             text: err,
+      //             type: "error",
+      //             showCancelButton: false,
+      //             confirmButtonText: "Try Again",
+      //           }).then((result) => {
+      //             if (result.value) {
+      //               Meteor._reload.reload();
+      //             } else if (result.dismiss === "cancel") {
+      //             }
+      //           });
+      //           $(".fullScreenSpin").css("display", "none");
+      //         });
+      //     });
+      // } else {
+      //   objDetails = {
+      //     type: "TPaymentMethod",
+      //     fields: {
+      //       PayMethodID: parseInt(paymentMethodID),
+      //       Active: true,
+      //       Name: paymentName,
+      //       IsCreditCard: isCreditCard,
+      //     },
+      //   };
+
+      //   taxRateService
+      //     .savePaymentMethod(objDetails)
+      //     .then(function (objDetails) {
+      //       sideBarService
+      //         .getPaymentMethodDataVS1()
+      //         .then(function (dataReload) {
+      //           addVS1Data("TPaymentMethodList", JSON.stringify(dataReload))
+      //             .then(function (datareturn) {
+      //               location.reload(true);
+      //             })
+      //             .catch(function (err) {
+      //               location.reload(true);
+      //             });
+      //         })
+      //         .catch(function (err) {
+      //           location.reload(true);
+      //         });
+      //     })
+      //     .catch(function (err) {
+      //       swal({
+      //         title: "Oooops...",
+      //         text: err,
+      //         type: "error",
+      //         showCancelButton: false,
+      //         confirmButtonText: "Try Again",
+      //       }).then((result) => {
+      //         if (result.value) {
+      //           Meteor._reload.reload();
+      //         } else if (result.dismiss === "cancel") {
+      //         }
+      //       });
+      //       $(".fullScreenSpin").css("display", "none");
+      //     });
+      // }
     }, delayTimeAfterSound);
   },
   "click .btnAddPaymentMethod": function () {
