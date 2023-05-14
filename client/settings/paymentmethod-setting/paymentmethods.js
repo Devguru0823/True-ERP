@@ -7,6 +7,7 @@ import "../../lib/global/indexdbstorage.js";
 import XLSX from "xlsx";
 import { Template } from "meteor/templating";
 import "./paymentmethods.html";
+import {FlowRouter} from 'meteor/ostrio:flow-router-extra';
 
 let taxRateService = new TaxRateService();
 let sideBarService = new SideBarService();
@@ -25,7 +26,6 @@ Template.paymentmethodSettings.onCreated(function () {
   templateObject.includeAccountID.set(false);
   templateObject.accountID = new ReactiveVar();
   templateObject.selectedFile = new ReactiveVar();
-
   templateObject.getDataTableList = function(data) {
     let linestatus = '';
     if (data.Active == true) {
@@ -50,38 +50,38 @@ Template.paymentmethodSettings.onCreated(function () {
   }
 
   let headerStructure = [
-    { index: 0, label: '#ID', class: 'colPayMethodID', active: false, display: true, width: "50" },
-    { index: 1, label: 'Payment Method Name', class: 'colName', active: true, display: true, width: "150" },
+    { index: 0, label: 'ID', class: 'colPayMethodID', active: false, display: true, width: "50" },
+    { index: 1, label: 'Payment Method Name', class: 'colName', active: true, display: true, width: "500" },
     { index: 2, label: 'Is Credit Card', class: 'colIsCreditCard', active: true, display: true, width: "100" },
-    { index: 3, label: 'Status', class: 'colStatus', active: true, display: true, width: "60" },
+    { index: 3, label: 'Status', class: 'colStatus', active: true, display: true, width: "120" },
   ];
   templateObject.tableheaderrecords.set(headerStructure);
 });
 
 Template.paymentmethodSettings.onRendered(function () {
   let templateObject = Template.instance();
-  Meteor.call(
-    "readPrefMethod",
-    localStorage.getItem("mycloudLogonID"),
-    "tblPaymentMethodList",
-    function (error, result) {
-      if (error) {
-      } else {
-        if (result) {
-          for (let i = 0; i < result.customFields.length; i++) {
-            let customcolumn = result.customFields;
-            let columData = customcolumn[i].label;
-            let columHeaderUpdate = customcolumn[i].thclass.replace(/ /g, ".");
-            let columnClass = columHeaderUpdate.split(".")[1];
-            let columnWidth = customcolumn[i].width;
+  // Meteor.call(
+  //   "readPrefMethod",
+  //   localStorage.getItem("mycloudLogonID"),
+  //   "tblPaymentMethodList",
+  //   function (error, result) {
+  //     if (error) {
+  //     } else {
+  //       if (result) {
+  //         for (let i = 0; i < result.customFields.length; i++) {
+  //           let customcolumn = result.customFields;
+  //           let columData = customcolumn[i].label;
+  //           let columHeaderUpdate = customcolumn[i].thclass.replace(/ /g, ".");
+  //           let columnClass = columHeaderUpdate.split(".")[1];
+  //           let columnWidth = customcolumn[i].width;
 
-            $("th." + columnClass + "").html(columData);
-            $("th." + columnClass + "").css("width", "" + columnWidth + "px");
-          }
-        }
-      }
-    }
-  );
+  //           $("th." + columnClass + "").html(columData);
+  //           $("th." + columnClass + "").css("width", "" + columnWidth + "px");
+  //         }
+  //       }
+  //     }
+  //   }
+  // );
   templateObject.getOrganisationDetails = function () {
     organisationService.getOrganisationDetail().then((dataListRet) => {
       let account_id = dataListRet.tcompanyinfo[0].Apcano || "";
@@ -115,7 +115,7 @@ Template.paymentmethodSettings.onRendered(function () {
       var id = url[url.length - 1];
 
       $.ajax({
-        url: "https://depot.vs1cloud.com/stripe/connect-to-stripe.php",
+        url: stripeGlobalURL +"connect-to-stripe.php",
         data: {
           code: id,
         },
@@ -314,6 +314,9 @@ Template.paymentmethodSettings.events({
       .catch(function (err) {
         Meteor._reload.reload();
       });
+      setTimeout(function() {
+        window.open('/paymentmethodSettings','_self');
+      }, 2000);
   },
   "click .btnDeletePaymentMethod": function () {
     playDeleteAudio();
@@ -441,7 +444,61 @@ Template.paymentmethodSettings.events({
           "warning"
         );
         e.preventDefault();
-      }
+      } else {
+    //     if (paymentMethodID == "") {
+    //         objDetails = {
+    //             type: "TPaymentMethod",
+    //             fields: {
+    //                 PaymentMethodName: paymentName,
+    //                 IsCreditCard: isCreditCard,
+    //                 Active: true
+    //             }
+    //         }
+    //     } else {
+    //         objDetails = {
+    //             type: "TPaymentMethod",
+    //             fields: {
+    //                 ID: paymentMethodID,
+    //                 PaymentMethodName: paymentName,
+    //                 IsCreditCard: isCreditCard,
+    //                 Active: true
+    //             }
+    //         }
+    //     }
+
+    //     taxRateService.savePaymentMethod(objDetails).then(function(result) {
+    //         sideBarService.getPaymentMethodData().then(function(dataReload) {
+    //             addVS1Data('TPaymentMethod', JSON.stringify(dataReload)).then(function(datareturn) {
+    //               sideBarService.getPaymentMethodDataList(initialBaseDataLoad, 0, false).then(async function(dataLeadList) {
+    //                   await addVS1Data('TPaymentMethodList', JSON.stringify(dataLeadList)).then(function(datareturn) {
+    //                     location.reload(true);
+    //                   }).catch(function(err) {
+    //                       location.reload(true);
+    //                   });
+    //               }).catch(function(err) {
+    //                   location.reload(true);
+    //               });
+    //             }).catch(function(err) {
+    //                 location.reload(true);
+    //             });
+    //         }).catch(function(err) {
+    //             location.reload(true);
+    //         });
+    //     }).catch(function(err) {
+    //         swal({
+    //             title: 'Oooops...',
+    //             text: err,
+    //             type: 'error',
+    //             showCancelButton: false,
+    //             confirmButtonText: 'Try Again'
+    //         }).then((result) => {
+    //             if (result.value) {
+    //                 // Meteor._reload.reload();
+    //             } else if (result.dismiss === 'cancel') {}
+    //         });
+    //         $('.fullScreenSpin').css('display', 'none');
+    //     });
+    // }
 
       if (paymentMethodID == "") {
         taxRateService
@@ -683,6 +740,7 @@ Template.paymentmethodSettings.events({
     let templateObject = Template.instance();
     let objDetails;
     let isCreditCard = false;
+    if (fileType == "csv" || fileType == "txt" || fileType == "xlsx") {
     Papa.parse(templateObject.selectedFile.get(), {
       complete: function (results) {
         if (results.data.length > 0) {
@@ -696,6 +754,21 @@ Template.paymentmethodSettings.events({
               $(".modal-backdrop").hide();
               FlowRouter.go("/paymentmethodSettings?success=true");
               $(".fullScreenSpin").css("display", "none");
+              // sideBarService
+              //   .getPaymentMethodData()
+              //   .then(function(dataReload) {
+              //       addVS1Data("TPaymentMethod", JSON.stringify(dataReload))
+              //           .then(function(datareturn) {
+              //               window.open("/paymentmethodSettings", "_self");
+              //           })
+              //           .catch(function(err) {
+              //               window.open("/paymentmethodSettings", "_self");
+              //           });
+              //   })
+              //   .catch(function(err) {
+              //       window.open("/paymentmethodSettings", "_self");
+              //   });
+
             }, parseInt(dataLength));
             for (let i = 0; i < results.data.length - 1; i++) {
               isCreditCard =
@@ -705,7 +778,7 @@ Template.paymentmethodSettings.events({
               objDetails = {
                 type: "TPaymentMethod",
                 fields: {
-                  Name: results.data[i + 1][0],
+                  PaymentMethodName: results.data[i + 1][0],
                   IsCreditCard: isCreditCard || false,
                   Active: true,
                 },
@@ -726,9 +799,10 @@ Template.paymentmethodSettings.events({
                         confirmButtonText: "Try Again",
                       }).then((result) => {
                         if (result.value) {
-                          FlowRouter.go("/paymentmethodSettings?success=true");
+                          // FlowRouter.go("/paymentmethodSettings?success=true");
+                          Meteor._reload.reload();
                         } else if (result.dismiss === "cancel") {
-                          FlowRouter.go("/paymentmethodSettings?success=false");
+                          // FlowRouter.go("/paymentmethodSettings?success=false");
                         }
                       });
                     });
@@ -753,6 +827,7 @@ Template.paymentmethodSettings.events({
         }
       },
     });
+  }else{}
   },
 });
 
@@ -812,7 +887,7 @@ Template.paymentmethodSettings.helpers({
   },
 
   searchAPI: function() {
-    return sideBarService.getPaymentMethodDataList;
+    return sideBarService.getOnePaymentMethodByName;
   },
 
   service: ()=>{
@@ -840,6 +915,10 @@ Template.paymentmethodSettings.helpers({
   apiParams: function() {
     return ['limitCount', 'limitFrom', 'deleteFilter'];
   },
+  localURL: function(){
+    let getCurrentURL = window.location.href;
+    return getCurrentURL;
+  }
 });
 
 Template.registerHelper("equals", function (a, b) {
