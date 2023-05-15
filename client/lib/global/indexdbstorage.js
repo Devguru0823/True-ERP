@@ -110,6 +110,7 @@ openDb = function (dbName) {
       db.createObjectStore("TCompanyType", { keyPath: "EmployeeEmail" });
       db.createObjectStore("TContact", { keyPath: "EmployeeEmail" });
       db.createObjectStore("TCountries", { keyPath: "EmployeeEmail" });
+      db.createObjectStore("TCountrylist", { keyPath: "EmployeeEmail" });
       db.createObjectStore("TCustomerEx", { keyPath: "EmployeeEmail" });
       db.createObjectStore("TCustomerPayment", { keyPath: "EmployeeEmail" });
       db.createObjectStore("TEmployeeEx", { keyPath: "EmployeeEmail" });
