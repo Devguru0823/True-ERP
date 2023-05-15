@@ -16,6 +16,7 @@ const erpObject = {
     TCompanyType: "TCompanyType",
     TContact: "TContact",
     TCountries: "TCountries",
+    TCountrylist:"TCountryList",
     TCredit: "TCredit",
     TCreditEx: "TCreditEx",
     TCurrency: "TCurrency",
