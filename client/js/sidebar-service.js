@@ -3848,6 +3848,14 @@ export class SideBarService extends BaseService {
     return this.GET(this.erpGet.ERPCountries);
   }
 
+  getCountries() {
+    let options = {
+      ListType: "Detail",
+      select: "[Active]=true",
+    };
+    return this.getList(this.ERPObjects.TCountries, options);
+  }
+
   getPaymentMethodDataVS1() {
     let options = {
       ListType: "Detail",
