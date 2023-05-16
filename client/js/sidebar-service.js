@@ -3864,6 +3864,42 @@ export class SideBarService extends BaseService {
     return this.getList(this.ERPObjects.TCountries, options);
   }
 
+  getCountryDataList(limitcount, limitfrom, deleteFilter) {
+    let options = "";
+    if(deleteFilter == "" || deleteFilter == false || deleteFilter == null || deleteFilter == undefined){
+      if (limitcount == "All") {
+        options = {
+            ListType: "Detail",
+            orderby: '"Name asc"',
+            Search: "Active = true",
+        };
+      } else {
+        options = {
+          orderby: '"Name asc"',
+          ListType: "Detail",
+          Search: "Active = true",
+          LimitCount: parseInt(limitcount)||initialReportLoad,
+          LimitFrom: parseInt(limitfrom)||0,
+        };
+      }
+    }else{
+      if (limitcount == "All") {
+        options = {
+            ListType: "Detail",
+            orderby: '"Name asc"',
+        };
+      } else {
+        options = {
+            orderby: '"Name asc"',
+            ListType: "Detail",
+            LimitCount: parseInt(limitcount)||initialReportLoad,
+            LimitFrom: parseInt(limitfrom)||0,
+        };
+      }
+    }
+    return this.getList(this.ERPObjects.TCountryList, options);
+  }
+
   getPaymentMethodDataVS1() {
     let options = {
       ListType: "Detail",
