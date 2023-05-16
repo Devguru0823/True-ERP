@@ -3856,6 +3856,14 @@ export class SideBarService extends BaseService {
     return this.getList(this.ERPObjects.TCountries, options);
   }
 
+  getOneCountryByName(keyword){
+    let options = {
+      ListType:"Detail",
+      Search: "Active = true and Country like '%"+keyword+"%'",
+    };
+    return this.getList(this.ERPObjects.TCountries, options);
+  }
+
   getPaymentMethodDataVS1() {
     let options = {
       ListType: "Detail",
