@@ -51,20 +51,53 @@ Template.newcountrymodal.events({
                 };
             }
 
-            countryService.saveCountry(objDetails).then(function(objDetails) {
-                sideBarService.getCountries().then(function(dataUpdate) {
-                    // $('#shipvia').val(shipViaData);
-                    $('#newCountryViaModal').modal('toggle');
-                    $('.fullScreenSpin').css('display', 'none');
-                    addVS1Data('TCountries', JSON.stringify(dataUpdate)).then(function(datareturn) {
-                        $('.fullScreenSpin').css('display', 'none');
-                    }).catch(function(err) {});
+            // countryService.saveCountry(objDetails).then(function(objDetails) {
+            //     sideBarService.getCountries().then(function(dataUpdate) {
+            //         // $('#shipvia').val(shipViaData);
+            //         $('#newCountryViaModal').modal('toggle');
+            //         $('.fullScreenSpin').css('display', 'none');
+            //         addVS1Data('TCountries', JSON.stringify(dataUpdate)).then(function(datareturn) {
+            //             $('.fullScreenSpin').css('display', 'none');
+            //         }).catch(function(err) {});
+            //     }).catch(function(err) {
+            //         $('#newCountryViaModal').modal('toggle');
+            //         $('.fullScreenSpin').css('display', 'none');
+            //     });
+            // }).catch(function(err) {
+            //     $('.fullScreenSpin').css('display', 'none');
+            //     swal({
+            //         title: 'Oooops...',
+            //         text: err,
+            //         type: 'error',
+            //         showCancelButton: false,
+            //         confirmButtonText: 'Try Again'
+            //     }).then((result) => {
+            //         if (result.value) {
+            //             // if(err === checkResponseError){window.open('/', '_self');}
+            //         }
+            //         else if (result.dismiss === 'cancel') {}
+            //     });
+            //     $('.fullScreenSpin').css('display', 'none');
+            // });
+            countryService.saveCountry(objDetails).then(function(result) {
+                sideBarService.getCountries().then(function(dataReload) {
+                    addVS1Data('TCountries', JSON.stringify(dataReload)).then(function(datareturn) {
+                      sideBarService.getCountryDataList(initialBaseDataLoad, 0, false).then(async function(dataLeadList) {
+                          await addVS1Data('TCountryList', JSON.stringify(dataLeadList)).then(function(datareturn) {
+                            location.reload(true);
+                          }).catch(function(err) {
+                              location.reload(true);
+                          });
+                      }).catch(function(err) {
+                          location.reload(true);
+                      });
+                    }).catch(function(err) {
+                        location.reload(true);
+                    });
                 }).catch(function(err) {
-                    $('#newCountryViaModal').modal('toggle');
-                    $('.fullScreenSpin').css('display', 'none');
+                    location.reload(true);
                 });
             }).catch(function(err) {
-                $('.fullScreenSpin').css('display', 'none');
                 swal({
                     title: 'Oooops...',
                     text: err,
@@ -73,9 +106,8 @@ Template.newcountrymodal.events({
                     confirmButtonText: 'Try Again'
                 }).then((result) => {
                     if (result.value) {
-                        // if(err === checkResponseError){window.open('/', '_self');}
-                    }
-                    else if (result.dismiss === 'cancel') {}
+                        // Meteor._reload.reload();
+                    } else if (result.dismiss === 'cancel') {}
                 });
                 $('.fullScreenSpin').css('display', 'none');
             });
