@@ -157,6 +157,11 @@ Template.CountryModal.helpers({
 
   apiParams: function() {
     return ['limitCount', 'limitFrom', 'deleteFilter'];
-  }
+  },
+  tablename: () => {
+    let templateObject = Template.instance();
+    let accCustID = templateObject.data.custid ? templateObject.data.custid : '';
+    return 'tblCountryPopList'+ accCustID;
+  },
 
 });
