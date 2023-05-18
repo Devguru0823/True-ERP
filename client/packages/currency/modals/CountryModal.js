@@ -18,21 +18,26 @@ Template.CountryModal.onCreated(function () {
   templateObject.selectedFile = new ReactiveVar();
   templateObject.getDataTableList = function(data) {
     let linestatus = '';
-    if (data.Active == true) {
+    if (data.fields.Active == true) {
       linestatus = "";
-    } else if (data.Active == false) {
+    } else if (data.fields.Active == false) {
       linestatus = "In-Active";
     }
     let dataList = [
-      data.Country || "",
-      data.CountryID || ""
+    data.fields.ID || "",
+    data.fields.Country || "",
+    linestatus
     ];
     return dataList;
   }
 
   let headerStructure = [
-    { index: 0, label: 'Country', class: 'colCountry', active: true, display: true, width: "200" },
-    { index: 1, label: 'Country ID', class: 'colCountryID', active: false, display: true, width: "100" },
+    { index: 0, label: 'Country ID', class: 'colCountryID', active: false, display: true, width: "100" },
+    { index: 1, label: 'Country', class: 'colCountry', active: true, display: true, width: "200" },
+    { index: 2, label: 'Status', class: 'colStatus', active: true, display: true, width: "120" },
+
+    
+    
   ];
 
   templateObject.tableheaderrecords.set(headerStructure);
