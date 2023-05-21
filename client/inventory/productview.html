@@ -4,6 +4,7 @@
             .form-control {
                 width: 100% !important;
             }
+
             .form-group {
                 width: 100% !important;
             }
@@ -110,6 +111,7 @@
             th {
                 background-color: #ededed;
             }
+
             .table-striped tbody tr:nth-of-type(odd) {
                 background-color: white !important;
             }
@@ -117,6 +119,7 @@
             .table-striped tbody tr:nth-of-type(even) {
                 background-color: #0000000d !important;
             }
+
             .btnSpinType {
                 background-color: #00a3d3;
                 border: none;
@@ -133,9 +136,11 @@
                 cursor: pointer;
                 border-radius: 50%;
             }
+
             .btnSpinType:hover {
                 background-color: #00c2ef;
             }
+
             @media only screen and (max-width: 480px) {
                 /*
                 .row {
@@ -147,6 +152,7 @@
             }
                 */
             }
+
             .groove {
                 border-style: solid;
                 border-width: 1px;
@@ -154,9 +160,11 @@
                 padding: 2px;
                 border-radius: 0.35rem;
             }
+
             .custom-control-label {
                 position: absolute;
             }
+
             .rngRange {
                 position: relative;
                 display: flex;
@@ -174,6 +182,7 @@
                 color: rgb(128, 128, 128);
                 height: inherit !important;
             }
+
             @media only screen and (max-width: 480px) {
                 .modal.show .modal-dialog {
                     float: inherit !important;
@@ -201,18 +210,12 @@
                                     </div>
                                     <div class="modal-body">
                                         <p class="text-center text-muted">
-                                            <a
-                                                role="button"
-                                                data-toggle="modal"
-                                                href="#helpModal"
-                                                class="btn btn-primary helpModal"
-                                                >View Help Video</a
-                                            >
+                                            <a role="button" data-toggle="modal" href="#helpModal"
+                                                class="btn btn-primary helpModal">View Help Video</a>
                                         </p>
                                         <p class="text-center text-muted">
-                                            <a href="https://vs1forum.com/" target="_blank" class="btn btn-primary"
-                                                >Download Help File</a
-                                            >
+                                            <a href="https://vs1forum.com/" target="_blank"
+                                                class="btn btn-primary">Download Help File</a>
                                         </p>
                                         {{> helpadvisor}} {{> helpgotoforum}}
                                     </div>
@@ -229,19 +232,14 @@
             </div>
         </header>
         <div style="padding: 0px 16px">
-            <div
-                class="row no-gutters d-xl-flex justify-content-center justify-content-xl-center mb-3"
-                style="width: 100%"
-            >
+            <div class="row no-gutters d-xl-flex justify-content-center justify-content-xl-center mb-3"
+                style="width: 100%">
                 <div class="col-lg-7 col-md-12 col-sm-12 productCard" id="productCard">
                     <div class="card shadow mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <div style="display: flex; justify-content: space-between; width: 100%; margin-right: 25px">
-                                <div
-                                    class="text-primary m-0 font-weight-bold"
-                                    style="font-size: 28px"
-                                    id="productcardbodycode"
-                                >
+                                <div class="text-primary m-0 font-weight-bold" style="font-size: 28px"
+                                    id="productcardbodycode">
                                     {{productrecord.lib}}
                                 </div>
                                 <div class="text-primary m-0 font-weight-bold float-right" style="font-size: 28px">
@@ -250,9 +248,8 @@
                             </div>
                             <div class="float-right"></div>
                             <div>
-                                <a class="btn btnOpenSettings" role="button" data-toggle="modal" href="#myModal4"
-                                    ><i class="icon ion-android-more-horizontal"></i
-                                ></a>
+                                <a class="btn btnOpenSettings" role="button" data-toggle="modal" href="#myModal4"><i
+                                        class="icon ion-android-more-horizontal"></i></a>
                                 <!-- Start {{> optionCustomFiled}} -->
 
 
@@ -262,12 +259,8 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4>Field Settings</h4>
-                                                <button
-                                                    type="button"
-                                                    class="close"
-                                                    data-dismiss="modal"
-                                                    aria-label="Close"
-                                                >
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
                                                     <span aria-hidden="true">×</span>
                                                 </button>
                                             </div>
@@ -275,16 +268,10 @@
                                                 <div>
                                                     <form class="d-xl-flex align-items-xl-center">
                                                         <div class="flex-grow-1">
-                                                            <div
-                                                                class="custom-control custom-switch"
-                                                                style="margin: 8px"
-                                                            >
-                                                                <input
-                                                                    class="custom-control-input"
-                                                                    type="checkbox"
-                                                                    id="formCheck-one"
-                                                                    value="one"
-                                                                />
+                                                            <div class="custom-control custom-switch"
+                                                                style="margin: 8px">
+                                                                <input class="custom-control-input" type="checkbox"
+                                                                    id="formCheck-one" value="one" />
                                                                 {{#if productsCloudPreferenceRec}} {{#if equals
                                                                 productsCloudPreferenceRec.customFields.[0].hidden
                                                                 false}}
@@ -296,31 +283,21 @@
                                                                     $('#formCheck-one').removeAttr('checked');
                                                                 </script>
                                                                 {{/if}} {{/if}}
-                                                                <label
-                                                                    class="custom-control-label"
+                                                                <label class="custom-control-label"
                                                                     style="position: absolute"
-                                                                    for="formCheck-one"
-                                                                ></label>
-                                                                <div
-                                                                    contenteditable="true"
-                                                                    class="groove customField1Text"
-                                                                >
+                                                                    for="formCheck-one"></label>
+                                                                <div contenteditable="true"
+                                                                    class="groove customField1Text">
                                                                     {{#if
                                                                     productsCloudPreferenceRec}}{{productsCloudPreferenceRec.customFields.[0].label}}{{else}}Custom
                                                                     Field 1{{/if}}
                                                                 </div>
                                                             </div>
 
-                                                            <div
-                                                                class="custom-control custom-switch"
-                                                                style="margin: 8px"
-                                                            >
-                                                                <input
-                                                                    class="custom-control-input"
-                                                                    type="checkbox"
-                                                                    id="formCheck-two"
-                                                                    value="two"
-                                                                />
+                                                            <div class="custom-control custom-switch"
+                                                                style="margin: 8px">
+                                                                <input class="custom-control-input" type="checkbox"
+                                                                    id="formCheck-two" value="two" />
                                                                 {{#if productsCloudPreferenceRec}} {{#if equals
                                                                 productsCloudPreferenceRec.customFields.[1].hidden
                                                                 false}}
@@ -332,15 +309,11 @@
                                                                     $('#formCheck-two').removeAttr('checked');
                                                                 </script>
                                                                 {{/if}} {{/if}}
-                                                                <label
-                                                                    class="custom-control-label"
+                                                                <label class="custom-control-label"
                                                                     style="position: absolute"
-                                                                    for="formCheck-two"
-                                                                ></label>
-                                                                <div
-                                                                    contenteditable="true"
-                                                                    class="groove customField2Text"
-                                                                >
+                                                                    for="formCheck-two"></label>
+                                                                <div contenteditable="true"
+                                                                    class="groove customField2Text">
                                                                     {{#if
                                                                     productsCloudPreferenceRec}}{{productsCloudPreferenceRec.customFields.[1].label}}{{else}}Custom
                                                                     Field 2{{/if}}
@@ -354,11 +327,8 @@
                                                 <button class="btn btn-success btnSaveSettings" type="button">
                                                     <i class="fa fa-save" style="margin-right: 5px"></i>Save
                                                 </button>
-                                                <button
-                                                    class="btn btn-warning btnResetSettings"
-                                                    data-dismiss="modal"
-                                                    type="reset"
-                                                >
+                                                <button class="btn btn-warning btnResetSettings" data-dismiss="modal"
+                                                    type="reset">
                                                     <i class="fa fa-repeat" style="margin-right: 5px"></i>Reset
                                                 </button>
                                                 <button class="btn btn-secondary" data-dismiss="modal" type="button">
@@ -382,10 +352,12 @@
                             .lblCostInc {
                                 color: #17a673;
                             }
+
                             .fa-trans {
                                 -ms-transform: rotate(180deg);
                                 transform: rotate(180deg);
                             }
+
                             .lblPriceEx,
                             .lblPriceInc,
                             .lblCostEx,
@@ -398,10 +370,12 @@
                                 -ms-user-select: none;
                                 user-select: none;
                             }
+
                             .showColumn {
                                 display: inline-block !important;
                                 padding: 0px !important;
                             }
+
                             input.showColumn {
                                 padding: 12px !important;
                             }
@@ -412,69 +386,42 @@
                                 <div class="col-6 col-md-7 colProductName" id="colProductName">
                                     <div class="form-group">
                                         <label>Product Name</label>
-                                        <input
-                                            type="text"
-                                            class="form-control highlightInput"
-                                            id="edtproductname"
-                                            name="edtproductname"
-                                            value="{{productrecord.productname}}"
-                                        />
+                                        <input type="text" class="form-control highlightInput" id="edtproductname"
+                                            name="edtproductname" value="{{productrecord.productname}}" />
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-3 colPrice" id="colPrice">
                                     <div class="form-group">
-                                        <label class="lblPriceEx hiddenColumn"
-                                            >Price (Ex Tax) <i class="fas fa-random"></i
-                                        ></label>
-                                        <label class="lblPriceInc"
-                                            >Price (Inc Tax) <i class="fas fa-random fa-trans"></i
-                                        ></label>
+                                        <label class="lblPriceEx hiddenColumn">Price (Ex Tax) <i
+                                                class="fas fa-random"></i></label>
+                                        <label class="lblPriceInc">Price (Inc Tax) <i
+                                                class="fas fa-random fa-trans"></i></label>
 
                                         <input type="hidden" class="lblPriceCheckStatus" value="" />
 
-                                        <input
-                                            type="text"
+                                        <input type="text"
                                             class="form-control highlightInput edtsellqty1priceCheck hiddenColumn"
-                                            id="edtsellqty1price"
-                                            name="edtsellqty1price"
-                                            value="{{productrecord.sellqty1price}}"
-                                        />
-                                        <input
-                                            type="text"
-                                            class="form-control highlightInput edtsellqty1priceIncCheck"
-                                            id="edtsellqty1priceInc"
-                                            name="edtsellqty1priceInc"
-                                            value="{{productrecord.sellqty1priceinc}}"
-                                        />
+                                            id="edtsellqty1price" name="edtsellqty1price"
+                                            value="{{productrecord.sellqty1price}}" />
+                                        <input type="text" class="form-control highlightInput edtsellqty1priceIncCheck"
+                                            id="edtsellqty1priceInc" name="edtsellqty1priceInc"
+                                            value="{{productrecord.sellqty1priceinc}}" />
                                     </div>
                                 </div>
-                                <div
-                                    class="col-6 col-md-2 trackItemvisible colTotalQty"
-                                    id="colTotalQty"
-                                    style="{{#if isTrackChecked}}visibility: visible;{{else}}visibility: hidden;{{/if}}"
-                                >
+                                <div class="col-6 col-md-2 trackItemvisible colTotalQty" id="colTotalQty"
+                                    style="{{#if isTrackChecked}}visibility: visible;{{else}}visibility: hidden;{{/if}}">
                                     <div class="form-group">
                                         <label>Total Quantity</label>
-                                        <input
-                                            type="text"
-                                            class="form-control highlightInput"
-                                            id="edttotalqtyinstock"
-                                            name="edttotalqtyinstock"
-                                            value="{{totaldeptquantity}}"
-                                        />
+                                        <input type="text" class="form-control highlightInput" id="edttotalqtyinstock"
+                                            name="edttotalqtyinstock" value="{{totaldeptquantity}}" />
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>Sales Description</label>
-                                        <textarea
-                                            class="form-control"
-                                            rows="3"
-                                            id="txasalesdescription"
-                                            name="txasalesdescription"
-                                        >
-{{productrecord.salesdescription}}</textarea
-                                        >
+                                        <textarea class="form-control" rows="3" id="txasalesdescription"
+                                            name="txasalesdescription">
+{{productrecord.salesdescription}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -497,62 +444,41 @@
                                 <div class="col-6 col-md-3 colSalesAccount" id="colSalesAccount">
                                     <div class="form-group">
                                         <label>Sales Account</label>
-                                        <select
-                                            type="search"
-                                            class="form-control"
-                                            id="sltsalesacount"
+                                        <select type="search" class="form-control" id="sltsalesacount"
                                             name="sltsalesacount"
-                                            style="background-color: rgb(255, 255, 255); cursor: pointer"
-                                        ></select>
+                                            style="background-color: rgb(255, 255, 255); cursor: pointer"></select>
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-2 colUOM" id="colUOM">
                                     <div class="form-group">
                                         <label>Unit of Measure</label>
-                                        <select
-                                            type="search"
-                                            class="form-control sltUomSales"
-                                            id="sltUomSales"
+                                        <select type="search" class="form-control sltUomSales" id="sltUomSales"
                                             name="sltUomSales"
-                                            style="background-color: rgb(255, 255, 255); cursor: pointer"
-                                        ></select>
+                                            style="background-color: rgb(255, 255, 255); cursor: pointer"></select>
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-2 colTaxCode" id="colTaxCode">
                                     <div class="form-group">
                                         <label>Tax Code</label>
-                                        <select
-                                            type="search"
-                                            class="form-control"
-                                            id="slttaxcodesales"
+                                        <select type="search" class="form-control" id="slttaxcodesales"
                                             name="slttaxcodesales"
-                                            style="background-color: rgb(255, 255, 255); cursor: pointer"
-                                        ></select>
+                                            style="background-color: rgb(255, 255, 255); cursor: pointer"></select>
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-2 colPrice" id="colPrice">
                                     <div class="form-group">
-                                        <label class="lblPriceEx hiddenColumn"
-                                            >Price (Ex Tax) <i class="fas fa-random"></i
-                                        ></label>
-                                        <label class="lblPriceInc"
-                                            >Price (Inc Tax) <i class="fas fa-random fa-trans"></i
-                                        ></label>
+                                        <label class="lblPriceEx hiddenColumn">Price (Ex Tax) <i
+                                                class="fas fa-random"></i></label>
+                                        <label class="lblPriceInc">Price (Inc Tax) <i
+                                                class="fas fa-random fa-trans"></i></label>
                                         <div style="display: flex">
                                             <input type="hidden" class="lblPriceCheckStatus" value="" />
-                                            <input
-                                                type="text"
+                                            <input type="text"
                                                 class="form-control highlightInput edtsellqty1priceCheck hiddenColumn"
-                                                id="edtsellqty1price"
-                                                name="edtsellqty1price"
-                                            />
-                                            <input
-                                                type="text"
+                                                id="edtsellqty1price" name="edtsellqty1price" />
+                                            <input type="text"
                                                 class="form-control highlightInput edtsellqty1priceIncCheck"
-                                                id="edtsellqty1priceInc"
-                                                name="edtsellqty1priceInc"
-                                                value="$0.00"
-                                            />
+                                                id="edtsellqty1priceInc" name="edtsellqty1priceInc" value="$0.00" />
                                         </div>
                                     </div>
                                 </div>
@@ -560,14 +486,9 @@
                                     <div class="form-group">
                                         <label>Markup</label>
                                         <div class="input-group">
-                                            <input
-                                                type="text"
-                                                class="form-control highlightInput baseEdtMarkup"
-                                                id="edtmarkup"
-                                                name="edtmarkup"
-                                                value="40%"
-                                                style="padding-left: 0.3rem!Important;padding-right: 0.3rem!Important;"
-                                            />
+                                            <input type="text" class="form-control highlightInput baseEdtMarkup"
+                                                id="edtmarkup" name="edtmarkup" value="40%"
+                                                style="padding-left: 0.3rem!Important;padding-right: 0.3rem!Important;" />
                                             <!-- <div class="input-group-append">
                                                 <span class="input-group-text" style="z-index: 0;">%</span>
                                             </div> -->
@@ -578,12 +499,8 @@
                                 <div class="col-6 col-md-2 colBarcode" id="colBarcode">
                                     <div class="form-group">
                                         <label>Barcode</label>
-                                            <input
-                                                type="text"
-                                                class="form-control highlightInput"
-                                                id="edtbarcode"
-                                                name="edtbarcode"
-                                            />
+                                        <input type="text" class="form-control highlightInput" id="edtbarcode"
+                                            name="edtbarcode" />
                                     </div>
                                 </div>
 
@@ -592,63 +509,43 @@
                                 <div class="col-6 col-md-3 colSalesAccount" id="colSalesAccount">
                                     <div class="form-group">
                                         <label>Sales Account</label>
-                                        <select
-                                            type="search"
-                                            class="form-control"
-                                            id="sltsalesacount"
+                                        <select type="search" class="form-control" id="sltsalesacount"
                                             name="sltsalesacount"
-                                            style="background-color: rgb(255, 255, 255); cursor: pointer"
-                                        ></select>
+                                            style="background-color: rgb(255, 255, 255); cursor: pointer"></select>
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-2 colUOM" id="colUOM">
                                     <div class="form-group">
                                         <label>Unit of Measure</label>
-                                        <select
-                                            type="search"
-                                            class="form-control sltUomSales"
-                                            id="sltUomSales"
+                                        <select type="search" class="form-control sltUomSales" id="sltUomSales"
                                             name="sltUomSales"
-                                            style="background-color: rgb(255, 255, 255); cursor: pointer"
-                                        ></select>
+                                            style="background-color: rgb(255, 255, 255); cursor: pointer"></select>
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-2 colTaxCode" id="colTaxCode">
                                     <div class="form-group">
                                         <label>Tax Code</label>
-                                        <select
-                                            type="search"
-                                            class="form-control"
-                                            id="slttaxcodesales"
+                                        <select type="search" class="form-control" id="slttaxcodesales"
                                             name="slttaxcodesales"
-                                            style="background-color: rgb(255, 255, 255); cursor: pointer"
-                                        ></select>
+                                            style="background-color: rgb(255, 255, 255); cursor: pointer"></select>
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-2 colPrice" id="colPrice">
                                     <div class="form-group">
-                                        <label class="lblPriceEx hiddenColumn"
-                                            >Price (Ex Tax) <i class="fas fa-random"></i
-                                        ></label>
-                                        <label class="lblPriceInc"
-                                            >Price (Inc Tax) <i class="fas fa-random fa-trans"></i
-                                        ></label>
+                                        <label class="lblPriceEx hiddenColumn">Price (Ex Tax) <i
+                                                class="fas fa-random"></i></label>
+                                        <label class="lblPriceInc">Price (Inc Tax) <i
+                                                class="fas fa-random fa-trans"></i></label>
                                         <div style="display: flex">
                                             <input type="hidden" class="lblPriceCheckStatus" value="" />
-                                            <input
-                                                type="text"
+                                            <input type="text"
                                                 class="form-control highlightInput edtsellqty1priceCheck hiddenColumn"
-                                                id="edtsellqty1price"
-                                                name="edtsellqty1price"
-                                                value="{{productrecord.sellqty1price}}"
-                                            />
-                                            <input
-                                                type="text"
+                                                id="edtsellqty1price" name="edtsellqty1price"
+                                                value="{{productrecord.sellqty1price}}" />
+                                            <input type="text"
                                                 class="form-control highlightInput edtsellqty1priceIncCheck"
-                                                id="edtsellqty1priceInc"
-                                                name="edtsellqty1priceInc"
-                                                value="{{productrecord.sellqty1priceinc}}"
-                                            />
+                                                id="edtsellqty1priceInc" name="edtsellqty1priceInc"
+                                                value="{{productrecord.sellqty1priceinc}}" />
                                         </div>
                                     </div>
                                 </div>
@@ -657,14 +554,9 @@
                                         <label>Markup</label>
 
                                         <div class="input-group">
-                                            <input
-                                                type="text"
-                                                class="form-control highlightInput baseEdtMarkup"
-                                                id="edtmarkup"
-                                                name="edtmarkup"
-                                                value="40%"
-                                                style="padding-left: 0.3rem!Important;padding-right: 0.3rem!Important;"
-                                            />
+                                            <input type="text" class="form-control highlightInput baseEdtMarkup"
+                                                id="edtmarkup" name="edtmarkup" value="40%"
+                                                style="padding-left: 0.3rem!Important;padding-right: 0.3rem!Important;" />
 
                                         </div>
 
@@ -676,104 +568,63 @@
                                     <div class="form-group">
                                         <label>Barcode</label>
                                         <div style="display: flex">
-                                            <input
-                                                type="text"
-                                                class="form-control highlightInput"
-                                                id="edtbarcode"
+                                            <input type="text" class="form-control highlightInput" id="edtbarcode"
                                                 name="edtbarcode"
-                                                style="border-top-right-radius: 5px!important;border-bottom-right-radius: 5px!important;"
-                                            />
-                                            <span class="table-remove btnRemoveUOM pl-3"
-                                                ><button
-                                                    type="button"
-                                                    class="btn btn-danger btn-rounded btn-sm"
-                                                    autocomplete="off"
-                                                >
-                                                    <i class="fa fa-remove"></i></button
-                                            ></span>
+                                                style="border-top-right-radius: 5px!important;border-bottom-right-radius: 5px!important;" />
+                                            <span class="table-remove btnRemoveUOM pl-3"><button type="button"
+                                                    class="btn btn-danger btn-rounded btn-sm" autocomplete="off">
+                                                    <i class="fa fa-remove"></i></button></span>
+                                        </div>
                                     </div>
-                                      </div>
                                 </div>
 
                             </div>
                             <div class="row">
 
-                                <div
-                                    class="col-6 col-md-3 checkbox1div colCustom1"
-                                    id="colCustom1"
-                                    style="{{#if productsCloudPreferenceRec}}{{#if equals productsCloudPreferenceRec.customFields.[0].hidden false}}display:block{{else}}display:none{{/if}}{{else}}display:none{{/if}}"
-                                >
+                                <div class="col-6 col-md-3 checkbox1div colCustom1" id="colCustom1"
+                                    style="{{#if productsCloudPreferenceRec}}{{#if equals productsCloudPreferenceRec.customFields.[0].hidden false}}display:block{{else}}display:none{{/if}}{{else}}display:none{{/if}}">
                                     <!-- <div class="form-group">
                                         <label class="lblCustomField1">{{#if productsCloudPreferenceRec}}{{productsCloudPreferenceRec.customFields.[0].label}}{{else}}Custom Field 1{{/if}}</label>
                                         <input type="text" class="form-control highlightInput" id="txtCustomField1" name="txtCustomField1"  value="{{productrecord.customfield1}}">
                                     </div> -->
-                                    <div
-                                        class="one box checkbox1div"
-                                        style="{{#if salesCloudPreferenceRec}}{{#if equals salesCloudPreferenceRec.customFields.[0].hidden false}}display:block{{else}}display:none{{/if}}{{else}}display:none{{/if}}"
-                                    >
+                                    <div class="one box checkbox1div"
+                                        style="{{#if salesCloudPreferenceRec}}{{#if equals salesCloudPreferenceRec.customFields.[0].hidden false}}display:block{{else}}display:none{{/if}}{{else}}display:none{{/if}}">
                                         <div class="form-group" style="margin-bottom: 0">
                                             <label class="lblCustomField1">{{custfields.[0].custfieldlabel}}</label>
-                                            <input
-                                                class="form-control form-control"
-                                                type="text"
-                                                id="edtSaleCustField1"
-                                                name="edtSaleCustField1"
-                                                value="{{invoicerecord.saleCustField1}}"
-                                                custfieldid=""
-                                            />
+                                            <input class="form-control form-control" type="text" id="edtSaleCustField1"
+                                                name="edtSaleCustField1" value="{{invoicerecord.saleCustField1}}"
+                                                custfieldid="" />
                                         </div>
                                     </div>
                                 </div>
-                                <div
-                                    class="col-6 col-md-3 checkbox2div colCustom2"
-                                    id="colCustom2"
-                                    style="{{#if productsCloudPreferenceRec}}{{#if equals productsCloudPreferenceRec.customFields.[1].hidden false}}display:block{{else}}display:none{{/if}}{{else}}display:none{{/if}}"
-                                >
+                                <div class="col-6 col-md-3 checkbox2div colCustom2" id="colCustom2"
+                                    style="{{#if productsCloudPreferenceRec}}{{#if equals productsCloudPreferenceRec.customFields.[1].hidden false}}display:block{{else}}display:none{{/if}}{{else}}display:none{{/if}}">
                                     <!-- <div class="form-group">
                                         <label class="lblCustomField2">{{#if productsCloudPreferenceRec}}{{productsCloudPreferenceRec.customFields.[1].label}}{{else}}Custom Field 2{{/if}}</label>
                                         <input type="text" class="form-control highlightInput" id="txtCustomField2" name="txtCustomField2" value="{{productrecord.customfield2}}" >
                                     </div> -->
-                                    <div
-                                        class="two box checkbox2div"
-                                        style="{{#if salesCloudPreferenceRec}}{{#if equals salesCloudPreferenceRec.customFields.[1].hidden false}}display:block{{else}}display:none{{/if}}{{else}}display:none{{/if}}"
-                                    >
+                                    <div class="two box checkbox2div"
+                                        style="{{#if salesCloudPreferenceRec}}{{#if equals salesCloudPreferenceRec.customFields.[1].hidden false}}display:block{{else}}display:none{{/if}}{{else}}display:none{{/if}}">
                                         <div class="form-group" style="margin-bottom: 0">
-                                            <label class="lblCustomField2"
-                                                >{{custfields.[1].custfieldlabel}}<br
-                                            /></label>
-                                            <input
-                                                class="form-control form-control"
-                                                type="text"
-                                                id="edtSaleCustField2"
-                                                name="edtSaleCustField2"
-                                                value="{{invoicerecord.saleCustField2}}"
-                                                custfieldid=""
-                                            />
+                                            <label
+                                                class="lblCustomField2">{{custfields.[1].custfieldlabel}}<br /></label>
+                                            <input class="form-control form-control" type="text" id="edtSaleCustField2"
+                                                name="edtSaleCustField2" value="{{invoicerecord.saleCustField2}}"
+                                                custfieldid="" />
                                         </div>
                                     </div>
                                 </div>
 
-                                <div
-                                    class="col-6 col-md-3 checkbox3div colCustom2"
-                                    id="colCustom3"
-                                    style="{{#if productsCloudPreferenceRec}}{{#if equals productsCloudPreferenceRec.customFields.[2].hidden false}}display:block{{else}}display:none{{/if}}{{else}}display:none{{/if}}"
-                                >
-                                    <div
-                                        class="two box checkbox3div"
-                                        style="{{#if salesCloudPreferenceRec}}{{#if equals salesCloudPreferenceRec.customFields.[1].hidden false}}display:block{{else}}display:none{{/if}}{{else}}display:none{{/if}}"
-                                    >
+                                <div class="col-6 col-md-3 checkbox3div colCustom2" id="colCustom3"
+                                    style="{{#if productsCloudPreferenceRec}}{{#if equals productsCloudPreferenceRec.customFields.[2].hidden false}}display:block{{else}}display:none{{/if}}{{else}}display:none{{/if}}">
+                                    <div class="two box checkbox3div"
+                                        style="{{#if salesCloudPreferenceRec}}{{#if equals salesCloudPreferenceRec.customFields.[1].hidden false}}display:block{{else}}display:none{{/if}}{{else}}display:none{{/if}}">
                                         <div class="form-group" style="margin-bottom: 0">
-                                            <label class="lblCustomField2"
-                                                >{{custfields.[2].custfieldlabel}}<br
-                                            /></label>
-                                            <input
-                                                class="form-control form-control"
-                                                type="text"
-                                                id="edtSaleCustField3"
-                                                name="edtSaleCustField3"
-                                                value="{{invoicerecord.saleCustField3}}"
-                                                custfieldid=""
-                                            />
+                                            <label
+                                                class="lblCustomField2">{{custfields.[2].custfieldlabel}}<br /></label>
+                                            <input class="form-control form-control" type="text" id="edtSaleCustField3"
+                                                name="edtSaleCustField3" value="{{invoicerecord.saleCustField3}}"
+                                                custfieldid="" />
                                         </div>
                                     </div>
                                 </div>
@@ -787,81 +638,54 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>Purchase Description</label>
-                                        <textarea
-                                            class="form-control"
-                                            rows="3"
-                                            id="txapurchasedescription"
-                                            name="txapurchasedescription"
-                                        >
-{{productrecord.purchasedescription}}</textarea
-                                        >
+                                        <textarea class="form-control" rows="3" id="txapurchasedescription"
+                                            name="txapurchasedescription">
+{{productrecord.purchasedescription}}</textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="row purchaseRowWrapper">
-                                <div class="col-6 col-md-3 colCOGSaccount" id="colCOGSaccount" >
+                                <div class="col-6 col-md-3 colCOGSaccount" id="colCOGSaccount">
                                     <div class="form-group">
                                         <label>COGS Account</label>
-                                        <select
-                                            type="search"
-                                            value="{{productrecord.cogsaccount}}"
-                                            class="form-control"
-                                            id="sltcogsaccount"
-                                            name="sltcogsaccount"
-                                            style="background-color: rgb(255, 255, 255); cursor: pointer"
-                                        ></select>
+                                        <select type="search" value="{{productrecord.cogsaccount}}" class="form-control"
+                                            id="sltcogsaccount" name="sltcogsaccount"
+                                            style="background-color: rgb(255, 255, 255); cursor: pointer"></select>
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-2 colUOM" id="colUOM">
                                     <div class="form-group">
                                         <label>Unit of Measure</label>
-                                        <select
-                                            type="search"
-                                            class="form-control sltUomPurchases"
-                                            id="sltUomPurchases"
+                                        <select type="search" class="form-control sltUomPurchases" id="sltUomPurchases"
                                             name="sltUomPurchases"
                                             style="background-color: rgb(255, 255, 255); cursor: pointer"
-                                            value="Each"
-                                        ></select>
+                                            value="Each"></select>
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-2 colTaxCode2" id="colTaxCode2">
                                     <div class="form-group">
                                         <label>Tax Code</label>
-                                        <select
-                                            type="search"
-                                            class="form-control"
-                                            id="slttaxcodepurchase"
+                                        <select type="search" class="form-control" id="slttaxcodepurchase"
                                             name="slttaxcodepurchase"
-                                            style="background-color: rgb(255, 255, 255); cursor: pointer"
-                                        ></select>
+                                            style="background-color: rgb(255, 255, 255); cursor: pointer"></select>
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-3 colCost" id="colCost" style="width: 13%">
                                     <div class="form-group">
-                                        <label class="lblCostEx hiddenColumn"
-                                            >Cost (Ex Tax) <i class="fas fa-random"></i
-                                        ></label>
-                                        <label class="lblCostInc"
-                                            >Cost (Inc Tax) <i class="fas fa-random fa-trans"></i
-                                        ></label>
+                                        <label class="lblCostEx hiddenColumn">Cost (Ex Tax) <i
+                                                class="fas fa-random"></i></label>
+                                        <label class="lblCostInc">Cost (Inc Tax) <i
+                                                class="fas fa-random fa-trans"></i></label>
                                         <div class="d-flex">
                                             <input type="hidden" class="lblCostCheckStatus" value="" />
 
-                                            <input
-                                                type="text"
+                                            <input type="text"
                                                 class="form-control highlightInput edtbuyqty1cost hiddenColumn"
-                                                id="edtbuyqty1cost"
-                                                name="edtbuyqty1cost"
-                                                value="{{productrecord.buyqty1cost}}"
-                                            />
-                                            <input
-                                                type="text"
-                                                class="form-control highlightInput edtbuyqty1costInc"
-                                                id="edtbuyqty1costInc"
-                                                name="edtbuyqty1costInc"
-                                                value="{{productrecord.buyqty1costinc}}"
-                                            />
+                                                id="edtbuyqty1cost" name="edtbuyqty1cost"
+                                                value="{{productrecord.buyqty1cost}}" />
+                                            <input type="text" class="form-control highlightInput edtbuyqty1costInc"
+                                                id="edtbuyqty1costInc" name="edtbuyqty1costInc"
+                                                value="{{productrecord.buyqty1costinc}}" />
                                         </div>
                                     </div>
                                 </div>
@@ -870,63 +694,42 @@
                                 <div class="col-6 col-md-3 colCOGS" id="colCOGS">
                                     <div class="form-group">
                                         <label>COGS Account</label>
-                                        <input
-                                            class="form-control"
-                                            id="sltcogsaccount"
-                                            name="sltsalesacount"
-                                            style="background-color: rgb(255, 255, 255); cursor: pointer"
-                                        />
+                                        <input class="form-control" id="sltcogsaccount" name="sltsalesacount"
+                                            style="background-color: rgb(255, 255, 255); cursor: pointer" />
                                     </div>
                                 </div>
-                                <div class="col-6 col-md-2 colUOM" id="colUOM" >
+                                <div class="col-6 col-md-2 colUOM" id="colUOM">
                                     <div class="form-group">
                                         <label>Unit of Measure</label>
-                                        <select
-                                            type="search"
-                                            class="form-control sltUomPurchases"
-                                            id="sltUomPurchases"
+                                        <select type="search" class="form-control sltUomPurchases" id="sltUomPurchases"
                                             name="sltUomPurchases"
-                                            style="background-color: rgb(255, 255, 255); cursor: pointer"
-                                        ></select>
+                                            style="background-color: rgb(255, 255, 255); cursor: pointer"></select>
                                     </div>
                                 </div>
                                 <div class="col-6 col-md-2 colTaxCode" id="colTaxCode">
                                     <div class="form-group">
                                         <label>Tax Code</label>
-                                        <select
-                                            type="search"
-                                            class="form-control"
-                                            id="slttaxcodepurchase"
+                                        <select type="search" class="form-control" id="slttaxcodepurchase"
                                             name="slttaxcodepurchase"
-                                            style="background-color: rgb(255, 255, 255); cursor: pointer"
-                                        ></select>
+                                            style="background-color: rgb(255, 255, 255); cursor: pointer"></select>
                                     </div>
                                 </div>
-                                <div class="col-6 col-md-3 colCost" id="colCost"  >
+                                <div class="col-6 col-md-3 colCost" id="colCost">
                                     <div class="form-group">
-                                        <label class="lblCostEx hiddenColumn"
-                                            >Cost (Ex Tax) <i class="fas fa-random"></i
-                                        ></label>
-                                        <label class="lblCostInc"
-                                            >Cost (Inc Tax) <i class="fas fa-random fa-trans"></i
-                                        ></label>
+                                        <label class="lblCostEx hiddenColumn">Cost (Ex Tax) <i
+                                                class="fas fa-random"></i></label>
+                                        <label class="lblCostInc">Cost (Inc Tax) <i
+                                                class="fas fa-random fa-trans"></i></label>
                                         <div style="display: flex">
                                             <input type="hidden" class="lblCostCheckStatus" value="" />
 
-                                            <input
-                                                type="text"
+                                            <input type="text"
                                                 class="form-control highlightInput edtsellqty1CostCheck hiddenColumn"
-                                                id="edtsellqty1Cost"
-                                                name="edtsellqty1Cost"
-                                                value=""
-                                            />
-                                            <input
-                                                type="text"
+                                                id="edtsellqty1Cost" name="edtsellqty1Cost" value="" />
+                                            <input type="text"
                                                 class="form-control highlightInput edtsellqty1costIncCheck"
-                                                id="edtsellqty1costInc"
-                                                name="edtsellqty1costInc"
-                                                value="{{productrecord.sellqty1priceinc}}"
-                                            />
+                                                id="edtsellqty1costInc" name="edtsellqty1costInc"
+                                                value="{{productrecord.sellqty1priceinc}}" />
                                         </div>
                                     </div>
                                 </div>
@@ -954,101 +757,138 @@
 
                                 <div class="col-12 col-md-4">
                                     <div class="custom-control custom-switch d-flex">
-                                        <input
-                                            class="custom-control-input"
-                                            type="checkbox"
-                                            id="chkTrack"
+                                        <input class="custom-control-input" type="checkbox" id="chkTrack"
                                             name="chkTrack"
-                                            checked="{{#if includeInventory}}{{#if isTrackChecked}}checked{{/if}}{{else}}{{/if}}"
-                                        />
+                                            checked="{{#if includeInventory}}{{#if isTrackChecked}}checked{{/if}}{{else}}{{/if}}" />
                                         <label
                                             class="custom-control-label position-relative {{#if includeInventory}}inventorytracking{{else}}inventorynottracking{{/if}}"
-                                            for="chkTrack"
-                                            >I Track This Product</label
-                                        >
+                                            for="chkTrack">I Track This Product</label>
                                     </div>
                                     <div class="custom-control custom-switch d-flex">
-                                        <input
-                                            class="custom-control-input"
-                                            type="checkbox"
-                                            id="chkBOM"
-                                            name="chkBOM"
-                                            checked="{{productrecord.isManufactured}}"
-                                        />
-                                        <label class="custom-control-label position-relative" for="chkBOM"
-                                            >Bill Of Materials</label
-                                        >
+                                        <input class="custom-control-input" type="checkbox" id="chkBOM" name="chkBOM"
+                                            checked="{{productrecord.isManufactured}}" />
+                                        <label class="custom-control-label position-relative" for="chkBOM">Bill Of
+                                            Materials</label>
+                                        <div style="margin-left: 8px">
+                                            <span id="btnShowBOMExtra" class="btnSpinType"><i class="fas fa-search"
+                                                    style="font-size: 11px !important"></i></span>
+                                        </div>    
                                     </div>
                                 </div>
                                 {{#if equals isSNTrackChecked true}}
                                 <div class="col-12 col-md-4">
                                     <div class="">
                                         <div class="custom-control custom-switch d-flex">
-                                            <input
-                                                class="custom-control-input"
-                                                type="checkbox"
-                                                id="chkSNTrack"
-                                                name="chkSNTrack"
-                                            />
-                                            <label class="custom-control-label position-relative" for="chkSNTrack"
-                                                >I Track Serial Numbers</label
-                                            >
+                                            <input class="custom-control-input" type="checkbox" id="chkSNTrack"
+                                                name="chkSNTrack" />
+                                            <label class="custom-control-label position-relative" for="chkSNTrack">I
+                                                Track Serial Numbers</label>
                                             <div style="margin-left: 8px">
-                                                <span id="btnSNTrack" class="btnSpinType"
-                                                    ><i class="fas fa-search" style="font-size: 11px !important"></i
-                                                ></span>
+                                                <span id="btnSNTrack" class="btnSpinType"><i class="fas fa-search"
+                                                        style="font-size: 11px !important"></i></span>
                                             </div>
                                         </div>
                                         <div class="d-flex">
                                             <div class="custom-control custom-switch d-flex">
-                                                <input
-                                                    class="custom-control-input"
-                                                    type="checkbox"
-                                                    id="chkAddSN"
-                                                    name="chkAddSN"
-                                                />
-                                                <label class="custom-control-label position-relative" for="chkAddSN"
-                                                    >I Can Create Serial Numbers</label
-                                                >
+                                                <input class="custom-control-input" type="checkbox" id="chkAddSN"
+                                                    name="chkAddSN" />
+                                                <label class="custom-control-label position-relative" for="chkAddSN">I
+                                                    Can Create Serial Numbers</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <div class="custom-control custom-switch d-flex">
-                                        <input
-                                            class="custom-control-input"
-                                            type="checkbox"
-                                            id="chkLotTrack"
-                                            name="chkLotTrack"
-                                        />
-                                        <label class="custom-control-label position-relative" for="chkLotTrack"
-                                            >I Track Lot Numbers</label
-                                        >
+                                        <input class="custom-control-input" type="checkbox" id="chkLotTrack"
+                                            name="chkLotTrack" />
+                                        <label class="custom-control-label position-relative" for="chkLotTrack">I Track
+                                            Lot Numbers</label>
                                         <div style="margin-left: 8px">
-                                            <span id="btnLotTrack" class="btnSpinType"
-                                                ><i class="fas fa-search" style="font-size: 11px !important"></i
-                                            ></span>
+                                            <span id="btnLotTrack" class="btnSpinType"><i class="fas fa-search"
+                                                    style="font-size: 11px !important"></i></span>
                                         </div>
+                                    </div>
+                                    <div class="custom-control custom-switch d-flex">
+                                        <input class="custom-control-input" type="checkbox" id="chkDelivery"
+                                            name="chkDelivery" />
+                                        <label class="custom-control-label position-relative"
+                                            for="chkDelivery">Delivery</label>
                                     </div>
                                 </div>
                                 {{/if}}
                             </div>
+                            {{#if creatingNewTopic }}
+                            <div class="row delivery_unit w-100 mr-0 ml-0">
+                                <div class="col-6 col-md-3 coldelivery" id="coldelivery">
+                                    <div class="form-group">
+                                        <label>Weight</label>
+                                        <input type="text" class="form-control highlightInput" id="delivery_weight"
+                                            name="delivery_weight" value="" />
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 coldelivery" id="coldelivery">
+                                    <div class="form-group">
+                                        {{>vs1___dropdown
+                                        data=record.loginDefault
+                                        type='search'
+                                        id='sltWeightUnit'
+                                        name='sltWeightUnit'
+                                        modalId= 'weightUnitsModal'
+                                        list_template_name='weightunitpopup'
+                                        modal_title='Weight Unit'
+                                        innerModal=true
+                                        label = 'Weight Unit'
+                                        colNameForValue = 'colOptionsName'
+                                        is_editable=true
+                                        noBorder=false
+                                        }}
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 coldelivery" id="coldelivery">
+                                    <div class="form-group">
+                                        <label>Volume</label>
+                                        <input type="text" class="form-control highlightInput" id="delivery_volume"
+                                            name="delivery_volume" value="" />
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3 coldelivery" id="coldelivery">
+                                    <div class="form-group">
+                                        {{>vs1___dropdown
+                                        data=record.loginDefault
+                                        type='search'
+                                        id='sltVolumeUnit'
+                                        name='sltVolumeUnit'
+                                        modalId= 'volumeUnitModal'
+                                        list_template_name='volumeunitpopup'
+                                        modal_title='Volume Unit'
+                                        innerModal=true
+                                        label = 'Volume Unit'
+                                        colNameForValue = 'colOptionsName'
+                                        is_editable=true
+                                        noBorder=false
+                                        }}
+                                    </div>
+                                </div>
+                                <!-- <div class="col-1 colDel3">
+                                    <label></label>
+                                    <div class="form-group mt-2">
+                                        <span class="table-remove btnRemove"><button type="button"
+                                                class="btn btn-danger btn-rounded btn-sm" autocomplete="off">
+                                                <i class="fa fa-remove"></i></button></span>
+                                    </div>
+                                </div> -->
+                            </div>
+                            {{/if}}
                             <div class="row">
                                 <div class="col-12 col-md-3" id="trackdiv">
-                                    <div
-                                        class="trackItem"
-                                        style="{{#if includeInventory}}{{#if isTrackChecked}}display: block;{{else}}display: none;{{/if}}{{else}}display: none;{{/if}}"
-                                    >
+                                    <div class="trackItem"
+                                        style="{{#if includeInventory}}{{#if isTrackChecked}}display: block;{{else}}display: none;{{/if}}{{else}}display: none;{{/if}}">
                                         <div class="form-group">
                                             <label>Inventory Account</label>
-                                            <select
-                                                type="search"
-                                                class="form-control"
-                                                id="sltinventoryacount"
+                                            <select type="search" class="form-control" id="sltinventoryacount"
                                                 name="sltinventoryacount"
-                                                style="background-color: rgb(255, 255, 255); cursor: pointer"
-                                            ></select>
+                                                style="background-color: rgb(255, 255, 255); cursor: pointer"></select>
                                         </div>
                                     </div>
                                 </div>
@@ -1058,27 +898,22 @@
                                     <hr class="reporthr" style="border-width: 3px" />
                                 </div>
                             </div>
-                            <div
-                                class="row trackItem"
-                                style="{{#if includeInventory}}{{#if isTrackChecked}}display: flex;{{else}}display: none;{{/if}}{{else}}display: none;{{/if}}"
-                            >
+                            <div class="row trackItem"
+                                style="{{#if includeInventory}}{{#if isTrackChecked}}display: flex;{{else}}display: none;{{/if}}{{else}}display: none;{{/if}}">
                                 {{#each item in productqtyrecords}}
                                 <div class="col-12">
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="row">
                                                 <div class="col-8 form-group">
-                                                    <label style="">Deparment</label>
-                                                    {{> vs1_dropdown id='sltdepartment' name='sltdepartment' value=bindept type='search' classes='es-input'}}
+                                                    <label style="">Department</label>
+                                                    {{> vs1_dropdown id='sltdepartment' name='sltdepartment'
+                                                    value=bindept type='search' classes='es-input'}}
                                                 </div>
                                                 <div class="col-4 form-group">
                                                     <label>Available</label>
-                                                    <input
-                                                            type="text"
-                                                            class="form-control trackProd Available"
-                                                            value="{{item.availableqty}}"
-                                                            style="text-align: center"
-                                                    />
+                                                    <input type="text" class="form-control trackProd Available"
+                                                        value="{{item.availableqty}}" style="text-align: center" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1088,59 +923,50 @@
                                                 <div class="col-2">
                                                     <div class="form-group">
                                                         <label style="white-space: nowrap;">On SO</label>
-                                                        <input
-                                                            type="text"
-                                                            class="form-control trackProd OnSO"
-                                                            value="{{item.onsoqty}} "
-                                                            style="text-align: center"
-                                                        />
+                                                        <input type="text" class="form-control trackProd OnSO"
+                                                            value="{{item.onsoqty}} " style="text-align: center" />
                                                     </div>
                                                 </div>
                                                 <div class="col-2">
                                                     <div class="form-group">
                                                         <label style="white-space: nowrap;">On BO</label>
-                                                        <input
-                                                            type="text"
-                                                            class="form-control trackProd OnBO"
-                                                            value="{{item.onboqty}}"
-                                                            style="text-align: center"
-                                                        />
+                                                        <input type="text" class="form-control trackProd OnBO"
+                                                            value="{{item.onboqty}}" style="text-align: center" />
                                                     </div>
                                                 </div>
                                                 <div class="col-2">
                                                     <div class="form-group">
                                                         <label style="white-space: nowrap;">In Stock</label>
-                                                        <input
-                                                            type="text"
-                                                            class="form-control trackProd InStock"
-                                                            value="{{item.instockqty}}"
-                                                            style="text-align: center"
-                                                        />
+                                                        <input type="text" class="form-control trackProd InStock"
+                                                            value="{{item.instockqty}}" style="text-align: center" />
                                                     </div>
                                                 </div>
                                                 <div class="col-2">
                                                     <div class="form-group">
                                                         <label style="white-space: nowrap;">On Order</label>
-                                                        <input
-                                                            type="text"
-                                                            class="form-control trackProd OnOrder"
-                                                            value="{{item.onorderqty}}"
-                                                            style="text-align: center"
-                                                        />
+                                                        <input type="text" class="form-control trackProd OnOrder"
+                                                            value="{{item.onorderqty}}" style="text-align: center" />
                                                     </div>
                                                 </div>
                                                 <div class="col-2">
                                                     <div class="form-group">
                                                         <label style="white-space: nowrap;">Bin Location</label>
-                                                        <select type="search" class="form-control slt-bin" id="sltbinlocation" name="sltbinlocation" value="{{binlocation}}" style="background-color:rgb(255, 255, 255); cursor: pointer;">
+                                                        <select type="search" class="form-control slt-bin"
+                                                            id="sltbinlocation" name="sltbinlocation"
+                                                            value="{{binlocation}}"
+                                                            style="background-color:rgb(255, 255, 255); cursor: pointer;">
                                                             {{#each itemtt in binlocationarray}}
-                                                                {{#if equals itemtt.binclass bindept}}
-                                                                    {{#if equals itemtt.binlocation binlocation}}
-                                                                        <option value="{{itemtt.binlocation}}" data-location="{{itemtt.binlocation}}" selected>{{itemtt.binlocation}}</option>
-                                                                    {{else}}
-                                                                        <option value="{{itemtt.binlocation}}" data-location="{{itemtt.binlocation}}">{{itemtt.binlocation}}</option>
-                                                                    {{/if}}
-                                                                {{/if}}
+                                                            {{#if equals itemtt.binclass bindept}}
+                                                            {{#if equals itemtt.binlocation binlocation}}
+                                                            <option value="{{itemtt.binlocation}}"
+                                                                data-location="{{itemtt.binlocation}}" selected>
+                                                                {{itemtt.binlocation}}</option>
+                                                            {{else}}
+                                                            <option value="{{itemtt.binlocation}}"
+                                                                data-location="{{itemtt.binlocation}}">
+                                                                {{itemtt.binlocation}}</option>
+                                                            {{/if}}
+                                                            {{/if}}
                                                             {{/each}}
                                                         </select>
                                                     </div>
@@ -1148,17 +974,23 @@
                                                 <div class="col-2">
                                                     <div class="form-group">
                                                         <label style="white-space: nowrap;">Bin Number</label>
-                                                        <select type="search" class="form-control slt-bin" id="sltbinnumber" name="sltbinnumber" value="{{binnumber}}" style="background-color:rgb(255, 255, 255); cursor: pointer;">
+                                                        <select type="search" class="form-control slt-bin"
+                                                            id="sltbinnumber" name="sltbinnumber" value="{{binnumber}}"
+                                                            style="background-color:rgb(255, 255, 255); cursor: pointer;">
                                                             {{#each itemtt in binarray}}
-                                                                {{#if equals itemtt.binclass bindept}}
-                                                                    {{#if equals itemtt.binlocation binlocation}}
-                                                                        {{#if equals itemtt.binnumber binnumber}}
-                                                                            <option value="{{itemtt.binnumber}}" data-location="{{itemtt.binlocation}}" selected>{{itemtt.binnumber}}</option>
-                                                                        {{else}}
-                                                                            <option value="{{itemtt.binnumber}}" data-location="{{itemtt.binlocation}}">{{itemtt.binnumber}}</option>
-                                                                        {{/if}}
-                                                                    {{/if}}
-                                                                {{/if}}
+                                                            {{#if equals itemtt.binclass bindept}}
+                                                            {{#if equals itemtt.binlocation binlocation}}
+                                                            {{#if equals itemtt.binnumber binnumber}}
+                                                            <option value="{{itemtt.binnumber}}"
+                                                                data-location="{{itemtt.binlocation}}" selected>
+                                                                {{itemtt.binnumber}}</option>
+                                                            {{else}}
+                                                            <option value="{{itemtt.binnumber}}"
+                                                                data-location="{{itemtt.binlocation}}">
+                                                                {{itemtt.binnumber}}</option>
+                                                            {{/if}}
+                                                            {{/if}}
+                                                            {{/if}}
                                                             {{/each}}
                                                         </select>
                                                     </div>
@@ -1169,10 +1001,8 @@
                                 </div>
                                 {{/each}}
                             </div>
-                            <div
-                                class="row"
-                                style="{{#if includeInventory}}{{#if isTrackChecked}}display: block;{{else}}display: none;{{/if}}{{else}}display: none;{{/if}}"
-                            >
+                            <div class="row"
+                                style="{{#if includeInventory}}{{#if isTrackChecked}}display: block;{{else}}display: none;{{/if}}{{else}}display: none;{{/if}}">
                                 <div class="col-12">
                                     <hr class="reporthr" style="border-width: 3px" />
                                 </div>
@@ -1180,16 +1010,11 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="custom-control custom-switch">
-                                        <input
-                                            class="custom-control-input"
-                                            type="checkbox"
-                                            id="chkSellPrice"
+                                        <input class="custom-control-input" type="checkbox" id="chkSellPrice"
                                             name="chkSellPrice"
-                                            checked="{{#if isExtraSellChecked}}checked{{else}}{{/if}}"
-                                        />
-                                        <label class="custom-control-label" for="chkSellPrice"
-                                            >Customer Type Discount</label
-                                        >
+                                            checked="{{#if isExtraSellChecked}}checked{{else}}{{/if}}" />
+                                        <label class="custom-control-label" for="chkSellPrice">Customer Type
+                                            Discount</label>
                                     </div>
                                 </div>
                             </div>
@@ -1219,14 +1044,13 @@
                                     cursor: pointer;
                                     border-radius: 50%;
                                 }
+
                                 .addClientType:hover {
                                     background-color: #00c2ef;
                                 }
                             </style>
-                            <div
-                                class="row trackCustomerTypeDisc"
-                                style="{{#if isExtraSellChecked}}display: flex;{{else}}display: none;{{/if}}"
-                            >
+                            <div class="row trackCustomerTypeDisc"
+                                style="{{#if isExtraSellChecked}}display: flex;{{else}}display: none;{{/if}}">
                                 <div class="col-4 colClientType1" id="colClientType1">
                                     <div class="form-group" style="margin-bottom: 0px">
                                         <label>Customer Type</label>
@@ -1256,47 +1080,30 @@
                                     <div class="row">
                                         <div class="col-4 colClientType2">
                                             <div class="form-group">
-                                                <select
-                                                    type="search"
-                                                    class="form-control sltCustomerType"
-                                                    id="sltCustomerType"
-                                                    name="sltCustomerType"
-                                                    style="background-color: rgb(255, 255, 255); cursor: pointer"
-                                                ></select>
+                                                <select type="search" class="form-control sltCustomerType"
+                                                    id="sltCustomerType" name="sltCustomerType"
+                                                    style="background-color: rgb(255, 255, 255); cursor: pointer"></select>
                                             </div>
                                         </div>
                                         <!-- {{> clienttypemodal}} -->
                                         <div class="col-3 colDiscount2">
                                             <div class="form-group">
-                                                <input
-                                                    type="text"
-                                                    class="form-control highlightInput edtDiscount"
-                                                    style="width: 100%"
-                                                    value="{{itemExtraSell.discount}}"
-                                                />
+                                                <input type="text" class="form-control highlightInput edtDiscount"
+                                                    style="width: 100%" value="{{itemExtraSell.discount}}" />
                                             </div>
                                         </div>
 
                                         <div class="col-3 colPrice2">
                                             <div class="form-group">
-                                                <input
-                                                    type="text"
-                                                    class="form-control highlightInput edtPriceEx"
-                                                    style="width: 100%"
-                                                    value="{{itemExtraSell.price}}"
-                                                />
+                                                <input type="text" class="form-control highlightInput edtPriceEx"
+                                                    style="width: 100%" value="{{itemExtraSell.price}}" />
                                             </div>
                                         </div>
                                         <div class="col-1 colDel2">
                                             <div class="form-group">
-                                                <span class="table-remove btnRemove"
-                                                    ><button
-                                                        type="button"
-                                                        class="btn btn-danger btn-rounded btn-sm"
-                                                        autocomplete="off"
-                                                    >
-                                                        <i class="fa fa-remove"></i></button
-                                                ></span>
+                                                <span class="table-remove btnRemove"><button type="button"
+                                                        class="btn btn-danger btn-rounded btn-sm" autocomplete="off">
+                                                        <i class="fa fa-remove"></i></button></span>
                                             </div>
                                         </div>
                                     </div>
@@ -1308,13 +1115,8 @@
                                 </div>
                                 {{/each}}
                                 <div class="col-12">
-                                    <button
-                                        class="btn btn-primary addRowLine"
-                                        type="button"
-                                        id="addRowLine"
-                                        style="float: right"
-                                        autocomplete="off"
-                                    >
+                                    <button class="btn btn-primary addRowLine" type="button" id="addRowLine"
+                                        style="float: right" autocomplete="off">
                                         + Add New Discount
                                     </button>
                                 </div>
@@ -1328,23 +1130,15 @@
                             <!-- End Sell Price1111 -->
                             <div class="row recenttrasaction">
                                 <div class="col-8">
-                                    <button
-                                        class="btn btn-primary loadrecenttransaction"
-                                        type="button"
-                                        id="loadrecenttransaction"
-                                        name="loadrecenttransaction"
-                                    >
+                                    <button class="btn btn-primary loadrecenttransaction" type="button"
+                                        id="loadrecenttransaction" name="loadrecenttransaction">
                                         Recent Transactions
                                     </button>
                                 </div>
                                 <div class="col-4 d-flex justify-content-end">
                                     {{#if isManufactured}}
-                                    <button
-                                        class="btn btn-primary showBOMBtn"
-                                        type="button"
-                                        id="showBOMBtn"
-                                        name="showBOMBtn"
-                                    >
+                                    <button class="btn btn-primary showBOMBtn" type="button" id="showBOMBtn"
+                                        name="showBOMBtn">
                                         Show BOM
                                     </button>
                                     {{/if}}
@@ -1357,239 +1151,266 @@
                                     </header>
                                     <div class="row justify-content-end">
                                         <div class="col">
-                                          <a
-                                            class="btn btnOpenSettings btnOpenSettingsDesktop float-right vs1ButtonMargin"
-                                            role="button"
-                                            data-toggle="modal"
-                                            href="#productrecentlist_Modal"
-                                            ><i class="icon ion-android-more-horizontal"></i
-                                          ></a>
-                                          <button class="btn btnNav btn-primary float-right printConfirm vs1ButtonMargin" type="button">
-                                            <i class="fas fa-print" style="padding-right: 5px"></i>Print
-                                          </button>
-                                          <button
-                                            class="btn btn-primary float-right vs1ButtonMargin"
-                                            type="button"
-                                            data-toggle="modal"
-                                            href="#importRecentTransctionModal"
-                                          >
-                                            <i class="fas fa-file-import" style="padding-right: 5px"></i>Import
-                                          </button>
-                                          <div class="modal fade" role="dialog" tabindex="-1" id="importRecentTransctionModal">
-                                            <div class="modal-dialog" role="document">
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <h4>Import Items</h4>
-                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">×</span>
-                                                  </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                  <div class="row no-gutters d-xl-flex flex-row justify-content-xl-start align-items-xl-start">
-                                                    <p style="margin-bottom: 0px; font-weight: bold">1. Download the &lt;&lt;form&gt;&gt; template</p>
-                                                    <p style="margin-left: 16px; margin-bottom: 0px; margin-top: 4px">
-                                                      Start by downloading our template file. This file has the correct column headings to allow VS1 Cloud
-                                                      to import your form's details.
-                                                    </p>
-                                                    <div class="col flex-grow-1">
-                                                      <button
-                                                        class="btn btn-primary templateDownload"
-                                                        type="button"
-                                                        style="margin: 12px; margin-bottom: 0px"
-                                                      >
-                                                        <i class="fas fa-file-csv" style="margin-right: 5px"></i>Download CSV Template
-                                                      </button>
-                                                      <button
-                                                        class="btn btn-primary templateDownloadXLSX"
-                                                        type="button"
-                                                        style="margin: 12px; margin-bottom: 0px"
-                                                      >
-                                                        <i class="fas fa-file-csv" style="margin-right: 5px"></i>Download Excel Template
-                                                      </button>
-                                                    </div>
-                                                    <div class="col d-xl-flex align-items-xl-center" style="width: 50px; max-width: 50px">
-                                                      <a href="#" download
-                                                        ><i
-                                                          class="fa fa-question-circle-o"
-                                                          data-toggle="tooltip"
-                                                          data-bs-tooltip=""
-                                                          title="Having issues? Navigate to your Region Settings in your Control Panel and check that you have a comma selected as your 'List Seperator' and a period as your 'Decimal Symbol'."
-                                                          style="margin: 12px"
-                                                        ></i
-                                                      ></a>
-                                                    </div>
-                                                  </div>
-                                                  <hr />
-                                                  <div class="row no-gutters d-xl-flex flex-column justify-content-xl-start align-items-xl-start">
-                                                    <p style="margin-bottom: 0px; font-weight: bold">2. Copy your items into the template</p>
-                                                    <p style="margin-left: 16px; margin-bottom: 0px; margin-top: 4px">
-                                                      Using MS Excel, or another spreadsheet editor, you can fill in the VS1 Cloud template with your
-                                                      desired details.
-                                                    </p>
-                                                    <p style="margin-left: 16px; margin-bottom: 0px; margin-top: 16px">
-                                                      Important: Avoid changing the column headings in the template file.
-                                                    </p>
-                                                  </div>
-                                                  <hr />
-                                                  <div class="row no-gutters d-xl-flex flex-column justify-content-xl-start align-items-xl-start">
-                                                    <p style="margin-bottom: 0px; font-weight: bold">3. Import the updated template file</p>
-                                                    <p style="margin-left: 16px; margin-bottom: 0px; margin-top: 4px">
-                                                      Save your updated template and you're ready to go.
-                                                    </p>
+                                            <a class="btn btnOpenSettings btnOpenSettingsDesktop float-right vs1ButtonMargin"
+                                                role="button" data-toggle="modal" href="#productrecentlist_Modal"><i
+                                                    class="icon ion-android-more-horizontal"></i></a>
+                                            <button
+                                                class="btn btnNav btn-primary float-right printConfirm vs1ButtonMargin"
+                                                type="button">
+                                                <i class="fas fa-print" style="padding-right: 5px"></i>Print
+                                            </button>
+                                            <button class="btn btn-primary float-right vs1ButtonMargin" type="button"
+                                                data-toggle="modal" href="#importRecentTransctionModal">
+                                                <i class="fas fa-file-import" style="padding-right: 5px"></i>Import
+                                            </button>
+                                            <div class="modal fade" role="dialog" tabindex="-1"
+                                                id="importRecentTransctionModal">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4>Import Items</h4>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div
+                                                                class="row no-gutters d-xl-flex flex-row justify-content-xl-start align-items-xl-start">
+                                                                <p style="margin-bottom: 0px; font-weight: bold">1.
+                                                                    Download the &lt;&lt;form&gt;&gt; template</p>
+                                                                <p
+                                                                    style="margin-left: 16px; margin-bottom: 0px; margin-top: 4px">
+                                                                    Start by downloading our template file. This file
+                                                                    has the correct column headings to allow VS1 Cloud
+                                                                    to import your form's details.
+                                                                </p>
+                                                                <div class="col flex-grow-1">
+                                                                    <button class="btn btn-primary templateDownload"
+                                                                        type="button"
+                                                                        style="margin: 12px; margin-bottom: 0px">
+                                                                        <i class="fas fa-file-csv"
+                                                                            style="margin-right: 5px"></i>Download CSV
+                                                                        Template
+                                                                    </button>
+                                                                    <button class="btn btn-primary templateDownloadXLSX"
+                                                                        type="button"
+                                                                        style="margin: 12px; margin-bottom: 0px">
+                                                                        <i class="fas fa-file-csv"
+                                                                            style="margin-right: 5px"></i>Download Excel
+                                                                        Template
+                                                                    </button>
+                                                                </div>
+                                                                <div class="col d-xl-flex align-items-xl-center"
+                                                                    style="width: 50px; max-width: 50px">
+                                                                    <a href="#" download><i
+                                                                            class="fa fa-question-circle-o"
+                                                                            data-toggle="tooltip" data-bs-tooltip=""
+                                                                            title="Having issues? Navigate to your Region Settings in your Control Panel and check that you have a comma selected as your 'List Seperator' and a period as your 'Decimal Symbol'."
+                                                                            style="margin: 12px"></i></a>
+                                                                </div>
+                                                            </div>
+                                                            <hr />
+                                                            <div
+                                                                class="row no-gutters d-xl-flex flex-column justify-content-xl-start align-items-xl-start">
+                                                                <p style="margin-bottom: 0px; font-weight: bold">2. Copy
+                                                                    your items into the template</p>
+                                                                <p
+                                                                    style="margin-left: 16px; margin-bottom: 0px; margin-top: 4px">
+                                                                    Using MS Excel, or another spreadsheet editor, you
+                                                                    can fill in the VS1 Cloud template with your
+                                                                    desired details.
+                                                                </p>
+                                                                <p
+                                                                    style="margin-left: 16px; margin-bottom: 0px; margin-top: 16px">
+                                                                    Important: Avoid changing the column headings in the
+                                                                    template file.
+                                                                </p>
+                                                            </div>
+                                                            <hr />
+                                                            <div
+                                                                class="row no-gutters d-xl-flex flex-column justify-content-xl-start align-items-xl-start">
+                                                                <p style="margin-bottom: 0px; font-weight: bold">3.
+                                                                    Import the updated template file</p>
+                                                                <p
+                                                                    style="margin-left: 16px; margin-bottom: 0px; margin-top: 4px">
+                                                                    Save your updated template and you're ready to go.
+                                                                </p>
 
-                                                    <div class="divTable" id="file-display"></div>
-                                                    <input type="file" id="attachment-upload" style="display: none" accept=".csv,.txt,.xlsx" />
-                                                    <style>
-                                                      #row1 {
-                                                        display: flex;
-                                                        flex-direction: row;
-                                                        justify-content: space-around;
-                                                      }
+                                                                <div class="divTable" id="file-display"></div>
+                                                                <input type="file" id="attachment-upload"
+                                                                    style="display: none" accept=".csv,.txt,.xlsx" />
+                                                                <style>
+                                                                    #row1 {
+                                                                        display: flex;
+                                                                        flex-direction: row;
+                                                                        justify-content: space-around;
+                                                                    }
 
-                                                      #column1 {
-                                                        display: flex;
-                                                      }
+                                                                    #column1 {
+                                                                        display: flex;
+                                                                    }
 
-                                                      #column2 {
-                                                        display: flex;
-                                                        flex-direction: column;
-                                                        margin: 16px;
-                                                        padding: 0.375rem 0.75rem;
-                                                      }
-                                                    </style>
-                                                    <div id="row1">
-                                                      <div id="column1"></div>
-                                                      <button class="btn btn-primary btnUploadFile new_attachment_btn" type="button" style="margin: 12px">
-                                                        <i class="fa fa-cloud-upload" style="margin-right: 5px"></i>Browse
-                                                      </button>
-                                                      <div class="file-name" id="column2"></div>
+                                                                    #column2 {
+                                                                        display: flex;
+                                                                        flex-direction: column;
+                                                                        margin: 16px;
+                                                                        padding: 0.375rem 0.75rem;
+                                                                    }
+                                                                </style>
+                                                                <div id="row1">
+                                                                    <div id="column1"></div>
+                                                                    <button
+                                                                        class="btn btn-primary btnUploadFile new_attachment_btn"
+                                                                        type="button" style="margin: 12px">
+                                                                        <i class="fa fa-cloud-upload"
+                                                                            style="margin-right: 5px"></i>Browse
+                                                                    </button>
+                                                                    <div class="file-name" id="column2"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-primary btnImport" type="button"
+                                                                disabled>
+                                                                <i class="fas fa-file-import"
+                                                                    style="margin-right: 5px"></i>Import
+                                                            </button>
+                                                            <button class="btn btn-secondary" data-dismiss="modal"
+                                                                type="button">
+                                                                <i class="fa fa-close"
+                                                                    style="margin-right: 5px"></i>Close
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                  </div>
                                                 </div>
-                                                <div class="modal-footer">
-                                                  <button class="btn btn-primary btnImport" type="button" disabled>
-                                                    <i class="fas fa-file-import" style="margin-right: 5px"></i>Import
-                                                  </button>
-                                                  <button class="btn btn-secondary" data-dismiss="modal" type="button">
-                                                    <i class="fa fa-close" style="margin-right: 5px"></i>Close
-                                                  </button>
-                                                </div>
-                                              </div>
                                             </div>
-                                          </div>
-                                          <a
-                                            class="btn btnNav btn-primary float-right vs1ButtonMargin"
-                                            role="button"
-                                            data-toggle="modal"
-                                            href="#myModalDepartment"
-                                            ><i class="fas fa-users-cog" style="padding-right: 5px"></i>Department</a
-                                          >
+                                            <a class="btn btnNav btn-primary float-right vs1ButtonMargin" role="button"
+                                                data-toggle="modal" href="#myModalDepartment"><i
+                                                    class="fas fa-users-cog"
+                                                    style="padding-right: 5px"></i>Department</a>
                                         </div>
 
                                         <div class="modal fade" role="dialog" tabindex="-1" id="importModal">
-                                          <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                              <div class="modal-header">
-                                                <h4>Import Items</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                  <span aria-hidden="true">×</span>
-                                                </button>
-                                              </div>
-                                              <div class="modal-body">
-                                                <div class="row no-gutters d-xl-flex flex-row justify-content-xl-start align-items-xl-start">
-                                                  <p style="margin-bottom: 0px; font-weight: bold">1. Download the &lt;&lt;form&gt;&gt; template</p>
-                                                  <p style="margin-left: 16px; margin-bottom: 0px; margin-top: 4px">
-                                                    Start by downloading our template file. This file has the correct column headings to allow VS1 Cloud
-                                                    to import your form's details.
-                                                  </p>
-                                                  <div class="col flex-grow-1">
-                                                    <button
-                                                      class="btn btn-primary templateDownload"
-                                                      type="button"
-                                                      style="margin: 12px; margin-bottom: 0px"
-                                                    >
-                                                      <i class="fas fa-file-csv" style="margin-right: 5px"></i>Download CSV Template
-                                                    </button>
-                                                    <button
-                                                      class="btn btn-primary templateDownloadXLSX"
-                                                      type="button"
-                                                      style="margin: 12px; margin-bottom: 0px"
-                                                    >
-                                                      <i class="fas fa-file-csv" style="margin-right: 5px"></i>Download Excel Template
-                                                    </button>
-                                                  </div>
-                                                  <div class="col d-xl-flex align-items-xl-center" style="width: 50px; max-width: 50px">
-                                                    <a href="#" download
-                                                      ><i
-                                                        class="fa fa-question-circle-o"
-                                                        data-toggle="tooltip"
-                                                        data-bs-tooltip=""
-                                                        title="Having issues? Navigate to your Region Settings in your Control Panel and check that you have a comma selected as your 'List Seperator' and a period as your 'Decimal Symbol'."
-                                                        style="margin: 12px"
-                                                      ></i
-                                                    ></a>
-                                                  </div>
-                                                </div>
-                                                <hr />
-                                                <div class="row no-gutters d-xl-flex flex-column justify-content-xl-start align-items-xl-start">
-                                                  <p style="margin-bottom: 0px; font-weight: bold">2. Copy your items into the template</p>
-                                                  <p style="margin-left: 16px; margin-bottom: 0px; margin-top: 4px">
-                                                    Using MS Excel, or another spreadsheet editor, you can fill in the VS1 Cloud template with your
-                                                    desired details.
-                                                  </p>
-                                                  <p style="margin-left: 16px; margin-bottom: 0px; margin-top: 16px">
-                                                    Important: Avoid changing the column headings in the template file.
-                                                  </p>
-                                                </div>
-                                                <hr />
-                                                <div class="row no-gutters d-xl-flex flex-column justify-content-xl-start align-items-xl-start">
-                                                  <p style="margin-bottom: 0px; font-weight: bold">3. Import the updated template file</p>
-                                                  <p style="margin-left: 16px; margin-bottom: 0px; margin-top: 4px">
-                                                    Save your updated template and you're ready to go.
-                                                  </p>
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4>Import Items</h4>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div
+                                                            class="row no-gutters d-xl-flex flex-row justify-content-xl-start align-items-xl-start">
+                                                            <p style="margin-bottom: 0px; font-weight: bold">1. Download
+                                                                the &lt;&lt;form&gt;&gt; template</p>
+                                                            <p
+                                                                style="margin-left: 16px; margin-bottom: 0px; margin-top: 4px">
+                                                                Start by downloading our template file. This file has
+                                                                the correct column headings to allow VS1 Cloud
+                                                                to import your form's details.
+                                                            </p>
+                                                            <div class="col flex-grow-1">
+                                                                <button class="btn btn-primary templateDownload"
+                                                                    type="button"
+                                                                    style="margin: 12px; margin-bottom: 0px">
+                                                                    <i class="fas fa-file-csv"
+                                                                        style="margin-right: 5px"></i>Download CSV
+                                                                    Template
+                                                                </button>
+                                                                <button class="btn btn-primary templateDownloadXLSX"
+                                                                    type="button"
+                                                                    style="margin: 12px; margin-bottom: 0px">
+                                                                    <i class="fas fa-file-csv"
+                                                                        style="margin-right: 5px"></i>Download Excel
+                                                                    Template
+                                                                </button>
+                                                            </div>
+                                                            <div class="col d-xl-flex align-items-xl-center"
+                                                                style="width: 50px; max-width: 50px">
+                                                                <a href="#" download><i class="fa fa-question-circle-o"
+                                                                        data-toggle="tooltip" data-bs-tooltip=""
+                                                                        title="Having issues? Navigate to your Region Settings in your Control Panel and check that you have a comma selected as your 'List Seperator' and a period as your 'Decimal Symbol'."
+                                                                        style="margin: 12px"></i></a>
+                                                            </div>
+                                                        </div>
+                                                        <hr />
+                                                        <div
+                                                            class="row no-gutters d-xl-flex flex-column justify-content-xl-start align-items-xl-start">
+                                                            <p style="margin-bottom: 0px; font-weight: bold">2. Copy
+                                                                your items into the template</p>
+                                                            <p
+                                                                style="margin-left: 16px; margin-bottom: 0px; margin-top: 4px">
+                                                                Using MS Excel, or another spreadsheet editor, you can
+                                                                fill in the VS1 Cloud template with your
+                                                                desired details.
+                                                            </p>
+                                                            <p
+                                                                style="margin-left: 16px; margin-bottom: 0px; margin-top: 16px">
+                                                                Important: Avoid changing the column headings in the
+                                                                template file.
+                                                            </p>
+                                                        </div>
+                                                        <hr />
+                                                        <div
+                                                            class="row no-gutters d-xl-flex flex-column justify-content-xl-start align-items-xl-start">
+                                                            <p style="margin-bottom: 0px; font-weight: bold">3. Import
+                                                                the updated template file</p>
+                                                            <p
+                                                                style="margin-left: 16px; margin-bottom: 0px; margin-top: 4px">
+                                                                Save your updated template and you're ready to go.
+                                                            </p>
 
-                                                  <div class="divTable" id="file-display"></div>
-                                                  <input type="file" id="attachment-upload" style="display: none" accept=".csv,.txt,.xlsx" />
-                                                  <style>
-                                                    #row1 {
-                                                      display: flex;
-                                                      flex-direction: row;
-                                                      justify-content: space-around;
-                                                    }
+                                                            <div class="divTable" id="file-display"></div>
+                                                            <input type="file" id="attachment-upload"
+                                                                style="display: none" accept=".csv,.txt,.xlsx" />
+                                                            <style>
+                                                                #row1 {
+                                                                    display: flex;
+                                                                    flex-direction: row;
+                                                                    justify-content: space-around;
+                                                                }
 
-                                                    #column1 {
-                                                      display: flex;
-                                                    }
+                                                                #column1 {
+                                                                    display: flex;
+                                                                }
 
-                                                    #column2 {
-                                                      display: flex;
-                                                      flex-direction: column;
-                                                      margin: 16px;
-                                                      padding: 0.375rem 0.75rem;
-                                                    }
-                                                  </style>
-                                                  <div id="row1">
-                                                    <div id="column1"></div>
-                                                    <button class="btn btn-primary btnUploadFile new_attachment_btn" type="button" style="margin: 12px">
-                                                      <i class="fa fa-cloud-upload" style="margin-right: 5px"></i>Browse
-                                                    </button>
-                                                    <div class="file-name" id="column2"></div>
-                                                  </div>
+                                                                #column2 {
+                                                                    display: flex;
+                                                                    flex-direction: column;
+                                                                    margin: 16px;
+                                                                    padding: 0.375rem 0.75rem;
+                                                                }
+                                                            </style>
+                                                            <div id="row1">
+                                                                <div id="column1"></div>
+                                                                <button
+                                                                    class="btn btn-primary btnUploadFile new_attachment_btn"
+                                                                    type="button" style="margin: 12px">
+                                                                    <i class="fa fa-cloud-upload"
+                                                                        style="margin-right: 5px"></i>Browse
+                                                                </button>
+                                                                <div class="file-name" id="column2"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-primary btnImport" type="button"
+                                                            disabled>
+                                                            <i class="fas fa-file-import"
+                                                                style="margin-right: 5px"></i>Import
+                                                        </button>
+                                                        <button class="btn btn-secondary" data-dismiss="modal"
+                                                            type="button">
+                                                            <i class="fa fa-close" style="margin-right: 5px"></i>Close
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                              </div>
-                                              <div class="modal-footer">
-                                                <button class="btn btn-primary btnImport" type="button" disabled>
-                                                  <i class="fas fa-file-import" style="margin-right: 5px"></i>Import
-                                                </button>
-                                                <button class="btn btn-secondary" data-dismiss="modal" type="button">
-                                                  <i class="fa fa-close" style="margin-right: 5px"></i>Close
-                                                </button>
-                                              </div>
                                             </div>
-                                          </div>
                                         </div>
-<!--                                        {{> departmentModal}}-->
-                                      </div>
+                                    </div>
 
                                     <!-- {{>recentTransactionTable productID=productID type="all"}} -->
                                     {{>transaction_list type="all" tablename="productrecentlist" productID=productID }}
@@ -1597,26 +1418,18 @@
                             </div>
                             <div class="row mt-3">
 
-                                <div class="col-12 justify-content-xl-end" style="padding-right: 0px; padding-left: 0px">
+                                <div class="col-12 justify-content-xl-end"
+                                    style="padding-right: 0px; padding-left: 0px">
                                     <div class="d-xl-flex justify-content-xl-end">
-                                        <button
-                                            class="btn btn-success"
-                                            type="button"
-                                            style="margin: 12px"
-                                            id="btnSave"
-                                            name="btnSave"
-                                        >
+                                        <button class="btn btn-success" type="button" style="margin: 12px" id="btnSave"
+                                            name="btnSave">
                                             <i class="fa fa-save" style="margin-right: 5px"></i>Save
                                         </button>
                                         <button class="btn btn-danger btnDeleteInv" type="button" style="margin: 12px">
                                             <i class="fa fa-close" style="margin-right: 5px"></i>Delete
                                         </button>
-                                        <button
-                                            class="btn btn-secondary btnBack"
-                                            data-dismiss="modal"
-                                            type="button"
-                                            style="margin: 12px"
-                                        >
+                                        <button class="btn btn-secondary btnBack" data-dismiss="modal" type="button"
+                                            style="margin: 12px">
                                             <i class="fa fa-close" style="margin-right: 5px"></i>Close
                                         </button>
                                     </div>
@@ -1643,15 +1456,8 @@
                 <div class="modal-body">
                     <!-- <iframe width="640" height="360" src="https://player.vimeo.com/video/99892791" frameborder="0" allowfullscreen=""></iframe> -->
                     <!-- <iframe width="640" height="360" src="https://www.youtube.com/embed/BzxoYOp42fg" frameborder="0" allowfullscreen=""></iframe> -->
-                    <video
-                        preload="none"
-                        id="myVideo"
-                        width="640"
-                        height="360"
-                        controls=""
-                        name="media"
-                        style="border: solid 5px #999999f0; height: auto; outline: none"
-                    >
+                    <video preload="none" id="myVideo" width="640" height="360" controls="" name="media"
+                        style="border: solid 5px #999999f0; height: auto; outline: none">
                         <source src="https://erphelpes.com/vs1videos/newproduct.mp4" type="video/mp4" />
                     </video>
                 </div>
@@ -1677,12 +1483,15 @@
                         #tblSerialNumberListByID .colSerialNumber {
                             width: 25% !important;
                         }
+
                         #tblSerialNumberListByID .colStatus {
                             width: 15% !important;
                         }
+
                         #tblSerialNumberListByID .colDate {
                             width: 25% !important;
                         }
+
                         #tblSerialNumberListByID .colDepartment {
                             width: 30% !important;
                         }
@@ -1710,12 +1519,15 @@
                         #tblLotNumberListByID .colSerialNumber {
                             width: 25% !important;
                         }
+
                         #tblLotNumberListByID .colExpiryDate {
                             width: 25% !important;
                         }
+
                         #tblLotNumberListByID .colStatus {
                             width: 15% !important;
                         }
+
                         #tblLotNumberListByID .colDepartment {
                             width: 30% !important;
                         }
@@ -1768,13 +1580,21 @@
         </div>
     </div>
     <!-- End Upgrade POP -->
-    <div class="modal fade" role="dialog" tabindex="-1" id="taxRateListModal">{{> taxratelistpop}}</div>
+    
 
     <div class="modal fade" role="dialog" tabindex="-1" id="addAccountModal">{{> addaccountpop}}</div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="taxRateListModal">{{> taxratelistpop}}</div>
 
     <div class="modal fade" role="dialog" tabindex="-1" id="customerTypeListModal">{{> clienttypepopup}}</div>
 
     {{> clienttypemodal}}
+    <div class="modal fade" role="dialog" tabindex="-1" id="termsListModal">
+        {{> termlistpop}}
+    </div>
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="newTermsModal">
+        {{> newtermspop}}
+    </div>
 
     <div class="modal fade" role="dialog" tabindex="-1" id="newTaxRateModal">{{> newtaxratepop}}</div>
 
@@ -1804,21 +1624,12 @@
                                     </div>
                                     <div class="modal-body">
                                         <p class="text-center text-muted">
-                                            <a
-                                                role="button"
-                                                data-toggle="modal"
-                                                href="#helpModalAdd"
-                                                class="btn btn-primary helpModal"
-                                                >View Help Video</a
-                                            >
+                                            <a role="button" data-toggle="modal" href="#helpModalAdd"
+                                                class="btn btn-primary helpModal">View Help Video</a>
                                         </p>
                                         <p class="text-center text-muted">
-                                            <a
-                                                href="https://vs1forum.com/viewtopic.php?f=6&t=186"
-                                                target="_blank"
-                                                class="btn btn-primary"
-                                                >Download Help File</a
-                                            >
+                                            <a href="https://vs1forum.com/viewtopic.php?f=6&t=186" target="_blank"
+                                                class="btn btn-primary">Download Help File</a>
                                         </p>
                                         {{> helpadvisor}} {{> helpgotoforum}}
                                     </div>
@@ -1835,19 +1646,13 @@
                     </button>
                 </div>
                 <div class="modal-body" style="background-color: #ededed">
-                    <input
-                        type="hidden"
-                        class="form-control"
-                        id="edtDepartmentID"
-                        name="edtDepartmentID"
-                        style="display: none"
-                    />
+                    <input type="hidden" class="form-control" id="edtDepartmentID" name="edtDepartmentID"
+                        style="display: none" />
                     <div class="row no-gutters">
                         <div class="col d-xl-flex align-items-xl-end">
                             <div class="form-group flex-grow-1" style="margin: 8px">
-                                <label data-toggle="tooltip" data-bs-tooltip="" data-placement="bottom"
-                                    >Type Name</label
-                                >
+                                <label data-toggle="tooltip" data-bs-tooltip="" data-placement="bottom">Type
+                                    Name</label>
                                 <input type="text" class="form-control" id="edtTypeName" name="edtTypeName" />
                                 <input type="hidden" class="form-control" id="typeID" name="typeID" />
                             </div>
@@ -1856,9 +1661,8 @@
                     <div class="row no-gutters">
                         <div class="col d-xl-flex align-items-xl-end">
                             <div class="form-group flex-grow-1" style="margin: 8px">
-                                <label data-toggle="tooltip" data-bs-tooltip="" data-placement="bottom"
-                                    >% Discount</label
-                                >
+                                <label data-toggle="tooltip" data-bs-tooltip="" data-placement="bottom">%
+                                    Discount</label>
                                 <input type="text" class="form-control highlightInput edtDiscountModal" />
                             </div>
                             <input type="hidden" class="form-control highlightInput edtPriceExModal" />
@@ -1868,12 +1672,8 @@
                         <div class="col d-xl-flex align-items-xl-end">
                             <div class="form-group flex-grow-1" style="margin: 8px">
                                 <label>Description</label>
-                                <textarea
-                                    class="form-control"
-                                    rows="5"
-                                    id="txaDescription"
-                                    name="txaDescription"
-                                ></textarea>
+                                <textarea class="form-control" rows="5" id="txaDescription"
+                                    name="txaDescription"></textarea>
                             </div>
                         </div>
                     </div>
@@ -2007,10 +1807,8 @@
                     </div> -->
                     {{> bom_template}}
                 </div>
-                <div
-                    class="modal-footer d-flex align-items-center justify-content-center px-3"
-                    style="border-top-width: 0px; gap: 15px"
-                >
+                <div class="modal-footer d-flex align-items-center justify-content-center px-3"
+                    style="border-top-width: 0px; gap: 15px">
                     <button class="btn btn-success btn-save-bom" type="button">
                         <i class="fa fa-save" style="padding-right: 8px"></i>Save
                     </button>
@@ -2059,33 +1857,16 @@
                 </div>
                 <div class="modal-footer">
                     {{#if isMobileDevices}}
-                    <input
-                        type="file"
-                        class="img-attachment-upload"
-                        id="img-attachment-upload"
-                        style="display: none"
-                        accept="image/*"
-                        capture="camera"
-                    />
+                    <input type="file" class="img-attachment-upload" id="img-attachment-upload" style="display: none"
+                        accept="image/*" capture="camera" />
                     <button class="btn btn-primary btnUploadFile img_new_attachment_btn" type="button">
                         <i class="fas fa-camera" style="margin-right: 5px"></i>Capture
                     </button>
 
-                    <input
-                        type="file"
-                        class="attachment-upload"
-                        id="attachment-upload"
-                        style="display: none"
-                        multiple
-                        accept=".jpg,.gif,.png"
-                    />
+                    <input type="file" class="attachment-upload" id="attachment-upload" style="display: none" multiple
+                        accept=".jpg,.gif,.png" />
                     {{else}}
-                    <input
-                        type="file"
-                        class="attachment-upload"
-                        id="attachment-upload"
-                        style="display: none"
-                        multiple
+                    <input type="file" class="attachment-upload" id="attachment-upload" style="display: none" multiple
                         accept=".jpg,.gif,.png,.bmp,.tiff,.pdf,.doc,.docx,.xls,.xlsx,.ppt,
                                .pptx,.odf,.csv,.txt,.rtf,.eml,.msg,.ods,.odt,.keynote,.key,.pages-tef,
                                .pages,.numbers-tef,.numbers,.zip,.rar,.zipx,.xzip,.7z,image/jpeg,
@@ -2099,19 +1880,13 @@
                                application/vnd.apple.keynote,application/x-iwork-pages-sffpages,
                                application/vnd.apple.pages,application/x-iwork-numbers-sffnumbers,
                                application/vnd.apple.numbers,application/zip,application/rar,
-                               application/x-zip-compressed,application/x-zip,application/x-7z-compressed"
-                    />
+                               application/x-zip-compressed,application/x-zip,application/x-7z-compressed" />
                     {{/if}}
                     <button class="btn btn-primary btnUploadFile new_attachment_btn" type="button">
                         <i class="fa fa-cloud-upload" style="margin-right: 5px"></i>Upload
                     </button>
-                    <button
-                        class="btn btn-success closeModal"
-                        data-dismiss="modal"
-                        type="button"
-                        style="margin-right: 5px"
-                        autocomplete="off"
-                    >
+                    <button class="btn btn-success closeModal" data-dismiss="modal" type="button"
+                        style="margin-right: 5px" autocomplete="off">
                         <i class="fa fa-save" style="padding-right: 8px"></i>Save
                     </button>
                     <button class="btn btn-secondary" data-dismiss="modal" type="button">
@@ -2122,7 +1897,7 @@
         </div>
     </div>
     <div class="modal fade" role="dialog" tabindex="-1" id="myModalDepartment">
-        {{> departmentpop}}
+        {{> departmentModal}}
     </div>
     <div class="modal fade" role="dialog" tabindex="-1" id="newDepartmentModal">
         {{> newdepartmentpop}}
