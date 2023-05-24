@@ -3335,40 +3335,41 @@ export class SideBarService extends BaseService {
     if(deleteFilter == "" || deleteFilter == false || deleteFilter == null || deleteFilter == undefined){
       if (limitcount == "All") {
         options = {
-            PropertyList: "ID,ShippingMethod",
+            ListType:"Detail",
             Search: "Active = true",
         };
       } else {
         options = {
-          PropertyList: "ID,ShippingMethod",
+          ListType:"Detail",
           Search: "Active = true",
-          LimitCount: parseInt(limitcount),
-          LimitFrom: parseInt(limitfrom),
+          LimitCount: parseInt(limitcount)||initialReportLoad,
+          LimitFrom: parseInt(limitfrom)||0,
         };
       }
     }else{
       if (limitcount == "All") {
         options = {
-            PropertyList: "ID,ShippingMethod",
+            ListType:"Detail",
         };
       } else {
         options = {
-            PropertyList: "ID,ShippingMethod",
-            LimitCount: parseInt(limitcount),
-            LimitFrom: parseInt(limitfrom),
+            ListType:"Detail",
+            LimitCount: parseInt(limitcount)||initialReportLoad,
+            LimitFrom: parseInt(limitfrom)||0,
         };
       }
     }
 
-    return this.getList(this.ERPObjects.TShippingMethod, options);
+    return this.getList(this.ERPObjects.TShippingMethodList, options);
   }
 
   getOneShippingMethod(keyword) {
     let options = {
       PropertyList: "ID,ShippingMethod",
-      select: "[Active]=true and [ShippingMethod] f7like '"+ keyword + "'",
+      // select: "[Active]=true and [ShippingMethod] f7like '"+ keyword + "'",
+      Search: "Active = true and ShippingMethod like '%"+keyword+"%'",
     };
-    return this.getList(this.ERPObjects.TShippingMethod, options);
+    return this.getList(this.ERPObjects.TShippingMethodList, options);
   }
 
   // getCurrencies() {
