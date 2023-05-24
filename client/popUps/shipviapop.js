@@ -19,7 +19,7 @@ Template.shipviapop.onCreated(function() {
     const templateObject = Template.instance();
     templateObject.datatablerecords = new ReactiveVar([]);
     templateObject.tableheaderrecords = new ReactiveVar([]);
-
+    templateObject.shipviarecords = new ReactiveVar();
     templateObject.deptrecords = new ReactiveVar();
 
     // templateObject.include7Days = new ReactiveVar();
@@ -46,7 +46,7 @@ Template.shipviapop.onCreated(function() {
                 linestatus = "In-Active";
             };
             var dataList = [
-                data.Id || "",
+                data.ShippingMethodID || "",
                 data.ShippingMethod || "",
                 linestatus,
             ];
@@ -925,14 +925,14 @@ Template.shipviapop.helpers({
     //     return localStorage.getItem('mySession') || '';
     // },
     apiFunction:function() {
-        // let sideBarService = new SideBarService();
+        let sideBarService = new SideBarService();
         return sideBarService.getShippingMethodList
     },
     service:()=>{
         return sideBarService;
     },
     searchAPI: function() {
-        // let sideBarService = new SideBarService();
+        let sideBarService = new SideBarService();
         return sideBarService.getOneShippingMethod
     },
 
