@@ -59,6 +59,7 @@ openDb = function (dbName) {
       db.createObjectStore("TLeadStatusType", { keyPath: "EmployeeEmail" });
       db.createObjectStore("TLeadStatusTypeList", { keyPath: "EmployeeEmail" });
       db.createObjectStore("TShippingMethod", { keyPath: "EmployeeEmail" });
+      db.createObjectStore("TShippingMethodList", { keyPath: "EmployeeEmail" });
       db.createObjectStore("TAccountType", { keyPath: "EmployeeEmail" });
       db.createObjectStore("TERPCombinedContactsVS1", {
         keyPath: "EmployeeEmail",

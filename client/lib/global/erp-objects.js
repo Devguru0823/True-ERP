@@ -76,6 +76,7 @@ const erpObject = {
     TServices: "TServices",
     TShippingAddress: "TShippingAddress",
     TShippingMethod: "TShippingMethod",
+    TShippingMethodList: "TShippingMethodList",
     TSmartOrder: "TSmartOrder",
     TSource: "TSource",
     TStockAdjustEntry: "TStockAdjustEntry",
