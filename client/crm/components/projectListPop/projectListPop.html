@@ -1,7 +1,5 @@
 <template name="projectListPop">
-  <div class="modal fade" role="dialog" tabindex="-1" id="projectListModal">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable customerListModalInner" role="document"
-      style="max-width: 90vw;">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
       <div class="modal-content customerListContent">
         <div class="modal-header">
           <h4>Project List</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -11,19 +9,25 @@
           <div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
             <div class="card-body rounded" style="margin: 0px;">
                 {{>datatablelist
-                        tablename="tblProjectsDatatablePop"
+                        tableclass="tblProjectsDatatablePop"
+                        tablename=tablename
                         apiName= apiFunction
-                        indexeddbname = 'TCRMProjectList'
+                        indexeddbname = 'TProjectListReport'
                         tableheaderrecords = tableheaderrecords
                         exportfilename = 'Projects Datatable List'
                         istransaction = false
                         apiParams= apiParams
                         datahandler = datahandler
                         service=service
-                        lowercaseDataName='tprojectlist'
-                        exIndexDBName = 'tprojectlist'
+                        lowercaseDataName='tprojecttaskslist'
+                        exIndexDBName = 'tprojecttaskslist'
                         exdatahandler = exDataHandler
                         searchAPI = searchAPI
+                        orderby = '[[ 0, "desc" ]]'
+                        showPlusButton = true
+                        showPlusButtonDataTarget = "#newCrmProject"
+                        showPlusButtonClass = "btnNewProject"
+                        custid=custId
                 }}
 <!--              <div class="tbl_responsive" style="overflow-x: hidden !important">-->
 <!--                <table id="tblProjectsDatatablePop" name="tblProjectsDatatablePop" style="width:100%"-->
@@ -49,7 +53,6 @@
         </div>
       </div>
     </div>
-  </div>
   <!-- <div class="modal fade" id="projectListModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered" role="document" style="min-width: 90vw;">
       <div class="modal-content">
