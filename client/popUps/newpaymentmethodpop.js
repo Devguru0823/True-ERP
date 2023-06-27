@@ -630,7 +630,7 @@ Template.newpaymentmethodpop.onRendered(function() {
             var id = url[url.length - 1];
 
             $.ajax({
-                url: 'https://depot.vs1cloud.com/stripe/connect-to-stripe.php',
+                url: stripeGlobalURL +'connect-to-stripe.php',
                 data: {
                     'code': id,
                 },
@@ -752,6 +752,205 @@ Template.newpaymentmethodpop.onRendered(function() {
         // }
     });
 
+    templateObject.savePaymentMethod = function (maiaMode=false, isMakeActive) {
+        playSaveAudio();
+        setTimeout(function () {
+          $(".fullScreenSpin").css("display", "inline-block");
+          let paymentMethodID = $("#edtPaymentMethodID").val();
+          let paymentName = $("#edtPaymentMethodName").val();
+          let isCreditCard = false;
+          if ($("#isformcreditcard").is(":checked")) {
+            isCreditCard = true;
+          } else {
+            isCreditCard = false;
+          }
+    
+          let objDetails = "";
+          if (paymentName === "") {
+            LoadingOverlay.hide();
+            Bert.alert("<strong>WARNING:</strong> Payment Method Name cannot be blank!", "warning");
+            e.preventDefault();
+          }
+          if (paymentMethodID == "") {
+            taxRateService
+              .checkPaymentMethodByName(paymentName)
+              .then(function (data) {
+                paymentMethodID = data.tpaymentmethod[0].Id;
+                objDetails = {
+                  type: "TPaymentMethod",
+                  fields: {
+                    ID: parseInt(paymentMethodID),
+                    PaymentMethodName: paymentName,
+                    Active: true,
+                    IsCreditCard: isCreditCard,
+                    PublishOnVS1: true,
+                  },
+                };
+                taxRateService
+                  .savePaymentMethod(objDetails)
+                  .then(function (objDetails) {
+                    sideBarService
+                      .getPaymentMethodDataList()
+                      .then(function (dataList) {
+                        addVS1Data("TPaymentMethodList", JSON.stringify(dataList))
+                          .then(function (datareturn) {
+                            sideBarService
+                              .getPaymentMethodDataVS1()
+                              .then(function (dataReload) {
+                                addVS1Data("TPaymentMethod", JSON.stringify(dataReload))
+                                  .then(function (datareturn) {
+                                    location.reload(true);
+                                  })
+                                  .catch(function (err) {
+                                    location.reload(true);
+                                  });
+                              })
+                              .catch(function (err) {
+                                location.reload(true);
+                              });
+                          })
+                          .catch(function (err) {
+                            location.reload(true);
+                          });
+                      })
+                      .catch(function (err) {
+                        location.reload(true);
+                      });
+                  })
+                  .catch(function (err) {
+                    swal({
+                      title: "Oooops...",
+                      text: err,
+                      type: "error",
+                      showCancelButton: false,
+                      confirmButtonText: "Try Again",
+                    }).then((result) => {
+                      if (result.value) {
+                        location.reload(true);
+                      } else if (result.dismiss === "cancel") {
+                      }
+                    });
+                    LoadingOverlay.hide();
+                  });
+              })
+              .catch(function (err) {
+                objDetails = {
+                  type: "TPaymentMethod",
+                  fields: {
+                    Active: true,
+                    PaymentMethodName: paymentName,
+                    IsCreditCard: isCreditCard,
+                    PublishOnVS1: true,
+                  },
+                };
+                taxRateService
+                  .savePaymentMethod(objDetails)
+                  .then(function (objDetails) {
+                    sideBarService
+                      .getPaymentMethodDataList()
+                      .then(function (dataList) {
+                        addVS1Data("TPaymentMethodList", JSON.stringify(dataList))
+                          .then(function (datareturn) {
+                            sideBarService
+                              .getPaymentMethodDataVS1()
+                              .then(function (dataReload) {
+                                addVS1Data("TPaymentMethod", JSON.stringify(dataReload))
+                                  .then(function (datareturn) {
+                                    location.reload(true);
+                                  })
+                                  .catch(function (err) {
+                                    location.reload(true);
+                                  });
+                              })
+                              .catch(function (err) {
+                                location.reload(true);
+                              });
+                          })
+                          .catch(function (err) {
+                            location.reload(true);
+                          });
+                      })
+                      .catch(function (err) {
+                        location.reload(true);
+                      });
+                  })
+                  .catch(function (err) {
+                    swal({
+                      title: "Oooops...",
+                      text: err,
+                      type: "error",
+                      showCancelButton: false,
+                      confirmButtonText: "Try Again",
+                    }).then((result) => {
+                      if (result.value) {
+                        location.reload(true);
+                      } else if (result.dismiss === "cancel") {
+                      }
+                    });
+                    LoadingOverlay.hide();
+                  });
+              });
+          } else {
+            objDetails = {
+              type: "TPaymentMethod",
+              fields: {
+                ID: parseInt(paymentMethodID),
+                Active: true,
+                PaymentMethodName: paymentName,
+                IsCreditCard: isCreditCard,
+                PublishOnVS1: true,
+              },
+            };
+            taxRateService
+              .savePaymentMethod(objDetails)
+              .then(function (objDetails) {
+                sideBarService
+                  .getPaymentMethodDataList()
+                  .then(function (dataList) {
+                    addVS1Data("TPaymentMethodList", JSON.stringify(dataList))
+                      .then(function (datareturn) {
+                        sideBarService
+                          .getPaymentMethodDataVS1()
+                          .then(function (dataReload) {
+                            addVS1Data("TPaymentMethod", JSON.stringify(dataReload))
+                              .then(function (datareturn) {
+                                location.reload(true);
+                              })
+                              .catch(function (err) {
+                                location.reload(true);
+                              });
+                          })
+                          .catch(function (err) {
+                            location.reload(true);
+                          });
+                      })
+                      .catch(function (err) {
+                        location.reload(true);
+                      });
+                  })
+                  .catch(function (err) {
+                    location.reload(true);
+                  });
+              })
+              .catch(function (err) {
+                swal({
+                  title: "Oooops...",
+                  text: err,
+                  type: "error",
+                  showCancelButton: false,
+                  confirmButtonText: "Try Again",
+                }).then((result) => {
+                  if (result.value) {
+                    location.reload(true);
+                  } else if (result.dismiss === "cancel") {
+                  }
+                });
+                LoadingOverlay.hide();
+              });
+          }
+        }, delayTimeAfterSound);
+      };
+
     // $('#paymentmethodList tbody').on('click', 'tr .colName, tr .colIsCreditCard, tr .colStatus', function() {
     //     var listData = $(this).closest('tr').attr('id');
     //     var isCreditcard = false;
@@ -795,186 +994,10 @@ Template.newpaymentmethodpop.onRendered(function() {
 
 
 Template.newpaymentmethodpop.events({
-    'click .btnSavePaymentMethodPOP': function() {
-        playSaveAudio();
-        let taxRateService = new TaxRateService();
-        setTimeout(function(){
-        $('.fullScreenSpin').css('display', 'inline-block');
-
-        var currentLoc = FlowRouter.current().path;
-        let paymentMethodID = $('#edtPaymentMethodID').val()||'';
-        let paymentName = $('#edtPaymentMethodName').val();
-        let isCreditCard = false;
-        if ($('#isformcreditcard').is(':checked')) {
-            isCreditCard = true;
-        } else {
-            isCreditCard = false;
-        }
-        let objDetails = '';
-
-        if (paymentName === '') {
-            $('.fullScreenSpin').css('display', 'none');
-            Bert.alert('<strong>WARNING:</strong> Payment Method Name cannot be blank!', 'warning');
-            e.preventDefault();
-        }
-
-        if (paymentMethodID == "") {
-            taxRateService.checkPaymentMethodByName(paymentName).then(function(data) {
-                paymentMethodID = data.tpaymentmethod[0].Id;
-                objDetails = {
-                    type: "TPaymentMethod",
-                    fields: {
-                        ID: parseInt(paymentMethodID),
-                        Active: true,
-                        //PaymentMethodName: paymentName,
-                        IsCreditCard: isCreditCard,
-                        PublishOnVS1: true
-                    }
-                };
-
-                taxRateService.savePaymentMethod(objDetails).then(function(objDetails) {
-                  let selectedDropdownID = $('#selectPaymentMethodLineID').val() || 'sltPaymentMethod';
-                  if (currentLoc.includes("/paymentcard")|| currentLoc.includes("/supplierpaymentcard") || currentLoc.includes("/customerscard")
-                  || currentLoc.includes("/supplierscard")|| currentLoc.includes("/refundcard")) {
-                     $('#'+selectedDropdownID+'').val(paymentName);
-                  }else if(currentLoc.includes("/depositcard")){
-                      $('#' + selectedDropdownID + " .linePaymentMethod").val(paymentName);
-                  };
-                  sideBarService.getPaymentMethodDataVS1().then(function(dataReload) {
-                      addVS1Data('TPaymentMethod', JSON.stringify(dataReload)).then(function(datareturn) {
-                          $('.linePaymentMethod').val(paymentName);
-                          $('#newPaymentMethodModal').modal('toggle');
-                          $('.fullScreenSpin').css('display', 'none');
-                      }).catch(function(err) {
-                          $('#newPaymentMethodModal').modal('toggle');
-                          $('.fullScreenSpin').css('display', 'none');
-                      });
-                  }).catch(function(err) {
-                      $('#newPaymentMethodModal').modal('toggle');
-                      $('.fullScreenSpin').css('display', 'none');
-                  });
-                }).catch(function(err) {
-                    swal({
-                        title: 'Oooops...',
-                        text: err,
-                        type: 'error',
-                        showCancelButton: false,
-                        confirmButtonText: 'Try Again'
-                    }).then((result) => {
-                        if (result.value) {
-                            $('#newPaymentMethodModal').modal('toggle');
-                            $('.fullScreenSpin').css('display', 'none');
-                        } else if (result.dismiss === 'cancel') {
-
-                        }
-                    });
-                    $('.fullScreenSpin').css('display', 'none');
-                });
-            }).catch(function(err) {
-                objDetails = {
-                    type: "TPaymentMethod",
-                    fields: {
-                        Active: true,
-                        PaymentMethodName: paymentName,
-                        IsCreditCard: isCreditCard,
-                        PublishOnVS1: true
-                    }
-                };
-
-                taxRateService.savePaymentMethod(objDetails).then(function(objDetails) {
-
-                  let selectedDropdownID = $('#selectPaymentMethodLineID').val() || 'sltPaymentMethod';
-                  if (currentLoc.includes("/paymentcard")|| currentLoc.includes("/supplierpaymentcard") || currentLoc.includes("/customerscard")
-                  || currentLoc.includes("/supplierscard")|| currentLoc.includes("/refundcard")) {
-                     $('#'+selectedDropdownID+'').val(paymentName);
-                  }else if(currentLoc.includes("/depositcard")){
-                      $('#' + selectedDropdownID + " .linePaymentMethod").val(paymentName);
-                  };
-                    sideBarService.getPaymentMethodDataVS1().then(function(dataReload) {
-                        addVS1Data('TPaymentMethod', JSON.stringify(dataReload)).then(function(datareturn) {
-                            $('.linePaymentMethod').val(paymentName);
-                            $('#newPaymentMethodModal').modal('toggle');
-                            $('.fullScreenSpin').css('display', 'none');
-                        }).catch(function(err) {
-                            $('#newPaymentMethodModal').modal('toggle');
-                            $('.fullScreenSpin').css('display', 'none');
-                        });
-                    }).catch(function(err) {
-                        $('#newPaymentMethodModal').modal('toggle');
-                        $('.fullScreenSpin').css('display', 'none');
-                    });
-                }).catch(function(err) {
-                    swal({
-                        title: 'Oooops...',
-                        text: err,
-                        type: 'error',
-                        showCancelButton: false,
-                        confirmButtonText: 'Try Again'
-                    }).then((result) => {
-                        if (result.value) {
-                            $('#newPaymentMethodModal').modal('toggle');
-                            $('.fullScreenSpin').css('display', 'none');
-                        } else if (result.dismiss === 'cancel') {
-
-                        }
-                    });
-                    $('.fullScreenSpin').css('display', 'none');
-                });
-            });
-
-        } else {
-            objDetails = {
-                type: "TPaymentMethod",
-                fields: {
-                    ID: parseInt(paymentMethodID),
-                    Active: true,
-                    PaymentMethodName: paymentName,
-                    IsCreditCard: isCreditCard,
-                    PublishOnVS1: true
-                }
-            };
-
-            taxRateService.savePaymentMethod(objDetails).then(function(objDetails) {
-              let selectedDropdownID = $('#selectPaymentMethodLineID').val() || 'sltPaymentMethod';
-              if (currentLoc.includes("/paymentcard")|| currentLoc.includes("/supplierpaymentcard") || currentLoc.includes("/customerscard")
-              || currentLoc.includes("/supplierscard")|| currentLoc.includes("/refundcard")) {
-                 $('#'+selectedDropdownID+'').val(paymentName);
-              }else if(currentLoc.includes("/depositcard")){
-                  $('#' + selectedDropdownID + " .linePaymentMethod").val(paymentName);
-              };
-              sideBarService.getPaymentMethodDataVS1().then(function(dataReload) {
-                  addVS1Data('TPaymentMethod', JSON.stringify(dataReload)).then(function(datareturn) {
-                      $('.linePaymentMethod').val(paymentName);
-                      $('#newPaymentMethodModal').modal('toggle');
-                      $('.fullScreenSpin').css('display', 'none');
-                  }).catch(function(err) {
-                      $('#newPaymentMethodModal').modal('toggle');
-                      $('.fullScreenSpin').css('display', 'none');
-                  });
-              }).catch(function(err) {
-                  $('#newPaymentMethodModal').modal('toggle');
-                  $('.fullScreenSpin').css('display', 'none');
-              });
-            }).catch(function(err) {
-                swal({
-                    title: 'Oooops...',
-                    text: err,
-                    type: 'error',
-                    showCancelButton: false,
-                    confirmButtonText: 'Try Again'
-                }).then((result) => {
-                    if (result.value) {
-                        $('#newPaymentMethodModal').modal('toggle');
-                        $('.fullScreenSpin').css('display', 'none');
-                    } else if (result.dismiss === 'cancel') {
-
-                    }
-                });
-                $('.fullScreenSpin').css('display', 'none');
-            });
-        }
-    }, delayTimeAfterSound);
-    }
+    "click .btnSavePaymentMethodPOP":function (event) {
+        const templateObject = Template.instance();
+        templateObject.savePaymentMethod();
+      },
 });
 
 Template.newpaymentmethodpop.helpers({
