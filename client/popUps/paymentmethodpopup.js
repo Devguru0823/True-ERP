@@ -32,615 +32,61 @@ Template.paymentmethodpop.onCreated(function() {
 
     templateObject.accountID = new ReactiveVar();
     templateObject.tablename = new ReactiveVar();
+
+    templateObject.getDataTableList = function(data) {
+        let linestatus = '';
+        if (data.Active == true) {
+          linestatus = "";
+        } else if (data.Active == false) {
+          linestatus = "In-Active";
+        };
+        let tdIsCreditCard = '';
+
+        if (data.IsCreditCard == true) {
+          tdIsCreditCard =
+            '<span style="display:none;">' +
+            data.IsCreditCard +
+            '</span><div class="custom-control custom-switch chkBox text-center"><input class="custom-control-input chkBox" type="checkbox" id="iscreditcard-' +
+            data.PayMethodID +
+            '" checked><label class="custom-control-label chkBox" for="iscreditcard-' +
+            data.PayMethodID +
+            '"></label></div>';
+        } else {
+          tdIsCreditCard =
+            '<span style="display:none;">' +
+            data.IsCreditCard +
+            '</span><div class="custom-control custom-switch chkBox text-center"><input class="custom-control-input chkBox" type="checkbox" id="iscreditcard-' +
+            data.PayMethodID +
+            '"><label class="custom-control-label chkBox" for="iscreditcard-' +
+            data.PayMethodID +
+            '"></label></div>';
+        }
+        var dataList = [
+          data.PayMethodID || "",
+          data.Name || "",
+          tdIsCreditCard,
+          linestatus,
+        ];
+        return dataList;
+    }
+
+    let headerStructure = [
+        { index: 0, label: 'ID', class: 'colPayMethodID', active: false, display: true, width: "50" },
+        { index: 1, label: 'Payment Method Name', class: 'colNamePopUp', active: true, display: true, width: "600" },
+        { index: 2, label: 'Is Credit Card', class: 'colCreditCardPopUp', active: true, display: true, width: "200" },
+        { index: 3, label: 'Status', class: 'colStatus', active: true, display: true, width: "120" },
+    ];
+    templateObject.tableheaderrecords.set(headerStructure);
 });
 
 Template.paymentmethodpop.onRendered(function() {
-    let templateObject = Template.instance();
-    let taxRateService = new TaxRateService();
-    var splashArrayPaymentMethodList = new Array();
-    const dataTableList = [];
-    const tableHeaderList = [];
-    const deptrecords = [];
-    let deptprodlineItems = [];
-    let currenttablename = templateObject.data.tablename || "paymentmethodList";
-    templateObject.tablename.set(currenttablename);
-
-    function MakeNegative() {
-        $('td').each(function() {
-            if ($(this).text().indexOf('-' + Currency) >= 0) $(this).addClass('text-danger')
-        });
-    };
-
-
-    templateObject.getOrganisationDetails = function() {
-        organisationService.getOrganisationDetail().then((dataListRet) => {
-            let account_id = dataListRet.tcompanyinfo[0].Apcano || '';
-            let feeMethod = dataListRet.tcompanyinfo[0].DvaABN || ''
-            if (feeMethod == "apply") {
-                $("#feeOnTopInput").prop("checked", true);
-                $("#feeInPriceInput").prop("checked", false);
-            } else if (feeMethod == "include") {
-                $("#feeOnTopInput").prop("checked", false);
-                $("#feeInPriceInput").prop("checked", true);
-            } else {
-                $("#feeOnTopInput").prop("checked", true);
-                $("#feeInPriceInput").prop("checked", false);
-            }
-            if (dataListRet.tcompanyinfo[0].Apcano == '') {
-                templateObject.includeAccountID.set(false);
-            } else {
-                templateObject.includeAccountID.set(true);
-            }
-
-            templateObject.accountID.set(account_id);
-        });
-
-    }
-    templateObject.getOrganisationDetails();
-    templateObject.getTaxRates = function() {
-        getVS1Data('TPaymentMethod').then(function(dataObject) {
-            if (dataObject.length == 0) {
-                taxRateService.getPaymentMethodVS1().then(function(data) {
-                    let lineItems = [];
-                    let lineItemObj = {};
-                    for (let i = 0; i < data.tpaymentmethodvs1.length; i++) {
-                        // let taxRate = (data.tdeptclass[i].fields.Rate * 100).toFixed(2) + '%';
-                        var dataList = {
-                            id: data.tpaymentmethodvs1[i].fields.ID || '',
-                            paymentmethodname: data.tpaymentmethodvs1[i].fields.PaymentMethodName || '',
-                            iscreditcard: data.tpaymentmethodvs1[i].fields.IsCreditCard || 'false',
-                        };
-
-                        let getIsCreditCard = '';
-                        if(data.tpaymentmethodvs1[i].fields.IsCreditCard){
-                          getIsCreditCard = '<div class="custom-control custom-checkbox chkBox"><input class="custom-control-input chkBox" type="checkbox" id="iscreditcard-data.tpaymentmethodvs1[i].fields.ID" checked><label class="custom-control-label chkBox"for="iscreditcard-data.tpaymentmethodvs1[i].fields.ID"></label></div>';
-                        }else{
-                          getIsCreditCard = '<div class="custom-control custom-checkbox chkBox"><input class="custom-control-input chkBox" type="checkbox" id="iscreditcard-data.tpaymentmethodvs1[i].fields.ID"><label class="custom-control-label chkBox"for="iscreditcard-data.tpaymentmethodvs1[i].fields.ID"></label></div>';
-                        }
-                        var dataList = [
-                          data.tpaymentmethodvs1[i].fields.PaymentMethodName || '',
-                          getIsCreditCard
-                        ];
-                        splashArrayPaymentMethodList.push(dataList);
-
-                        dataTableList.push(dataList);
-                        //}
-                    }
-
-                    templateObject.datatablerecords.set(dataTableList);
-
-                    if (templateObject.datatablerecords.get()) {
-
-                        Meteor.call('readPrefMethod', localStorage.getItem('mycloudLogonID'), 'paymentmethodList', function(error, result) {
-                            if (error) {
-
-                            } else {
-                                if (result) {
-                                    for (let i = 0; i < result.customFields.length; i++) {
-                                        let customcolumn = result.customFields;
-                                        let columData = customcolumn[i].label;
-                                        let columHeaderUpdate = customcolumn[i].thclass.replace(/ /g, ".");
-                                        let hiddenColumn = customcolumn[i].hidden;
-                                        let columnClass = columHeaderUpdate.split('.')[1];
-                                        let columnWidth = customcolumn[i].width;
-                                        let columnindex = customcolumn[i].index + 1;
-
-                                        if (hiddenColumn == true) {
-
-                                            $("." + columnClass + "").addClass('hiddenColumn');
-                                            $("." + columnClass + "").removeClass('showColumn');
-                                        } else if (hiddenColumn == false) {
-                                            $("." + columnClass + "").removeClass('hiddenColumn');
-                                            $("." + columnClass + "").addClass('showColumn');
-                                        }
-
-                                    }
-                                }
-
-                            }
-                        });
-
-
-                        setTimeout(function() {
-                            MakeNegative();
-                        }, 100);
-                    }
-
-                    $('.fullScreenSpin').css('display', 'none');
-                    setTimeout(function() {
-                        $('#'+currenttablename).DataTable({
-                            data: splashArrayPaymentMethodList,
-
-                            "sDom": "<'row'><'row'<'col-sm-12 col-md-6'f><'col-sm-12 col-md-6'l>r>t<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>B",
-                            paging: true,
-                            "aaSorting": [],
-                            "orderMulti": true,
-                            columnDefs: [
-                                { className: "colName colNamePopUp pointer", "targets": [0] },
-                                { className: "colIsCreditCard colCreditCardPopUp text-center", "targets": [1] }
-                            ],
-                            select: true,
-                            destroy: true,
-                            colReorder: true,
-                            pageLength: initialDatatableLoad,
-                            lengthMenu: [ [initialDatatableLoad, -1], [initialDatatableLoad, "All"] ],
-                            info: true,
-                            responsive: true,
-                            language: { search: "",searchPlaceholder: "Search List..." },
-                            "fnInitComplete": function () {
-                              $("<button class='btn btn-primary btnAddNewPaymentMethod' data-dismiss='modal' data-toggle='modal' data-target='#newPaymentMethodModal' type='button' style='padding: 4px 10px; font-size: 16px; margin-left: 12px !important;'><i class='fas fa-plus'></i></button>").insertAfter("#"+currenttablename+"_filter");
-                              $("<button class='btn btn-primary btnRefreshPaymentMethod' type='button' id='btnRefreshPaymentMethod' style='padding: 4px 10px; font-size: 16px; margin-left: 12px !important;'><i class='fas fa-search-plus' style='margin-right: 5px'></i>Search</button>").insertAfter("#"+currenttablename+"_filter");
-                            }
-
-                        });
-                        $('.fullScreenSpin').css('display', 'none');
-                    }, 10);
-
-
-                    var columns = $('#'+currenttablename+' th');
-                    let sTible = "";
-                    let sWidth = "";
-                    let sIndex = "";
-                    let sVisible = "";
-                    let columVisible = false;
-                    let sClass = "";
-                    $.each(columns, function(i, v) {
-                        if (v.hidden == false) {
-                            columVisible = true;
-                        }
-                        if ((v.className.includes("hiddenColumn"))) {
-                            columVisible = false;
-                        }
-                        sWidth = v.style.width.replace('px', "");
-
-                        let datatablerecordObj = {
-                            sTitle: v.innerText || '',
-                            sWidth: sWidth || '',
-                            sIndex: v.cellIndex || '',
-                            sVisible: columVisible || false,
-                            sClass: v.className || ''
-                        };
-                        tableHeaderList.push(datatablerecordObj);
-                    });
-                    templateObject.tableheaderrecords.set(tableHeaderList);
-                    $('div.dataTables_filter input').addClass('form-control form-control-sm');
-
-                }).catch(function(err) {
-                    // Bert.alert('<strong>' + err + '</strong>!', 'danger');
-                    $('.fullScreenSpin').css('display', 'none');
-                    // Meteor._reload.reload();
-                });
-            } else {
-                let data = JSON.parse(dataObject[0].data);
-                let useData = data.tpaymentmethodvs1;
-                let lineItems = [];
-                let lineItemObj = {};
-                for (let i = 0; i < useData.length; i++) {
-                    // let taxRate = (data.tdeptclass[i].fields.Rate * 100).toFixed(2) + '%';
-                    var dataList = {
-                        id: useData[i].fields.ID || '',
-                        paymentmethodname: useData[i].fields.PaymentMethodName || '',
-                        iscreditcard: useData[i].fields.IsCreditCard || 'false',
-                    };
-                    let getIsCreditCard = '';
-                    if(useData[i].fields.IsCreditCard){
-                      getIsCreditCard = '<div class="custom-control custom-checkbox chkBox"><input class="custom-control-input chkBox" type="checkbox" id="' + useData[i].fields.ID + '" checked><label class="custom-control-label chkBox"for="' + useData[i].fields.ID + '"></label></div>';
-                    }else{
-                      getIsCreditCard = '<div class="custom-control custom-checkbox chkBox"><input class="custom-control-input chkBox" type="checkbox" id="' + useData[i].fields.ID + '"><label class="custom-control-label chkBox"for="' + useData[i].fields.ID + '"></label></div>';
-                    }
-                    var dataList = [
-                      useData[i].fields.PaymentMethodName || '',
-                      getIsCreditCard
-                    ];
-                    splashArrayPaymentMethodList.push(dataList);
-
-                    dataTableList.push(dataList);
-                    //}
-                }
-
-                templateObject.datatablerecords.set(dataTableList);
-
-                if (templateObject.datatablerecords.get()) {
-
-                    Meteor.call('readPrefMethod', localStorage.getItem('mycloudLogonID'), 'paymentmethodList', function(error, result) {
-                        if (error) {
-
-                        } else {
-                            if (result) {
-                                for (let i = 0; i < result.customFields.length; i++) {
-                                    let customcolumn = result.customFields;
-                                    let columData = customcolumn[i].label;
-                                    let columHeaderUpdate = customcolumn[i].thclass.replace(/ /g, ".");
-                                    let hiddenColumn = customcolumn[i].hidden;
-                                    let columnClass = columHeaderUpdate.split('.')[1];
-                                    let columnWidth = customcolumn[i].width;
-                                    let columnindex = customcolumn[i].index + 1;
-
-                                    if (hiddenColumn == true) {
-
-                                        $("." + columnClass + "").addClass('hiddenColumn');
-                                        $("." + columnClass + "").removeClass('showColumn');
-                                    } else if (hiddenColumn == false) {
-                                        $("." + columnClass + "").removeClass('hiddenColumn');
-                                        $("." + columnClass + "").addClass('showColumn');
-                                    }
-
-                                }
-                            }
-
-                        }
-                    });
-
-
-                    setTimeout(function() {
-                        MakeNegative();
-                    }, 100);
-                }
-
-
-                $('.fullScreenSpin').css('display', 'none');
-                setTimeout(function() {
-                    $('#'+currenttablename).DataTable({
-                        data: splashArrayPaymentMethodList,
-                        "sDom": "<'row'><'row'<'col-sm-12 col-md-6'f><'col-sm-12 col-md-6'l>r>t<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>B",
-                        paging: true,
-                        "aaSorting": [],
-                        "orderMulti": true,
-                        columnDefs: [
-                            { className: "colName colNamePopUp pointer", "targets": [0] },
-                            { className: "colIsCreditCard colCreditCardPopUp text-center", "targets": [1] }
-                        ],
-                        select: true,
-                        destroy: true,
-                        colReorder: true,
-                        pageLength: initialDatatableLoad,
-                        lengthMenu: [ [initialDatatableLoad, -1], [initialDatatableLoad, "All"] ],
-                        info: true,
-                        responsive: true,
-                        language: { search: "",searchPlaceholder: "Search List..." },
-                        "fnInitComplete": function () {
-                          $("<button class='btn btn-primary btnAddNewPaymentMethod' data-dismiss='modal' data-toggle='modal' data-target='#newPaymentMethodModal' type='button' style='padding: 4px 10px; font-size: 16px; margin-left: 12px !important;'><i class='fas fa-plus'></i></button>").insertAfter("#"+currenttablename+"_filter");
-                          $("<button class='btn btn-primary btnRefreshPaymentMethod' type='button' id='btnRefreshPaymentMethod' style='padding: 4px 10px; font-size: 16px; margin-left: 12px !important;'><i class='fas fa-search-plus' style='margin-right: 5px'></i>Search</button>").insertAfter("#"+currenttablename+"_filter");
-                        }
-
-                    });
-                    $('.fullScreenSpin').css('display', 'none');
-                }, 10);
-
-
-                var columns = $('#'+currenttablename+' th');
-                let sTible = "";
-                let sWidth = "";
-                let sIndex = "";
-                let sVisible = "";
-                let columVisible = false;
-                let sClass = "";
-                $.each(columns, function(i, v) {
-                    if (v.hidden == false) {
-                        columVisible = true;
-                    }
-                    if ((v.className.includes("hiddenColumn"))) {
-                        columVisible = false;
-                    }
-                    sWidth = v.style.width.replace('px', "");
-
-                    let datatablerecordObj = {
-                        sTitle: v.innerText || '',
-                        sWidth: sWidth || '',
-                        sIndex: v.cellIndex || '',
-                        sVisible: columVisible || false,
-                        sClass: v.className || ''
-                    };
-                    tableHeaderList.push(datatablerecordObj);
-                });
-                templateObject.tableheaderrecords.set(tableHeaderList);
-                $('div.dataTables_filter input').addClass('form-control form-control-sm');
-
-            }
-        }).catch(function(err) {
-            taxRateService.getPaymentMethodVS1().then(function(data) {
-                let lineItems = [];
-                let lineItemObj = {};
-                for (let i = 0; i < data.tpaymentmethodvs1.length; i++) {
-                    // let taxRate = (data.tdeptclass[i].fields.Rate * 100).toFixed(2) + '%';
-                    var dataList = {
-                        id: data.tpaymentmethodvs1[i].fields.ID || '',
-                        paymentmethodname: data.tpaymentmethodvs1[i].fields.PaymentMethodName || '',
-                        iscreditcard: data.tpaymentmethodvs1[i].fields.IsCreditCard || 'false',
-                    };
-
-                    let getIsCreditCard = '';
-                    if(data.tpaymentmethodvs1[i].IsCreditCard){
-                      getIsCreditCard = '<div class="custom-control custom-checkbox chkBox"><input class="custom-control-input chkBox" type="checkbox" id="iscreditcard-data.tpaymentmethodvs1[i].Id" checked><label class="custom-control-label chkBox"for="iscreditcard-data.tpaymentmethodvs1[i].Id"></label></div>';
-                    }else{
-                      getIsCreditCard = '<div class="custom-control custom-checkbox chkBox"><input class="custom-control-input chkBox" type="checkbox" id="iscreditcard-data.tpaymentmethodvs1[i].Id"><label class="custom-control-label chkBox"for="iscreditcard-data.tpaymentmethodvs1[i].Id"></label></div>';
-                    }
-                    var dataList = [
-                      data.tpaymentmethodvs1[i].fields.PaymentMethodName || '',
-                      getIsCreditCard
-                    ];
-                    splashArrayPaymentMethodList.push(dataList);
-
-                    dataTableList.push(dataList);
-                    //}
-                }
-
-                templateObject.datatablerecords.set(dataTableList);
-
-                if (templateObject.datatablerecords.get()) {
-
-                    Meteor.call('readPrefMethod', localStorage.getItem('mycloudLogonID'), 'paymentmethodList', function(error, result) {
-                        if (error) {
-
-                        } else {
-                            if (result) {
-                                for (let i = 0; i < result.customFields.length; i++) {
-                                    let customcolumn = result.customFields;
-                                    let columData = customcolumn[i].label;
-                                    let columHeaderUpdate = customcolumn[i].thclass.replace(/ /g, ".");
-                                    let hiddenColumn = customcolumn[i].hidden;
-                                    let columnClass = columHeaderUpdate.split('.')[1];
-                                    let columnWidth = customcolumn[i].width;
-                                    let columnindex = customcolumn[i].index + 1;
-
-                                    if (hiddenColumn == true) {
-
-                                        $("." + columnClass + "").addClass('hiddenColumn');
-                                        $("." + columnClass + "").removeClass('showColumn');
-                                    } else if (hiddenColumn == false) {
-                                        $("." + columnClass + "").removeClass('hiddenColumn');
-                                        $("." + columnClass + "").addClass('showColumn');
-                                    }
-
-                                }
-                            }
-
-                        }
-                    });
-
-
-                    setTimeout(function() {
-                        MakeNegative();
-                    }, 100);
-                }
-
-                $('.fullScreenSpin').css('display', 'none');
-                setTimeout(function() {
-                    $('#'+currenttablename).DataTable({
-                        data: splashArrayPaymentMethodList,
-                        "sDom": "<'row'><'row'<'col-sm-12 col-md-6'f><'col-sm-12 col-md-6'l>r>t<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>B",
-                        paging: true,
-                        "aaSorting": [],
-                        "orderMulti": true,
-                        columnDefs: [
-                            { className: "colName colNamePopUp pointer", "targets": [0] },
-                            { className: "colIsCreditCard colCreditCardPopUp text-center", "targets": [1] }
-                        ],
-                        select: true,
-                        destroy: true,
-                        colReorder: true,
-                        pageLength: initialDatatableLoad,
-                        lengthMenu: [ [initialDatatableLoad, -1], [initialDatatableLoad, "All"] ],
-                        info: true,
-                        responsive: true,
-                        language: { search: "",searchPlaceholder: "Search List..." },
-                        "fnInitComplete": function () {
-                          $("<button class='btn btn-primary btnAddNewPaymentMethod' data-dismiss='modal' data-toggle='modal' data-target='#newPaymentMethodModal' type='button' style='padding: 4px 10px; font-size: 16px; margin-left: 12px !important;'><i class='fas fa-plus'></i></button>").insertAfter("#"+currenttablename+"_filter");
-                          $("<button class='btn btn-primary btnRefreshPaymentMethod' type='button' id='btnRefreshPaymentMethod' style='padding: 4px 10px; font-size: 16px; margin-left: 12px !important;'><i class='fas fa-search-plus' style='margin-right: 5px'></i>Search</button>").insertAfter("#"+currenttablename+"_filter");
-                        }
-
-                    });
-                    $('.fullScreenSpin').css('display', 'none');
-                }, 10);
-
-
-                var columns = $('#'+currenttablename+' th');
-                let sTible = "";
-                let sWidth = "";
-                let sIndex = "";
-                let sVisible = "";
-                let columVisible = false;
-                let sClass = "";
-                $.each(columns, function(i, v) {
-                    if (v.hidden == false) {
-                        columVisible = true;
-                    }
-                    if ((v.className.includes("hiddenColumn"))) {
-                        columVisible = false;
-                    }
-                    sWidth = v.style.width.replace('px', "");
-
-                    let datatablerecordObj = {
-                        sTitle: v.innerText || '',
-                        sWidth: sWidth || '',
-                        sIndex: v.cellIndex || '',
-                        sVisible: columVisible || false,
-                        sClass: v.className || ''
-                    };
-                    tableHeaderList.push(datatablerecordObj);
-                });
-                templateObject.tableheaderrecords.set(tableHeaderList);
-                $('div.dataTables_filter input').addClass('form-control form-control-sm');
-
-            }).catch(function(err) {
-                // Bert.alert('<strong>' + err + '</strong>!', 'danger');
-                $('.fullScreenSpin').css('display', 'none');
-                // Meteor._reload.reload();
-            });
-        });
-
-
-    }
-
-    $(document).ready(function() {
-        let url = window.location.href;
-        if (url.indexOf("?code") > 0) {
-            $('.fullScreenSpin').css('display', 'inline-block');
-            url = url.split('?code=');
-            var id = url[url.length - 1];
-
-            $.ajax({
-                url: 'https://depot.vs1cloud.com/stripe/connect-to-stripe.php',
-                data: {
-                    'code': id,
-                },
-                method: 'post',
-                success: function(response) {
-                    var dataReturnRes = JSON.parse(response);
-                    if (dataReturnRes.stripe_user_id) {
-                        const templateObject = Template.instance();
-                        let stripe_acc_id = dataReturnRes.stripe_user_id;
-                        let companyID = 1;
-
-                        var objDetails = {
-                            type: "TCompanyInfo",
-                            fields: {
-                                Id: companyID,
-                                Apcano: stripe_acc_id
-                            }
-                        };
-                        organisationService.saveOrganisationSetting(objDetails).then(function(data) {
-                            $('.fullScreenSpin').css('display', 'none');
-                            swal({
-                                title: 'Stripe Connection Successful',
-                                text: "Your stripe account connection is successful",
-                                type: 'success',
-                                showCancelButton: false,
-                                confirmButtonText: 'Ok'
-                            }).then((result) => {
-                                if (result.value) {
-                                    window.open('/paymentmethodSettings', '_self');
-                                } else if (result.dismiss === 'cancel') {
-                                    window.open('/paymentmethodSettings', '_self');
-                                } else {
-                                    window.open('/paymentmethodSettings', '_self');
-                                }
-                            });
-                        }).catch(function(err) {
-                            $('.fullScreenSpin').css('display', 'none');
-                            swal({
-                                title: 'Stripe Connection Successful',
-                                text: err,
-                                type: 'error',
-                                showCancelButton: false,
-                                confirmButtonText: 'Try Again'
-                            }).then((result) => {
-                                if (result.value) {
-                                    // Meteor._reload.reload();
-                                } else if (result.dismiss === 'cancel') {
-
-                                }
-                            });
-                        })
-
-                    } else {
-                        $('.fullScreenSpin').css('display', 'none');
-                        swal({
-                            title: 'Oooops...',
-                            text: response,
-                            type: 'error',
-                            showCancelButton: false,
-                            confirmButtonText: 'Try Again'
-                        }).then((result) => {
-                            if (result.value) {
-
-                            } else if (result.dismiss === 'cancel') {
-
-                            }
-                        });
-                    }
-                }
-            });
-
-        }
-
-
-        $("#saveStripeID").click(function() {
-            playSaveAudio();
-            setTimeout(function(){
-            $('.fullScreenSpin').css('display', 'inline-block');
-            let companyID = 1;
-            let feeMethod = "apply";
-
-            if ($('#feeInPriceInput').is(':checked')) {
-                feeMethod = "include";
-            }
-
-            var objDetails = {
-                type: "TCompanyInfo",
-                fields: {
-                    Id: companyID,
-                    DvaABN: feeMethod,
-                }
-            };
-            organisationService.saveOrganisationSetting(objDetails).then(function(data) {
-                localStorage.setItem('vs1companyStripeFeeMethod', feeMethod);
-                window.open('/paymentmethodSettings', '_self');
-            }).catch(function(err) {
-                window.open('/paymentmethodSettings', '_self');
-            });
-        }, delayTimeAfterSound);
-        });
-
-    })
-
-    templateObject.getTaxRates();
-
-    $(document).on('click', '.table-remove', function() {
-        event.stopPropagation();
-        event.stopPropagation();
-        var targetID = $(event.target).closest('tr').attr('id'); // table row ID
-        $('#selectDeleteLineID').val(targetID);
-        $('#deleteLineModal').modal('toggle');
-        // if ($('.paymentmethodList tbody>tr').length > 1) {
-        // // if(confirm("Are you sure you want to delete this row?")) {
-        // this.click;
-        // $(this).closest('tr').remove();
-        // //} else { }
-        // event.preventDefault();
-        // return false;
-        // }
+    const templateObject = Template.instance();
+    let prefix = templateObject.data.custid ? templateObject.data.custid : '';
+    $(`#PaymentListModal${prefix}`).on('shown.bs.modal', function(){
+        setTimeout(function() {
+            $(`#tblPaymentMethod${prefix}_filter .form-control-sm`).get(0).focus()
+        }, 500);
     });
-
-    // $('#paymentmethodList tbody').on('click', 'tr .colName, tr .colIsCreditCard, tr .colStatus', function() {
-    //     var listData = $(this).closest('tr').attr('id');
-    //     var isCreditcard = false;
-    //     if (listData) {
-    //         $('#add-paymentmethod-title').text('Edit Payment Method');
-    //         //$('#isformcreditcard').removeAttr('checked');
-    //         if (listData !== '') {
-    //             listData = Number(listData);
-    //             //taxRateService.getOnePaymentMethod(listData).then(function (data) {
-    //
-    //             var paymentMethodID = listData || '';
-    //             var paymentMethodName = $(event.target).closest("tr").find(".colName").text() || '';
-    //             // isCreditcard = $(event.target).closest("tr").find(".colName").text() || '';
-    //
-    //             if ($(event.target).closest("tr").find(".colIsCreditCard .chkBox").is(':checked')) {
-    //                 isCreditcard = true;
-    //             }
-    //
-    //             $('#edtPaymentMethodID').val(paymentMethodID);
-    //             $('#edtName').val(paymentMethodName);
-    //
-    //             if (isCreditcard == true) {
-    //                 templateObject.includeCreditCard.set(true);
-    //                 //$('#iscreditcard').prop('checked');
-    //             } else {
-    //                 templateObject.includeCreditCard.set(false);
-    //             }
-    //
-    //             //});
-    //
-    //
-    //             $(this).closest('tr').attr('data-target', '#myModal');
-    //             $(this).closest('tr').attr('data-toggle', 'modal');
-    //
-    //         }
-    //
-    //     }
-    //
-    // });
 });
 
 
@@ -654,6 +100,7 @@ Template.paymentmethodpop.events({
         setTimeout(function () {
           $('#edtPaymentMethodName').focus();
         }, 1000);
+        $("#newPaymentMethodModal").modal("show");
     },
     'click .feeOnTopInput': function(event) {
         if ($(event.target).is(':checked')) {
@@ -1194,6 +641,10 @@ Template.paymentmethodpop.helpers({
     accountID: () => {
         return Template.instance().accountID.get();
     },
+    apiFunction:function() {
+        let sideBarService = new SideBarService();
+        return sideBarService.getPaymentMethodDataList;
+    },
     tableheaderrecords: () => {
         return Template.instance().tableheaderrecords.get();
     },
@@ -1202,6 +653,15 @@ Template.paymentmethodpop.helpers({
             userid: localStorage.getItem('mycloudLogonID'),
             PrefName: 'paymentmethodList'
         });
+    },
+    searchAPI: function() {
+        return sideBarService.getOnePaymentMethodByName;
+    },
+
+    service: ()=>{
+        let sideBarService = new SideBarService();
+        return sideBarService;
+
     },
     deptrecords: () => {
         return Template.instance().deptrecords.get().sort(function(a, b) {
@@ -1213,6 +673,23 @@ Template.paymentmethodpop.helpers({
             return (a.department.toUpperCase() > b.department.toUpperCase()) ? 1 : -1;
         });
     },
+    datahandler: function () {
+        let templateObject = Template.instance();
+        return function(data) {
+            let dataReturn =  templateObject.getDataTableList(data)
+            return dataReturn
+        }
+    },
+    exDataHandler: function() {
+        let templateObject = Template.instance();
+        return function(data) {
+            let dataReturn =  templateObject.getDataTableList(data)
+            return dataReturn
+        }
+    },
+    apiParams: function() {
+        return ['limitCount', 'limitFrom', 'deleteFilter'];
+    },
     includeAccountID: () => {
         return Template.instance().includeAccountID.get();
     },
@@ -1223,8 +700,11 @@ Template.paymentmethodpop.helpers({
         return localStorage.getItem('mySession') || '';
     },
     tablename: () => {
-        return Template.instance().tablename.get();
+        let templateObject = Template.instance();
+        let accCustID = templateObject.data.custid ? templateObject.data.custid : '';
+        return 'tblPaymentMethod'+ accCustID;
     }
+
 });
 
 Template.registerHelper('equals', function(a, b) {
