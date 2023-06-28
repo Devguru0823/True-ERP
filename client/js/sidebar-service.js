@@ -787,29 +787,30 @@ export class SideBarService extends BaseService {
   }
 
   getAllTCustomerPaymentListData(dateFrom,dateTo,ignoreDate,limitcount,limitfrom) {
-    let options = "";
+    et options = "";
 
     if (ignoreDate == true) {
       options = {
         IgnoreDates: true,
         IsDetailReport: true,
         OrderBy: "PaymentDate desc",
-        Search: "Deleted != true",
-        LimitCount: parseInt(limitcount),
-        LimitFrom: parseInt(limitfrom),
+        Search: "Deleted = 'F'",
+        LimitCount: parseInt(limitcount)||initialReportLoad,
+        LimitFrom: parseInt(limitfrom)||0,
       };
     } else {
       options = {
         IgnoreDates: false,
         IsDetailReport: true,
         OrderBy: "PaymentDate desc",
-        Search: "Deleted != true",
+        Search: "Deleted = 'F'",
         DateFrom: '"' + dateFrom + '"',
         DateTo: '"' + dateTo + '"',
-        LimitCount: parseInt(limitcount),
-        LimitFrom: parseInt(limitfrom),
+        LimitCount: parseInt(limitcount)||initialReportLoad,
+        LimitFrom: parseInt(limitfrom)||0,
       };
     }
+    if(deleteFilter) options.Search = "";
     return this.getList(this.ERPObjects.TCustomerPaymentList, options);
   }
 
@@ -820,7 +821,7 @@ export class SideBarService extends BaseService {
       IgnoreDates: true,
       IsDetailReport: true,
       OrderBy: "PaymentDate desc",
-      Search: 'CompanyName = "' + customername + '"',
+      Search: "Deleted = 'F' AND CompanyName like '%" + CompanyName + "%'",
     };
 
     return this.getList(this.ERPObjects.TCustomerPaymentList, options);
