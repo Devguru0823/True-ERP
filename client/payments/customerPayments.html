@@ -141,11 +141,9 @@
 
                 </div>
 
-                <div class="col">
-                    <a class="btn btnOpenSettings float-right vs1ButtonMargin" role="button" data-toggle="modal" href="#myModal2"><i class="icon ion-android-more-horizontal"></i></a>
-                   <button class="btn btn-primary printConfirm float-right vs1ButtonMargin" type="button" ><i class="fa fa-print" style="padding-right: 5px;"></i>Print</button>
-                    <button class="btn btn-primary export float-right vs1ButtonMargin" type="button"  id="exportbtn" name="exportbtn"><i class="fas fa-file-export" style="padding-right: 5px;"></i>Export</button>
+                <div class="col d-xl-flex justify-content-xl-end align-items-xl-start">
                     {{> spreadsheet_link templateName="Customer Payments Report Result"}}
+                    {{> export_import_print_display_button Import="hiddenButton" tablename="tblCustomerPayment"}}
 
                 </div>
 
@@ -199,41 +197,7 @@
                                 color: #fff !important;
                             }
                         </style>
-                        <div class="row no-gutters d-xl-flex align-items-xl-end">
-                            <div class="col d-sm-flex justify-content-sm-start align-items-sm-center">
-
-                            </div>
-                            <div class="col float-right d-sm-flex d-xl-flex justify-content-sm-end align-items-sm-center justify-content-xl-end align-items-xl-end myvarFilterForm">
-                                <div class="dropdown" style="margin: 8px; margin-top: 0px;">
-                                    <style>
-                                        .btn-daterange::after {
-                                            display: none;
-                                        }
-                                    </style>
-                                    <button class="btn dropdown-toggle btn-daterange" data-toggle="dropdown" aria-expanded="true" type="button"><i class="fas fa-ellipsis-v"></i></button>
-                                    {{> daterangedropdownoption}}
-                                </div>
-                                <div class="form-group" style="margin: 8px; margin-top: 0px; display: inline-flex;">
-                                    <label style="margin-top: 8px; margin-right: 16px;">From</label>
-                                    <div class="input-group date" style="width: 160px;">
-                                        <input type="text" class="form-control" id="dateFrom" name="dateFrom" >
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-th"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group" style="margin: 8px; margin-right: 0px; margin-top: 0px; display: inline-flex;">
-                                    <label style="margin-top: 8px; margin-right: 16px;">To</label>
-                                    <div class="input-group date" style="width: 160px;">
-                                        <input type="text" class="form-control" id="dateTo" name="dateTo" >
-                                        <div class="input-group-addon">
-                                            <span class="glyphicon glyphicon-th"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <table id="tblCustomerPayment" name="tblCustomerPayment" class="dataTable table table-hover table-striped table-bordered tblCustomerPayment">
+                        <!-- <table id="tblCustomerPayment" name="tblCustomerPayment" class="dataTable table table-hover table-striped table-bordered tblCustomerPayment">
                             <thead>
                                 <tr class="dnd-moved">
                                     <th class="th colSortDate hiddenColumn">id</th>
@@ -271,7 +235,23 @@
                                 {{/if}}
 
                             </tbody>
-                        </table>
+                        </table> -->
+                        {{>datatablelist
+                            tablename="tblCustomerPayment"
+                            apiName= apiFunction
+                            indexeddbname = 'TCustomerPaymentList'
+                            tableheaderrecords = tableheaderrecords
+                            exportfilename = 'Customer Payment List'
+                            istransaction = true
+                            apiParams= apiParams
+                            datahandler = datahandler
+                            service=service
+                            lowercaseDataName='tcustomerpaymentlist'
+                            exIndexDBName = 'tcustomerpaymentlist'
+                            exdatahandler = exDataHandler
+                            searchAPI = searchAPI
+                            orderby = '[[ 0, "desc" ],[ 1, "desc" ]]'
+                        }}
                     </div>
                 </div>
             </div>
