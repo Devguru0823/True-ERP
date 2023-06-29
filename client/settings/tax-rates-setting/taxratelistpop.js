@@ -18,31 +18,87 @@ let taxRateService = new TaxRateService();
 let sideBarService = new SideBarService();
 
 Template.taxratelistpop.onCreated(function () {
-    templateObject = Template.instance();
+    let templateObject = Template.instance();
     templateObject.tableheaderrecords = new ReactiveVar([]);
 
     templateObject.getDataTableList = function(data) {
-        let taxRate = (data.Rate * 100).toFixed(2);
-        var dataList = [
-            data.Id || '',
-            data.CodeName || '',
-            data.Description || '-',
-            taxRate || 0,
-        ];
-        return dataList;
+        let taxRate = (data.Rate * 100).toFixed(2) + "%";
+    let tdPurchaseDef = "";
+    let tdSalesDef = "";
+    // Check if Purchase Default is checked
+    if (data.IsDefaultPurchase == true) {
+      tdPurchaseDef =
+        '<span style="display:none;">' +
+        data.IsDefaultPurchase +
+        '</span><div class="custom-control custom-switch chkBox text-center"><input class="custom-control-input chkBox" type="checkbox" id="isPurchasedefault-' +
+        data.TaxCodeID +
+        '" checked><label class="custom-control-label chkBox" for="isPurchasedefault-' +
+        data.TaxCodeID +
+        '"></label></div>';
+    } else {
+      tdPurchaseDef =
+        '<span style="display:none;">' +
+        data.IsDefaultPurchase +
+        '</span><div class="custom-control custom-switch chkBox text-center"><input class="custom-control-input chkBox" type="checkbox" id="isPurchasedefault-' +
+        data.TaxCodeID +
+        '"><label class="custom-control-label chkBox" for="isPurchasedefault-' +
+        data.TaxCodeID +
+        '"></label></div>';
     }
-
-    let headerStructure = [
-        {index: 0, label: "ID", class: "colID", width: "50", active: true, display: true},
-        {index: 1, label: "Name", class: "colName taxName", width: "80", active: true, display: true},
-        {index: 2, label: "Description", class: "colDescription", width: "", active: true, display: true},
-        {index: 3, label: "Rate", class: "colRate taxRate", width: "100", active: true, display: true},
+    // Check if Sales Default is checked
+    if (data.IsDefaultSales == true) {
+      tdSalesDef =
+        '<span style="display:none;">' +
+        data.IsDefaultSales +
+        '</span><div class="custom-control custom-switch chkBox text-center"><input class="custom-control-input chkBox" type="checkbox" id="isSalesdefault-' +
+        data.TaxCodeID +
+        '" checked><label class="custom-control-label chkBox" for="isSalesdefault-' +
+        data.TaxCodeID +
+        '"></label></div>';
+    } else {
+      tdSalesDef =
+        '<span style="display:none;">' +
+        data.IsDefaultSales +
+        '</span><div class="custom-control custom-switch chkBox text-center"><input class="custom-control-input chkBox" type="checkbox" id="isSalesdefault-' +
+        data.TaxCodeID +
+        '"><label class="custom-control-label chkBox" for="isSalesdefault-' +
+        data.TaxCodeID +
+        '"></label></div>';
+    }
+    let dataList = [
+      data.TaxCodeID || "",
+      data.Name || "",
+      data.Description || "",
+      taxRate || "",
+      tdPurchaseDef,
+      tdSalesDef,
+      data.Active ? "" : "In-Active",
     ];
-    templateObject.tableheaderrecords.set(headerStructure);
+    return dataList;
+  };
+
+  let headerStructure = [
+    { index: 0, label: "ID", class: "colTaxRateId", active: false, display: true, width: "20" },
+    { index: 1, label: "Name", class: "colTaxRateName", active: true, display: true, width: "200" },
+    { index: 2, label: "Description", class: "colTaxRateDesc", active: true, display: true, width: "840" },
+    { index: 3, label: "Rate", class: "colTaxRate", active: true, display: true, width: "100" },
+    { index: 4, label: "Purchase Default", class: "colTaxRatePurchaseDefault", active: true, display: true, width: "180" },
+    { index: 5, label: "Sales Default", class: "colTaxRateSalesDefault", active: true, display: true, width: "180" },
+    { index: 6, label: "Status", class: "colStatus", active: true, display: true, width: "120" },
+  ];
+  templateObject.tableheaderrecords.set(headerStructure);
 });
 
 Template.taxratelistpop.onRendered(function () {
+    let templateObject = Template.instance();
 
+    let prefix = templateObject.data.custid ? templateObject.data.custid : '';
+    $(`#taxRateListModal${prefix}`).on('shown.bs.modal', function(){
+        setTimeout(function() {
+            $(`#tblTaxRate${prefix}_filter .form-control-sm`).get(0).focus()
+        }, 500);
+    });
+    
 });
 
 Template.taxratelistpop.events({
@@ -65,16 +121,16 @@ Template.taxratelistpop.events({
                 let lineItemObj = {};
                 if (data.ttaxcodevs1.length > 0) {
                     for (let i = 0; i < data.ttaxcodevs1.length; i++) {
-                        let taxRate = (data.ttaxcodevs1[i].Rate * 100).toFixed(2);
+                        let taxRate = (data.ttaxcodevs1[i].fields.Rate * 100).toFixed(2);
                         var dataList = [
-                            data.ttaxcodevs1[i].Id || '',
-                            data.ttaxcodevs1[i].CodeName || '',
-                            data.ttaxcodevs1[i].Description || '-',
+                            data.ttaxcodevs1[i].fields.ID || '',
+                            data.ttaxcodevs1[i].fields.CodeName || '',
+                            data.ttaxcodevs1[i].fields.Description || '-',
                             taxRate || 0,
                         ];
 
                         let taxcoderecordObj = {
-                            codename: data.ttaxcodevs1[i].CodeName || ' ',
+                            codename: data.ttaxcodevs1[i].fields.CodeName || ' ',
                             coderate: taxRate || ' ',
                         };
 
@@ -120,16 +176,16 @@ Template.taxratelistpop.events({
                 let records = [];
                 let inventoryData = [];
                 for (let i = 0; i < data.ttaxcodevs1.length; i++) {
-                    let taxRate = (data.ttaxcodevs1[i].Rate * 100).toFixed(2);
+                    let taxRate = (data.ttaxcodevs1[i].fields.Rate * 100).toFixed(2);
                     var dataList = [
-                        data.ttaxcodevs1[i].Id || '',
-                        data.ttaxcodevs1[i].CodeName || '',
-                        data.ttaxcodevs1[i].Description || '-',
+                        data.ttaxcodevs1[i].fields.Id || '',
+                        data.ttaxcodevs1[i].fields.CodeName || '',
+                        data.ttaxcodevs1[i].fields.Description || '-',
                         taxRate || 0,
                     ];
 
                     let taxcoderecordObj = {
-                        codename: data.ttaxcodevs1[i].CodeName || ' ',
+                        codename: data.ttaxcodevs1[i].fields.CodeName || ' ',
                         coderate: taxRate || ' ',
                     };
 
@@ -152,6 +208,9 @@ Template.taxratelistpop.events({
         if (event.keyCode == 13) {
             $(".btnRefreshTax").trigger("click");
         }
+    },
+    'click .btnAddNewTax':function(){
+        $("#newTaxRateModal").modal("show");
     }
 });
 
@@ -161,7 +220,7 @@ Template.taxratelistpop.helpers({
     },
     apiFunction:function() {
         let sideBarService = new SideBarService();
-        return sideBarService.getTaxRateVS1;
+        return sideBarService.getTaxRateVS1List;
     },
 
     searchAPI: function() {
@@ -193,6 +252,10 @@ Template.taxratelistpop.helpers({
     apiParams: function() {
         return [];
     },
+    tablename: () => {
+        let templateObject = Template.instance();
+        return 'tblTaxRate'+templateObject.data.custid;
+      },
 });
 
 Template.registerHelper('equals', function (a, b) {
