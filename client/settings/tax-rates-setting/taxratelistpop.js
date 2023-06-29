@@ -98,7 +98,312 @@ Template.taxratelistpop.onRendered(function () {
             $(`#tblTaxRate${prefix}_filter .form-control-sm`).get(0).focus()
         }, 500);
     });
+    templateObject.saveTaxRate = function (maiaMode=false, isMakeActive) {
+        playSaveAudio();
+        let taxRateService = new TaxRateService();
+        setTimeout(function () {
+          $(".fullScreenSpin").css("display", "inline-block");
+          var url = FlowRouter.current().path;
     
+          let taxSelected = $("#taxSelected").val();
+          let taxtID = $("#edtTaxID").val();
+          let taxName = $("#edtTaxName").val();
+          let taxDesc = $("#edtTaxDesc").val();
+          let taxRate = parseFloat($("#edtTaxRate").val() / 100);
+          let active = $("#view-in-active button").hasClass("btnDeleteTaxRate");
+          if (maiaMode) {
+            active = isMakeActive;
+          }
+          let isDefaultPurchase = $("#isDefaultPurchase").is(':checked');
+          let isDefaultSales = $("#isDefaultSales").is(':checked');
+          let objDetails = "";
+          if (taxName === "") {
+            Bert.alert("<strong>WARNING:</strong> Tax Rate cannot be blank!", "warning");
+            $(".fullScreenSpin").css("display", "none");
+            e.preventDefault();
+          }
+    
+          if (taxtID === "") {
+            taxRateService
+              .checkTaxRateByName(taxName)
+              .then(function (data) {
+                taxtID = data.ttaxcode[0].Id;
+                objDetails = {
+                  type: "TTaxcode",
+                  fields: {
+                    ID: parseInt(taxtID),
+                    Active: active,
+                    CodeName: taxName,
+                    Description: taxDesc,
+                    Rate: taxRate,
+                    IsDefaultPurchase: isDefaultPurchase,
+                    IsDefaultSales: isDefaultSales,
+                    PublishOnVS1: true,
+                  },
+                };
+                taxRateService
+                  .saveTaxRate(objDetails)
+                  .then(function (objDetails) {
+                    sideBarService
+                      .getTaxRateVS1List()
+                      .then(function (dataReload) {
+                        addVS1Data("TTaxcodeVS1List", JSON.stringify(dataReload))
+                          .then(function (datareturn) {
+                            if (url.includes("/productview")) {
+                              if (taxSelected === "sales") {
+                                $("#slttaxcodesales").val(taxName);
+                              } else if (taxSelected === "purchase") {
+                                $("#slttaxcodepurchase").val(taxName);
+                              } else {
+                                $("#sltTaxCode").val(taxName);
+                              }
+                            }
+    
+                            if (url.includes("/accountsoverview")) {
+                              $("#sltTaxCode").val(taxName);
+                            }
+                            $("#addTaxRateModal").modal("toggle");
+                            $(".fullScreenSpin").css("display", "none");
+                            location.reload(true);
+                          })
+                          .catch(function (err) {
+                            if (url.includes("/productview")) {
+                              if (taxSelected === "sales") {
+                                $("#slttaxcodesales").val(taxName);
+                              } else if (taxSelected === "purchase") {
+                                $("#slttaxcodepurchase").val(taxName);
+                              } else {
+                                $("#sltTaxCode").val(taxName);
+                              }
+                            }
+    
+                            if (url.includes("/accountsoverview")) {
+                              $("#sltTaxCode").val(taxName);
+                            }
+                            $("#addTaxRateModal").modal("toggle");
+                            $(".fullScreenSpin").css("display", "none");
+                          });
+                      })
+                      .catch(function (err) {
+                        if (url.includes("/productview")) {
+                          if (taxSelected === "sales") {
+                            $("#slttaxcodesales").val(taxName);
+                          } else if (taxSelected === "purchase") {
+                            $("#slttaxcodepurchase").val(taxName);
+                          } else {
+                            $("#sltTaxCode").val(taxName);
+                          }
+                        }
+                        if (url.includes("/accountsoverview")) {
+                          $("#sltTaxCode").val(taxName);
+                        }
+                        $("#addTaxRateModal").modal("toggle");
+                        $(".fullScreenSpin").css("display", "none");
+                      });
+                    var selectLineID = $("#selectLineID").val();
+                    if (selectLineID) {
+                      $("#" + selectLineID + " .lineTaxCode").val(taxName);
+                    }
+                  })
+                  .catch(function (err) {
+                    swal({
+                      title: "Oooops...",
+                      text: err,
+                      type: "error",
+                      showCancelButton: false,
+                      confirmButtonText: "Try Again",
+                    }).then((result) => {
+                      if (result.value) {
+                        // Meteor._reload.reload();
+                        $("#addTaxRateModal").modal("toggle");
+                        $(".fullScreenSpin").css("display", "none");
+                      } else if (result.dismiss === "cancel") {
+                      }
+                    });
+                    $(".fullScreenSpin").css("display", "none");
+                  });
+              })
+              .catch(function (err) {
+                objDetails = {
+                  type: "TTaxcode",
+                  fields: {
+                    // Id: taxCodeId,
+                    Active: active,
+                    CodeName: taxName,
+                    Description: taxDesc,
+                    Rate: taxRate,
+                    IsDefaultPurchase: isDefaultPurchase,
+                    IsDefaultSales: isDefaultSales,
+                    PublishOnVS1: true,
+                  },
+                };
+    
+                taxRateService
+                  .saveTaxRate(objDetails)
+                  .then(function (objDetails) {
+                    sideBarService
+                      .getTaxRateVS1List()
+                      .then(function (dataReload) {
+                        addVS1Data("TTaxcodeVS1List", JSON.stringify(dataReload))
+                          .then(function (datareturn) {
+                            if (url.includes("/productview")) {
+                              if (taxSelected === "sales") {
+                                $("#slttaxcodesales").val(taxName);
+                              } else if (taxSelected === "purchase") {
+                                $("#slttaxcodepurchase").val(taxName);
+                              } else {
+                                $("#sltTaxCode").val(taxName);
+                              }
+                            }
+                            if (url.includes("/accountsoverview")) {
+                              $("#sltTaxCode").val(taxName);
+                            }
+                            $("#addTaxRateModal").modal("toggle");
+                            $(".fullScreenSpin").css("display", "none");
+                            location.reload(true);
+                          })
+                          .catch(function (err) {
+                            if (url.includes("/productview")) {
+                              if (taxSelected === "sales") {
+                                $("#slttaxcodesales").val(taxName);
+                              } else if (taxSelected === "purchase") {
+                                $("#slttaxcodepurchase").val(taxName);
+                              } else {
+                                $("#sltTaxCode").val(taxName);
+                              }
+                            }
+                            if (url.includes("/accountsoverview")) {
+                              $("#sltTaxCode").val(taxName);
+                            }
+                            $("#addTaxRateModal").modal("toggle");
+                            $(".fullScreenSpin").css("display", "none");
+                          });
+                      })
+                      .catch(function (err) {
+                        if (url.includes("/productview")) {
+                          if (taxSelected === "sales") {
+                            $("#slttaxcodesales").val(taxName);
+                          } else if (taxSelected === "purchase") {
+                            $("#slttaxcodepurchase").val(taxName);
+                          } else {
+                            $("#sltTaxCode").val(taxName);
+                          }
+                        }
+                        if (url.includes("/accountsoverview")) {
+                          $("#sltTaxCode").val(taxName);
+                        }
+                        $("#addTaxRateModal").modal("toggle");
+                        $(".fullScreenSpin").css("display", "none");
+                      });
+                    var selectLineID = $("#selectLineID").val();
+                    if (selectLineID) {
+                      $("#" + selectLineID + " .lineTaxCode").val(taxName);
+                    }
+                  })
+                  .catch(function (err) {
+                    swal({
+                      title: "Oooops...",
+                      text: err,
+                      type: "error",
+                      showCancelButton: false,
+                      confirmButtonText: "Try Again",
+                    }).then((result) => {
+                      if (result.value) {
+                        // Meteor._reload.reload();
+                        $("#addTaxRateModal").modal("toggle");
+                        $(".fullScreenSpin").css("display", "none");
+                      } else if (result.dismiss === "cancel") {
+                      }
+                    });
+                    $(".fullScreenSpin").css("display", "none");
+                  });
+              });
+          } else {
+            objDetails = {
+              type: "TTaxcode",
+              fields: {
+                ID: parseInt(taxtID),
+                Active: active,
+                CodeName: taxName,
+                Description: taxDesc,
+                Rate: taxRate,
+                IsDefaultPurchase: isDefaultPurchase,
+                IsDefaultSales: isDefaultSales,
+                PublishOnVS1: true,
+              },
+            };
+            taxRateService
+              .saveTaxRate(objDetails)
+              .then(function (objDetails) {
+                sideBarService
+                  .getTaxRateVS1List()
+                  .then(function (dataReload) {
+                    addVS1Data("TTaxcodeVS1List", JSON.stringify(dataReload))
+                      .then(function (datareturn) {
+                        if (url.includes("/productview")) {
+                          if (taxSelected === "sales") {
+                            $("#slttaxcodesales").val(taxName);
+                          } else if (taxSelected === "purchase") {
+                            $("#slttaxcodepurchase").val(taxName);
+                          } else {
+                            $("#sltTaxCode").val(taxName);
+                          }
+                        }
+    
+                        if (url.includes("/accountsoverview")) {
+                          $("#sltTaxCode").val(taxName);
+                        }
+                        $("#addTaxRateModal").modal("toggle");
+                        $(".fullScreenSpin").css("display", "none");
+                        location.reload(true);
+                      })
+                      .catch(function (err) {
+                        // Meteor._reload.reload();
+                        $("#addTaxRateModal").modal("toggle");
+                        $(".fullScreenSpin").css("display", "none");
+                      });
+                  })
+                  .catch(function (err) {
+                    if (url.includes("/productview")) {
+                      if (taxSelected === "sales") {
+                        $("#slttaxcodesales").val(taxName);
+                      } else if (taxSelected === "purchase") {
+                        $("#slttaxcodepurchase").val(taxName);
+                      } else {
+                        $("#sltTaxCode").val(taxName);
+                      }
+                    }
+                    if (url.includes("/accountsoverview")) {
+                      $("#sltTaxCode").val(taxName);
+                    }
+                    $("#addTaxRateModal").modal("toggle");
+                    $(".fullScreenSpin").css("display", "none");
+                  });
+                var selectLineID = $("#selectLineID").val();
+                if (selectLineID) {
+                  $("#" + selectLineID + " .lineTaxCode").val(taxName);
+                }
+              })
+              .catch(function (err) {
+                swal({
+                  title: "Oooops...",
+                  text: err,
+                  type: "error",
+                  showCancelButton: false,
+                  confirmButtonText: "Try Again",
+                }).then((result) => {
+                  if (result.value) {
+                    // Meteor._reload.reload();
+                    $("#addTaxRateModal").modal("toggle");
+                    $(".fullScreenSpin").css("display", "none");
+                  } else if (result.dismiss === "cancel") {
+                  }
+                });
+                $(".fullScreenSpin").css("display", "none");
+              });
+          }
+        }, delayTimeAfterSound);
+      }
 });
 
 Template.taxratelistpop.events({
