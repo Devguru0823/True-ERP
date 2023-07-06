@@ -417,11 +417,9 @@ Template.datatablelist.onRendered(async function () {
                 apiParams[i] = 0
             } else if (apiParams[i] == 'deleteFilter') {
                 if ($('.btnViewDeleted').css('display') != 'none') {
-                    console.log("Deleted===============");
                     apiParams[i] = true
                 } else {
                     apiParams[i] = false
-                    console.log("Deleted+++++++++++++");
                 }
             }else if (params[i] == 'productID') {
                 apiParams[i] = templateObject.data.productID;
