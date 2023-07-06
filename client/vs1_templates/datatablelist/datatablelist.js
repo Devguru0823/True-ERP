@@ -416,13 +416,17 @@ Template.datatablelist.onRendered(async function () {
             } else if (apiParams[i] == 'limitFrom') {
                 apiParams[i] = 0
             } else if (apiParams[i] == 'deleteFilter') {
-                if ($('.btnHideDeleted').css('display') != 'none') {
+                if ($('.btnViewDeleted').css('display') != 'none') {
+                    console.log("Deleted===============");
                     apiParams[i] = true
                 } else {
                     apiParams[i] = false
+                    console.log("Deleted+++++++++++++");
                 }
             }else if (params[i] == 'productID') {
                 apiParams[i] = templateObject.data.productID;
+            }else if (apiParams[i] == 'contactid') {
+                apiParams[i] = params[3]
             }
         }
         let that = templateObject.data.service;
@@ -729,15 +733,15 @@ Template.datatablelist.onRendered(async function () {
                         $("<button class='btn btn-primary "+templateObject.data.showPlusButtonClass+"' id='"+templateObject.data.showPlusButtonClass+"' name='"+templateObject.data.showPlusButtonClass+"' data-toggle='modal' data-target='"+templateObject.data.showModalID+"' type='button' style='padding: 4px 10px; font-size: 16px; margin-left: 12px !important;'><i class='fas fa-plus'></i></button>").insertAfter('#' + currenttablename + '_filter');
                       };
                       if (data.Params) {
-                        if (data.Params?.Search?.replace(/\s/g, "") == "" || data.Params?.AllocType?.replace(/\s/g, "") == "") {
+                        // if (data.Params?.Search?.replace(/\s/g, "") == "" || data.Params?.AllocType?.replace(/\s/g, "") == "") {
+                        //     $("<button class='btn btn-danger btnHideDeleted' type='button' id='btnHideDeleted' style='padding: 4px 10px; font-size: 16px; margin-left: 14px !important;'><i class='far fa-check-circle' style='margin-right: 5px'></i>"+hideViewDeletedLabel+"</button>").insertAfter('#' + currenttablename + '_filter');
+                        // } else {
+                            if (data.Params?.Search?.includes("Active = true") || data.Params?.Search?.includes("Deleted = 'F'") || data.Params?.Search?.includes("AND TransHeader.Deleted = 'F'") || data.Params?.Search?.includes("pt.Active=true") || data.Params?.Search?.includes("Active=true")) {
+                                $("<button class='btn btn-primary btnViewDeleted' type='button' id='btnViewDeleted' style='padding: 4px 10px; font-size: 16px; margin-left: 14px !important;'><i class='fa fa-trash' style='margin-right: 5px'></i>"+activeViewDeletedLabel+"</button>").insertAfter('#' + currenttablename + '_filter');
+                            } else {
                             $("<button class='btn btn-danger btnHideDeleted' type='button' id='btnHideDeleted' style='padding: 4px 10px; font-size: 16px; margin-left: 14px !important;'><i class='far fa-check-circle' style='margin-right: 5px'></i>"+hideViewDeletedLabel+"</button>").insertAfter('#' + currenttablename + '_filter');
-                        } else {
-                          if ((data.Params?.Search == "IsBill = true and IsCheque != true") || (data.Params?.Search == "AccountType IN ('Bank')") || (data.Params?.Search == "AND TransHeader.AddToManifest='T'") || (data.Params?.Search == "AccountType IN ('LTLIAB')") || (data.Params?.Search == "AccountType IN ('EXP')") || (data.Params?.Search == "AccountType IN ('AP')") || (data.Params?.Search == "AccountType IN ('OCLIAB')") || (data.Params?.Search == "AccountType IN ('EXEXP')")) {//Josue//Samet//Carina
-                            $("<button class='btn btn-danger btnHideDeleted' type='button' id='btnHideDeleted' style='padding: 4px 10px; font-size: 16px; margin-left: 14px !important;'><i class='far fa-check-circle' style='margin-right: 5px'></i>"+hideViewDeletedLabel+"</button>").insertAfter('#' + currenttablename + '_filter');
-                          }else{
-                            $("<button class='btn btn-primary btnViewDeleted' type='button' id='btnViewDeleted' style='padding: 4px 10px; font-size: 16px; margin-left: 14px !important;'><i class='fa fa-trash' style='margin-right: 5px'></i>"+activeViewDeletedLabel+"</button>").insertAfter('#' + currenttablename + '_filter');
-                          }
-                        }
+                            }
+                    // }
                     } else {
                         // const allEqual = data.every(val => val.Active === true);
                         $("<button class='btn btn-primary btnViewDeleted' type='button' id='btnViewDeleted' style='padding: 4px 10px; font-size: 16px; margin-left: 14px !important;'><i class='fa fa-trash' style='margin-right: 5px'></i>"+activeViewDeletedLabel+"</button>").insertAfter('#' + currenttablename + '_filter');
@@ -1212,13 +1216,14 @@ Template.datatablelist.events({
         }
         $('.' + currenttablename+" #dateFrom").attr('readonly', true);
         $('.' + currenttablename+" #dateTo").attr('readonly', true);
-
-        let params = ['', '', true]
+        let contactID = templateObject.data.contactid || '';
+        let params = ['', '', true, contactID]
         templateObject.getFilteredData(params);
     },
     'click .thisweek': function () {
         let templateObject = Template.instance();
         let currenttablename = templateObject.data.tablename || '';
+        let contactID = templateObject.data.contactid ||'';
         if(templateObject.data.custid) {
             currenttablename = currenttablename + "_" + templateObject.data.custid
         }
@@ -1262,7 +1267,7 @@ Template.datatablelist.events({
         $('.' + currenttablename+" #dateFrom").val(toDateDisplayFrom);
         $('.' + currenttablename+" #dateTo").val(toDateDisplayTo);
 
-        let params = [toDateERPFrom, toDateERPTo, false];
+        let params = [toDateERPFrom, toDateERPTo, false, contactID];
         templateObject.getFilteredData(params)
 
         // if (currenttablename == "tblBankingOverview") {
@@ -1272,6 +1277,7 @@ Template.datatablelist.events({
     'click .thisMonth': function () {
         let templateObject = Template.instance();
         let currenttablename = templateObject.data.tablename || '';
+        let contactID = templateObject.data.contactid ||'';
         if(templateObject.data.custid) {
             currenttablename = currenttablename + "_" + templateObject.data.custid
         }
@@ -1302,12 +1308,13 @@ Template.datatablelist.events({
         $('.' + currenttablename+" #dateFrom").val(fromDate);
         $('.' + currenttablename+" #dateTo").val(toDate);
 
-        let params = [getDateFrom, getToDate, false]
+        let params = [getDateFrom, getToDate, false, contactID]
         templateObject.getFilteredData(params)
     },
     'click .thisQuarter': function () {
         let templateObject = Template.instance();
         let currenttablename = templateObject.data.tablename || '';
+        let contactID = templateObject.data.contactid ||'';
         if(templateObject.data.custid) {
             currenttablename = currenttablename + "_" + templateObject.data.custid
         }
@@ -1326,12 +1333,13 @@ Template.datatablelist.events({
         $('.' + currenttablename+" #dateTo").val(thisQuarterEndDateFormat);
 
 
-        let params = [fromDate, toDate, false];
+        let params = [fromDate, toDate, false, contactID];
         templateObject.getFilteredData(params);
     },
     'click .thisfinancialyear': function () {
         let templateObject = Template.instance();
         let currenttablename = templateObject.data.tablename || '';
+        let contactID = templateObject.data.contactid ||'';
         if(templateObject.data.custid) {
             currenttablename = currenttablename + "_" + templateObject.data.custid
         }
@@ -1365,7 +1373,7 @@ Template.datatablelist.events({
         $('.' + currenttablename+" #dateTo").val(current_fiscal_year_end);
 
 
-        let params = [currentERP_fiscal_year_start, currentERP_fiscal_year_end, false];
+        let params = [currentERP_fiscal_year_start, currentERP_fiscal_year_end, false, contactID];
         templateObject.getFilteredData(params);
         // if (currenttablename == "tblBankingOverview") {
         //     templateObject.getAllFilterbankingData(fromDate,begunDate, false);
@@ -1374,6 +1382,7 @@ Template.datatablelist.events({
     'click .previousweek': function () {
         let templateObject = Template.instance();
         let currenttablename = templateObject.data.tablename || '';
+        let contactID = templateObject.data.contactid ||'';
         if(templateObject.data.custid) {
             currenttablename = currenttablename + "_" + templateObject.data.custid
         }
@@ -1418,7 +1427,7 @@ Template.datatablelist.events({
         $('.' + currenttablename+" #dateFrom").val(toDateDisplayFrom);
         $('.' + currenttablename+" #dateTo").val(toDateDisplayTo);
 
-        let params = [toDateERPFrom, toDateERPTo, false]
+        let params = [toDateERPFrom, toDateERPTo, false, contactID]
         templateObject.getFilteredData(params)
 
         // if (currenttablename == "tblBankingOverview") {
@@ -1428,6 +1437,7 @@ Template.datatablelist.events({
     'click .previousmonth': function () {
         let templateObject = Template.instance();
         let currenttablename = templateObject.data.tablename || '';
+        let contactID = templateObject.data.contactid ||'';
         if(templateObject.data.custid) {
             currenttablename = currenttablename + "_" + templateObject.data.custid
         }
@@ -1460,7 +1470,7 @@ Template.datatablelist.events({
         $('.' + currenttablename+" #dateFrom").val(fromDate);
         $('.' + currenttablename+" #dateTo").val(toDate);
 
-        let params = [getDateFrom, getToDate, false]
+        let params = [getDateFrom, getToDate, false, contactID]
         templateObject.getFilteredData(params);
 
         // if (currenttablename == "tblBankingOverview") {
@@ -1471,6 +1481,7 @@ Template.datatablelist.events({
     'click .previousquarter': function () {
         let templateObject = Template.instance();
         let currenttablename = templateObject.data.tablename || '';
+        let contactID = templateObject.data.contactid ||'';
         if(templateObject.data.custid) {
             currenttablename = currenttablename + "_" + templateObject.data.custid
         }
@@ -1487,13 +1498,14 @@ Template.datatablelist.events({
         $('.' + currenttablename+" #dateFrom").val(lastQuarterStartDateFormat);
         $('.' + currenttablename+" #dateTo").val(lastQuarterEndDateFormat);
 
-        let params = [fromDate, toDate, false];
+        let params = [fromDate, toDate, false, contactID];
         templateObject.getFilteredData(params);
 
     },
     'click .previousfinancialyear': function () {
         let templateObject = Template.instance();
         let currenttablename = templateObject.data.tablename || '';
+        let contactID = templateObject.data.contactid ||'';
         if(templateObject.data.custid) {
             currenttablename = currenttablename + "_" + templateObject.data.custid
         }
@@ -1527,7 +1539,7 @@ Template.datatablelist.events({
       $('.' + currenttablename+" #dateTo").val(previous_fiscal_year_end);
 
 
-      let params = [previousERP_fiscal_year_start, previousERP_fiscal_year_end, false];
+      let params = [previousERP_fiscal_year_start, previousERP_fiscal_year_end, false, contactID];
         templateObject.getFilteredData(params);
     },
 
@@ -1535,6 +1547,7 @@ Template.datatablelist.events({
         let templateObject = Template.instance();
         $('.fullScreenSpin').css('display', 'inline-block');
         let currenttablename = templateObject.data.tablename || '';
+        let contactID = templateObject.data.contactid ||'';
         if(templateObject.data.custid) {
             currenttablename = currenttablename + "_" + templateObject.data.custid
         }
@@ -1561,7 +1574,7 @@ Template.datatablelist.events({
 
         $('.' + currenttablename+" #dateFrom").val(toDateDisplayFrom);
         $('.' + currenttablename+" #dateTo").val(toDateDisplayTo);
-        let params = [toDateERPFrom, toDateERPTo, false];
+        let params = [toDateERPFrom, toDateERPTo, false, contactID];
         templateObject.getFilteredData(params)
         // templateObject.getAllFilterSalesOrderData(toDateERPFrom,toDateERPTo, false);
     },
@@ -1594,6 +1607,45 @@ Template.datatablelist.events({
             tablename = tablename + "_" + templateObject.data.custid
         }
         let dataSearchName = $('#' + tablename + '_filter input').val();
+        if(templateObject.data.productID){
+            if (dataSearchName.replace(/\s/g, '') != '') {
+                let that = templateObject.data.service;
+                if (that == undefined) {
+                    $('.fullScreenSpin').css('display', 'none');
+                    $('.btnRefreshTable').removeClass('btnSearchAlert');
+                    return;
+                }
+                let paramArray = [dataSearchName,templateObject.data.productID]
+                templateObject.data.searchAPI.apply(that, paramArray).then(function (data) {
+                    $('.btnRefreshTable').removeClass('btnSearchAlert');
+                    templateObject.displayTableData(data, true)
+                }).catch(function (err) {
+                    $('.fullScreenSpin').css('display', 'none');
+                });
+            } else {
+                $(".btnRefresh").trigger("click");
+            }
+        }
+        else if(templateObject.data.contactid){
+                if (dataSearchName.replace(/\s/g, '') != '') {
+                    let that = templateObject.data.service;
+                    if (that == undefined) {
+                        $('.fullScreenSpin').css('display', 'none');
+                        $('.btnRefreshTable').removeClass('btnSearchAlert');
+                        return;
+                    }
+                    let paramArray = [dataSearchName,templateObject.data.contactid]
+                    templateObject.data.searchAPI.apply(that, paramArray).then(function (data) {
+                        $('.btnRefreshTable').removeClass('btnSearchAlert');
+                        templateObject.displayTableData(data, true)
+                    }).catch(function (err) {
+                        $('.fullScreenSpin').css('display', 'none');
+                    });
+                } else {
+                    $(".btnRefresh").trigger("click");
+                }
+        }
+        else{
         if (dataSearchName.replace(/\s/g, '') != '') {
             let that = templateObject.data.service;
             if (that == undefined) {
@@ -1611,6 +1663,7 @@ Template.datatablelist.events({
         } else {
             $(".btnRefresh").trigger("click");
         }
+    }
     },
 
     "blur .divcolumn": function (event) {
