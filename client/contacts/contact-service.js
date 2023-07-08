@@ -112,6 +112,7 @@ export class ContactService extends BaseService {
         let options = {
             clientID: clientID,
             ListType: "Detail",
+            IgnoreDates: true,
             // select: "[Active]=true"
         };
         return this.getList(this.ERPObjects.TStatementForCustomer, options);
@@ -135,12 +136,13 @@ export class ContactService extends BaseService {
 
     getAllEmployeesData(limitcount, limitfrom, deleteFilter) {
         let options = {
-            PropertyList: "ID,GlobalRef,DefaultClassName,EmployeeName,EmployeeNo,FirstName,LastName,Phone,Email,Active,Street,Country,CustFld1,CustFld2,CustFld3,CustFld4,CustFld5",
-            select: "[Active]=true",
+            //PropertyList: "ID,GlobalRef,DefaultClassName,EmployeeName,EmployeeNo,FirstName,LastName,Phone,Email,Active,Street,Country,CustFld1,CustFld2,CustFld3,CustFld4,CustFld5",
+            //select: "[Active]=true",
+            Search:"Active=true",
             LimitCount: parseInt(limitcount),
             LimitFrom: parseInt(limitfrom),
         };
-        if(deleteFilter) options.select = "";
+        if(deleteFilter) options.Search = "";
         return this.getList(this.ERPObjects.TEmployeeList, options);
     }
 
@@ -360,6 +362,160 @@ export class ContactService extends BaseService {
         return this.getList(this.ERPObjects.TJob, options);
     }
 
+    getFilteredJobListByCustomer(keyword) {
+        let options = {
+            PropertyList: "ID,Active,ClientName,ContactName,Phone,ARBalance,CreditBalance,Balance,CreditLimit,SalesOrderBalance,CreditBalance,Email,AccountNo,ClientNo,JobTitle,Notes,Country,IsJob,ParentCustomerName",
+            select: "[Active]=true and [ClientName]f7like'"+keyword+"'"
+        }
+        return this.getList(this.ERPObjects.TJob, options)
+    }
+
+    getAllJobList(limitCount, limitFrom, deleteFilter) {
+        let options = {
+            listType: "Detail",
+            Search: "Active = true",
+            LimitCount: parseInt(limitCount)||initialReportLoad,
+            LimitFrom: parseInt(limitFrom)||0,
+        };
+        //LastName='"+customerName+"' and
+        if(deleteFilter) options.Search = "";
+        return this.getList(this.ERPObjects.TJobVS1List, options);
+    }
+    getAllJobListByName(customerName) {
+        let options = {
+            listType: "Detail",
+            Search: `Active = true and Company = "${customerName}"`,
+        };
+        //LastName='"+customerName+"' and
+        //if(deleteFilter) options.Search = "";
+        return this.getList(this.ERPObjects.TJobVS1List, options);
+    }
+
+    getAllInvoiceList(dateFrom, dateTo, ignoreDate, limitcount, limitfrom, deleteFilter,contactID) {
+        let options = "";
+        if(deleteFilter == undefined || deleteFilter == null || deleteFilter == '' || deleteFilter == false) {
+            if(contactID != '' && contactID != undefined){
+                if (ignoreDate == true) {
+                    options = {
+                      IgnoreDates: true,
+                      Search: " AND TransHeader.Deleted = 'F' and EmployeeName like '%" + contactID + "%'",
+                      OrderBy: "SaleID desc",
+                      IncludeBo: false,
+                      IncludeShipped: true,
+                      IncludeLines: false,
+                      LimitCount: parseInt(limitcount)||initialReportLoad,
+                      LimitFrom: parseInt(limitfrom)||0,
+                    };
+                } else {
+                    options = {
+                      OrderBy: "SaleID desc",
+                      IgnoreDates: false,
+                      Search: " AND TransHeader.Deleted = 'F' and EmployeeName like '%" + contactID + "%'",
+                      IncludeBo: false,
+                      IncludeShipped: true,
+                      IncludeLines: false,
+                      DateFrom: '"' + dateFrom + '"',
+                      DateTo: '"' + dateTo + '"',
+                      LimitCount: parseInt(limitcount)||initialReportLoad,
+                      LimitFrom: parseInt(limitfrom)||0,
+                    };
+                }
+            } else {
+                if (ignoreDate == true) {
+                    options = {
+                      IgnoreDates: true,
+                      Search: " AND TransHeader.Deleted = 'F'",
+                      OrderBy: "SaleID desc",
+                      IncludeBo: false,
+                      IncludeShipped: true,
+                      IncludeLines: false,
+                      LimitCount: parseInt(limitcount)||initialReportLoad,
+                      LimitFrom: parseInt(limitfrom)||0,
+                    };
+                } else {
+                    options = {
+                      OrderBy: "SaleID desc",
+                      IgnoreDates: false,
+                      Search: " AND TransHeader.Deleted = 'F'",
+                      IncludeBo: false,
+                      IncludeShipped: true,
+                      IncludeLines: false,
+                      DateFrom: '"' + dateFrom + '"',
+                      DateTo: '"' + dateTo + '"',
+                      LimitCount: parseInt(limitcount)||initialReportLoad,
+                      LimitFrom: parseInt(limitfrom)||0,
+                    };
+                }
+            }
+        }else{
+            if(contactID != '' && contactID != undefined){
+                if (ignoreDate == true) {
+                    options = {
+                      IgnoreDates: true,
+                      Search: "AND EmployeeName like '%" + contactID + "%'",
+                      OrderBy: "SaleID desc",
+                      IncludeBo: false,
+                      IncludeShipped: true,
+                      IncludeLines: false,
+                      LimitCount: parseInt(limitcount)||initialReportLoad,
+                      LimitFrom: parseInt(limitfrom)||0,
+                    };
+                } else {
+                    options = {
+                      OrderBy: "SaleID desc",
+                      IgnoreDates: false,
+                      Search: "AND EmployeeName like '%" + contactID + "%'",
+                      IncludeBo: false,
+                      IncludeShipped: true,
+                      IncludeLines: false,
+                      DateFrom: '"' + dateFrom + '"',
+                      DateTo: '"' + dateTo + '"',
+                      LimitCount: parseInt(limitcount)||initialReportLoad,
+                      LimitFrom: parseInt(limitfrom)||0,
+                    };
+                }
+            } else {
+                if (ignoreDate == true) {
+                    options = {
+                      IgnoreDates: true,
+                      OrderBy: "SaleID desc",
+                      IncludeBo: false,
+                      IncludeShipped: true,
+                      IncludeLines: false,
+                      LimitCount: parseInt(limitcount)||initialReportLoad,
+                      LimitFrom: parseInt(limitfrom)||0,
+                    };
+                } else {
+                    options = {
+                      OrderBy: "SaleID desc",
+                      IgnoreDates: false,
+                      IncludeBo: false,
+                      IncludeShipped: true,
+                      IncludeLines: false,
+                      DateFrom: '"' + dateFrom + '"',
+                      DateTo: '"' + dateTo + '"',
+                      LimitCount: parseInt(limitcount)||initialReportLoad,
+                      LimitFrom: parseInt(limitfrom)||0,
+                    };
+                }
+            }
+        }
+        return this.getList(this.ERPObjects.TInvoiceList, options);
+    }
+
+    getInvoiceListsByEmployeeName(CustomerName,contactID) {
+        var options = {
+            IgnoreDates: true,
+            IncludeBo: false,
+            IncludeShipped: true,
+            IncludeLines: false,
+            ListType: "Detail",
+            Search: "AND TransHeader.Deleted = 'F' and EmployeeName like '%" + contactID + "%' and CustomerName like '%" + CustomerName + "%'",
+        };
+        
+        return this.getList(this.ERPObjects.TInvoiceList, options);
+    }
+
     getAllInvoiceListByEmployee(employeeName) {
         let options = {
             PropertyList: "ID,EmployeeName,SaleClassName,SaleDate,CustomerName,TotalAmount,SalesStatus,ShipDate,SalesDescription,CustPONumber,TermsName,TotalTax,TotalAmountInc,TotalPaid,TotalBalance,Comments",
@@ -376,12 +532,13 @@ export class ContactService extends BaseService {
         return this.getList(this.ERPObjects.TPurchaseOrder, options);
     }
 
-    getAllTransListBySupplier(supplierName) {
+    getAllTransListBySupplier(dataSearchName, contactID) {
         let options = {
             IgnoreDates: true,
             IncludePOs: true,
             IncludeBills: true,
-            select: "SupplierName='" + supplierName + "' and [Deleted]=false",
+            Search: "PO.Deleted = 'F' AND PrintName = '" + contactID + "' AND PO.PurchaseOrderID like '%" + dataSearchName + "%'",
+
         };
         return this.getList(this.ERPObjects.TbillReport, options);
 
@@ -390,6 +547,113 @@ export class ContactService extends BaseService {
         //   select: "SupplierName='"+supplierName+"' and [Deleted]=false",
         // };
         // return this.getList(this.ERPObjects.tbillreport, options);
+    }
+
+    getAllTransList(dateFrom,dateTo,ignoreDate,limitcount,limitfrom, deleteFilter, contactID) {
+    let options = "";
+
+    if(deleteFilter == undefined || deleteFilter == null || deleteFilter == '' || deleteFilter == false) {
+        if(contactID != '' && contactID != undefined){
+            if (ignoreDate == true) {
+                options = {
+                  IgnoreDates: true,
+                  Search: "PO.Deleted = 'F' and PrintName = '" + contactID + "'",
+                  IncludePOs: true,
+                  IncludeBills: true,
+                  OrderBy: "PurchaseOrderID desc",
+                  LimitCount: parseInt(limitcount)||initialReportLoad,
+                  LimitFrom: parseInt(limitfrom)||0,
+                };
+            } else {
+                options = {
+                  IgnoreDates: false,
+                  Search: "PO.Deleted = 'F' and PrintName = '" + contactID + "'",
+                  IncludePOs: true,
+                  IncludeBills: true,
+                  OrderBy: "PurchaseOrderID desc",
+                  DateFrom: '"' + dateFrom + '"',
+                  DateTo: '"' + dateTo + '"',
+                  LimitCount: parseInt(limitcount)||initialReportLoad,
+                  LimitFrom: parseInt(limitfrom)||0,
+                };
+            }
+        } else {
+            if (ignoreDate == true) {
+                options = {
+                  IgnoreDates: true,
+                  Search: "PO.Deleted = 'F'",
+                  IncludePOs: true,
+                  IncludeBills: true,
+                  OrderBy: "PurchaseOrderID desc",
+                  LimitCount: parseInt(limitcount)||initialReportLoad,
+                  LimitFrom: parseInt(limitfrom)||0,
+                };
+            } else {
+                options = {
+                  IgnoreDates: false,
+                  Search: "PO.Deleted = 'F'",
+                  IncludePOs: true,
+                  IncludeBills: true,
+                  OrderBy: "PurchaseOrderID desc",
+                  DateFrom: '"' + dateFrom + '"',
+                  DateTo: '"' + dateTo + '"',
+                  LimitCount: parseInt(limitcount)||initialReportLoad,
+                  LimitFrom: parseInt(limitfrom)||0,
+                };
+            }
+        }
+    }else{
+        if(contactID != '' && contactID != undefined){
+            if (ignoreDate == true) {
+                options = {
+                  IgnoreDates: true,
+                  Search: "PrintName = '" + contactID + "'",
+                  OrderBy: "SaleID desc",
+                  IncludePOs: true,
+                  IncludeBills: true,
+                  OrderBy: "PurchaseOrderID desc",
+                  LimitCount: parseInt(limitcount)||initialReportLoad,
+                  LimitFrom: parseInt(limitfrom)||0,
+                };
+            } else {
+                options = {
+                  OrderBy: "SaleID desc",
+                  IgnoreDates: false,
+                  Search: "PrintName = '" + contactID + "'",
+                  IncludePOs: true,
+                  IncludeBills: true,
+                  OrderBy: "PurchaseOrderID desc",
+                  DateFrom: '"' + dateFrom + '"',
+                  DateTo: '"' + dateTo + '"',
+                  LimitCount: parseInt(limitcount)||initialReportLoad,
+                  LimitFrom: parseInt(limitfrom)||0,
+                };
+            }
+        } else {
+            if (ignoreDate == true) {
+                options = {
+                  IgnoreDates: true,
+                  IncludePOs: true,
+                  IncludeBills: true,
+                  OrderBy: "PurchaseOrderID desc",
+                  LimitCount: parseInt(limitcount)||initialReportLoad,
+                  LimitFrom: parseInt(limitfrom)||0,
+                };
+            } else {
+                options = {
+                  IgnoreDates: false,
+                  IncludePOs: true,
+                  IncludeBills: true,
+                  OrderBy: "PurchaseOrderID desc",
+                  DateFrom: '"' + dateFrom + '"',
+                  DateTo: '"' + dateTo + '"',
+                  LimitCount: parseInt(limitcount)||initialReportLoad,
+                  LimitFrom: parseInt(limitfrom)||0,
+                };
+            }
+        }
+    }
+        return this.getList(this.ERPObjects.TbillReport, options);
     }
 
     getDetailAccountTransactions() {
@@ -424,7 +688,7 @@ export class ContactService extends BaseService {
     getTermDataVS1() {
         let options = {
             PropertyList: "ID,TermsName,",
-            select: "[Active]=true",
+            Select: "[Active]=true",
         };
         return this.getList(this.ERPObjects.TTermsVS1, options);
     }
