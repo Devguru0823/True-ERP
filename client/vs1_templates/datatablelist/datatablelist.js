@@ -731,15 +731,11 @@ Template.datatablelist.onRendered(async function () {
                         $("<button class='btn btn-primary "+templateObject.data.showPlusButtonClass+"' id='"+templateObject.data.showPlusButtonClass+"' name='"+templateObject.data.showPlusButtonClass+"' data-toggle='modal' data-target='"+templateObject.data.showModalID+"' type='button' style='padding: 4px 10px; font-size: 16px; margin-left: 12px !important;'><i class='fas fa-plus'></i></button>").insertAfter('#' + currenttablename + '_filter');
                       };
                       if (data.Params) {
-                        // if (data.Params?.Search?.replace(/\s/g, "") == "" || data.Params?.AllocType?.replace(/\s/g, "") == "") {
-                        //     $("<button class='btn btn-danger btnHideDeleted' type='button' id='btnHideDeleted' style='padding: 4px 10px; font-size: 16px; margin-left: 14px !important;'><i class='far fa-check-circle' style='margin-right: 5px'></i>"+hideViewDeletedLabel+"</button>").insertAfter('#' + currenttablename + '_filter');
-                        // } else {
-                            if (data.Params?.Search?.includes("Active = true") || data.Params?.Search?.includes("Deleted = 'F'") || data.Params?.Search?.includes("AND TransHeader.Deleted = 'F'") || data.Params?.Search?.includes("pt.Active=true") || data.Params?.Search?.includes("Active=true")) {
+                            if (data.Params?.Search?.includes("Active = true") || data.Params?.Search?.includes("Deleted = 'F'") || data.Params?.Search?.includes("PO.Deleted = 'F'") || data.Params?.Search?.includes("AND TransHeader.Deleted = 'F'") || data.Params?.Search?.includes("pt.Active=true") || data.Params?.Search?.includes("Active=true")) {
                                 $("<button class='btn btn-primary btnViewDeleted' type='button' id='btnViewDeleted' style='padding: 4px 10px; font-size: 16px; margin-left: 14px !important;'><i class='fa fa-trash' style='margin-right: 5px'></i>"+activeViewDeletedLabel+"</button>").insertAfter('#' + currenttablename + '_filter');
                             } else {
                             $("<button class='btn btn-danger btnHideDeleted' type='button' id='btnHideDeleted' style='padding: 4px 10px; font-size: 16px; margin-left: 14px !important;'><i class='far fa-check-circle' style='margin-right: 5px'></i>"+hideViewDeletedLabel+"</button>").insertAfter('#' + currenttablename + '_filter');
                             }
-                    // }
                     } else {
                         // const allEqual = data.every(val => val.Active === true);
                         $("<button class='btn btn-primary btnViewDeleted' type='button' id='btnViewDeleted' style='padding: 4px 10px; font-size: 16px; margin-left: 14px !important;'><i class='fa fa-trash' style='margin-right: 5px'></i>"+activeViewDeletedLabel+"</button>").insertAfter('#' + currenttablename + '_filter');
