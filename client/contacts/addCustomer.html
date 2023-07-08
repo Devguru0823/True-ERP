@@ -176,11 +176,16 @@
           {{#if isModal}}
 
           {{else}}
-          {{> allCardsLists tabGroupID="9" chartGroup="PaymentOverviewCustomer"}}
+          <!-- {{> editCardChartButtons}}
+          {{> allCardsLists tabGroupID="9" chartGroup="PaymentOverviewCustomer"}} -->
+          {{> allCardCharts defaultData=defaultcardcharts chartGroup='Customer'}}
           {{/if}}
           <div class="card shadow mb-4 cardSizing">
             {{> vs1_contact_card_header isJob=isJob record=record id="customerInfo"}}
+            <!-- {{> customfieldDroppop}}
+            {{> customfieldpop}} -->
             {{> customfieldDroppop}}
+          	<!-- {{> custfieldpopup custlisttype='ltCustomer' custfields=custfields custid='fromcustomercard'}} -->
             {{> customfieldpop}}
             <div class="card-body text-nowrap">
               <div>
@@ -375,24 +380,41 @@
                         </div>
 
                         <div class="row">
-                          <div class="col-6 col-md-4" style="padding: 0;">
+                          <div class="col-6 col-md-3" style="padding: 0;">
                             <div class="form-group flex-grow-1" style="margin: 4px;"><label
                                 class="text-nowrap">Phone</label><input type="text" class="form-control"
                                 id="edtJobCustomerPhone" name="edtJobCustomerPhone" value="{{record.jobphone}}">
                             </div>
                           </div>
-                          <div class="col-6 col-md-4" style="padding: 0;">
+                          <div class="col-6 col-md-3" style="padding: 0;">
                             <div class="form-group flex-grow-1" style="margin: 4px;"><label
                                 class="text-nowrap">Mobile</label><input type="text" class="form-control"
                                 id="edtJobCustomerMobile" name="edtJobCustomerMobile" value="{{record.jobmobile}}">
                             </div>
                           </div>
-                          <div class="col-6 col-md-4" style="padding: 0;">
+                          <div class="col-6 col-md-3" style="padding: 0;">
                             <div class="form-group flex-grow-1" style="margin: 4px;"><label
                                 class="text-nowrap">Fax</label><input type="text" class="form-control"
                                 id="edtJobCustomerFax" name="edtJobCustomerFax" value="{{record.jobfax}}">
                             </div>
                           </div>
+                          <div class="col-6 col-md-3" style="padding: 0px; padding-top: 4px;">
+                            {{>vs1___dropdown
+                                data='SMS'
+                                type='search'
+                                id='Correspondence'
+                                name='Correspondence'
+                                modalId= 'CorrespondencePopModal'
+                                list_template_name='correspondence'
+                                modal_title='Correspondence'
+                                innerModal=true
+                                label = 'Correspondence'
+                                colNameForValue = 'colType'
+                                is_editable=true
+                                noBorder=false
+                                custid='correspondence'
+                            }}
+                        </div>
                         </div>
                         <div class="row">
                           <div class="col-6 col-md-4" style="padding: 0;">
@@ -434,42 +456,17 @@
                           <div class="tab-content">
                             <div class="tab-pane border rounded-0 tab-crm active" role="tabpanel" id="tab-crm-job"
                               style="border-color: #ededed #00a3d3 #00a3d3 #00a3d3 !important;padding: 20px;">
-                              <style>
-                                #tblCustomerCrmListWithDate {
-                                  width: 100% !important;
-                                }
-
-                                #tblCustomerCrmListWithDate .colDate {
-                                  width: 12% !important;
-                                }
-
-                                #tblCustomerCrmListWithDate .colType {
-                                  width: 12% !important;
-                                }
-
-                                #tblCustomerCrmListWithDate .colTaskName {
-                                  width: 18% !important;
-                                }
-
-                                #tblCustomerCrmListWithDate .colTaskDesc {
-                                  width: 30% !important;
-                                }
-
-                                #tblCustomerCrmListWithDate .colCompletedBy {
-                                  width: 15% !important;
-                                }
-
-                                #tblCustomerCrmListWithDate .colCompleteTask {
-                                  width: 12% !important;
-                                }
-                              </style>
+                                <div class="col d-xl-flex justify-content-xl-end align-items-xl-start">
+                                    {{> export_import_print_display_button Import="hiddenButton" tablename="tblCustomerCrmListWithDate"}}
+                                </div>
 <!--                              {{> non_transactional_list tablename="tblCustomerCrmListWithDate"}}-->
                                 {{>datatablelist
                                         tablename="tblCustomerCrmListWithDate"
+                                        tableclass="tblCustomerCrmListWithDate"
                                         apiName= apiFunction
-                                        indexeddbname = 'TCRMTaskList'
+                                        indexeddbname = 'TCRMCustomerTaskList'
                                         tableheaderrecords = tableheaderrecords
-                                        exportfilename = 'Customer CRM Task List'
+                                        exportfilename = 'Customer CRM List'
                                         istransaction = true
                                         apiParams= apiParams
                                         datahandler = datahandler
@@ -478,6 +475,7 @@
                                         exIndexDBName = 'tprojecttaskslist'
                                         exdatahandler = exDataHandler
                                         searchAPI = searchAPI
+                                        showPlusButtonCRM = true
                                 }}
                             </div>
                             <div class="tab-pane border rounded-0 tab-Job4" role="tabpanel" id="tab-Job4"
@@ -970,9 +968,20 @@
                               value="{{record.email}}">
                           </div>
                           <div class="form-group col-md-3" style="padding-left:4px;">
-                            <label for="leadStatus">Status</label>
-                            <input type="search" class="form-control es-input" id="leadStatus" name="leadStatus"
-                              style="background-color:rgb(255, 255, 255); cursor: pointer;" value="{{record.status}}">
+                              {{>vs1___dropdown
+                                      data=record.status
+                                      type='search'
+                                      id='leadStatus'
+                                      name='leadStatus'
+                                      modalId= 'statusPopModal'
+                                      list_template_name='statuspop'
+                                      modal_title='Status'
+                                      innerModal=true
+                                      label = 'Status'
+                                      colNameForValue = 'colStatusName'
+                                      is_editable=true
+                                      noBorder=false
+                              }}
                           </div>
                           <div class="form-group col-md-2" style="padding-left :4px;padding-right:4px;">
                             <label>Sales Quota</label>
@@ -983,9 +992,22 @@
                         </div>
                         <div class="row">
                           <div class="col d-xl-flex align-items-xl-start" style="padding: 0;">
-                            <div class="col-6 col-md-1" style="padding: 0px 8px;">
-                              <div class="form-group" style="margin: 4px;padding-right:4px;">
-                                {{> contact_title target="editCustomerTitle" value=record.title}}
+                            <div class="col-6 col-md-1" style="padding: 0px 4px;">
+                              <div class="form-group" style="margin:4px 0px 4px 0px;padding-right:4px;">
+                                  {{>vs1___dropdown
+                                          data=record.title
+                                          type='search'
+                                          id='editCustomerTitle'
+                                          name='editCustomerTitle'
+                                          modalId= 'titlePopModal'
+                                          list_template_name='title_list_pop'
+                                          modal_title='Title'
+                                          innerModal=true
+                                          label = 'Title'
+                                          colNameForValue = 'colTitleName'
+                                          is_editable=true
+                                          noBorder=false
+                                  }}
                               </div>
                             </div>
                             <div class="form-group flex-grow-1" style="margin: 4px;"><label class="text-nowrap">First
@@ -1005,6 +1027,10 @@
                         </div>
                         <div class="row">
                           <div class="col d-xl-flex flex-row align-items-xl-start" style="padding: 0;">
+                            <div class="form-group flex-grow-1" style="margin: 4px; padding-left:4px;">
+                                <label class="text-nowrap">Account Number</label>
+                                <input type="text" class="form-control" id="edtAccountNumber" name="edtAccountNumber" value="{{record.bankAccountNo}}">
+                            </div>
                             <div class="form-group flex-grow-1" style="margin: 4px;padding-right:4px;"><label
                                 class="text-nowrap">Phone</label><input type="text" class="form-control"
                                 id="edtCustomerPhone" name="edtCustomerPhone" value="{{record.phone}}">
@@ -1015,7 +1041,25 @@
                             </div>
                             <div class="form-group flex-grow-1" style="margin: 4px;padding-left:4px;"><label
                                 class="text-nowrap">Fax</label><input type="text" class="form-control"
-                                id="edtCustomerFax" name="edtCustomerFax" value="{{record.fax}}"></div>
+                                id="edtCustomerFax" name="edtCustomerFax" value="{{record.fax}}">
+                            </div>
+                            <div class="form-group flex-grow-1" style="margin: 4px;padding-left:4px;">
+                              {{>vs1___dropdown
+                                data='SMS'
+                                type='search'
+                                id='Correspondence'
+                                name='Correspondence'
+                                modalId= 'CorrespondencePopModal'
+                                list_template_name='correspondence'
+                                modal_title='Correspondence'
+                                innerModal=true
+                                label = 'Correspondence'
+                                colNameForValue = 'colType'
+                                is_editable=true
+                                noBorder=false
+                                custid='correspondence'
+                              }}
+                            </div>
                           </div>
                         </div>
                         <div class="row">
@@ -1031,9 +1075,21 @@
                                 value="{{record.website}}">
                             </div>
                             <div class="form-group col-md-2" style="margin: 4px;padding-left:4px;padding-right :4px;">
-                              <label for="leadRep">Rep</label>
-                              <input type="search" class="form-control" id="leadRep" name="leadRep"
-                                value="{{record.rep}}">
+                                {{>vs1___dropdown
+                                        data=record.rep
+                                        type='search'
+                                        id='leadRep'
+                                        name='leadRep'
+                                        modalId= 'employeeListModal_customer'
+                                        list_template_name='employeelistpop'
+                                        modal_title='Employee List'
+                                        innerModal=false
+                                        label = 'Rep'
+                                        colNameForValue = 'colEmployeeName'
+                                        is_editable=true
+                                        noBorder=false
+                                        custid='_customer_card'
+                                }}
                             </div>
                             <div class="form-group col-md-2" style="margin: 4px;padding-left:4px;padding-right:4px;">
                               <label for="leadSource">Source</label>
@@ -1085,84 +1141,26 @@
                             <li class="nav-item" style="cursor: pointer;"><a class="nav-link taxTab" role="tab"
                                 data-toggle="tab" data-target="#tab-10">Tax</a></li>
                           </ul>
-                          <script>
-                            setTimeout(function () {
-                              const x = window.matchMedia("(max-width: 420px)");
-
-                              function mediaQuery(x) {
-                                if (x.matches) {
-                                  $("#colStreetAddress").removeClass("col");
-                                  $("#colStreetAddress").addClass("col-12");
-                                  $("#colAddressDetails").removeClass("col");
-                                  $("#colAddressDetails").addClass("col-12");
-                                  $("#colBillStreetAddress").removeClass("col");
-                                  $("#colBillStreetAddress").addClass("col-12");
-                                  $("#colBillStreetAddressDetails").removeClass("col");
-                                  $("#colBillStreetAddressDetails").addClass("col-12");
-                                }
-                              }
-                              mediaQuery(x);
-                              x.addListener(mediaQuery)
-                            }, 10);
-                          </script>
-                          <style>
-                            @media screen and (max-width: 420px) {
-                              .preferredPaymentMethodSelect {
-                                width: 215px !important;
-                              }
-
-                              .taxCodeSelect {
-                                width: 215px !important;
-                              }
-
-                              .attachementsImage1 {
-                                width: 200px !important;
-                              }
-
-                              .breakPhone {
-                                display: block !important;
-                              }
-                            }
-                          </style>
                           <div class="tab-content">
                             <div class="tab-pane border rounded-0 tab-crm active" role="tabpanel" id="tab-crm"
                               style="border-color: #ededed #00a3d3 #00a3d3 #00a3d3 !important;padding: 20px;">
-                              <style>
-                                #tblCustomerCrmListWithDate {
-                                  width: 100% !important;
-                                }
-
-                                #tblCustomerCrmListWithDate .colDate {
-                                  width: 12% !important;
-                                }
-
-                                #tblCustomerCrmListWithDate .colType {
-                                  width: 12% !important;
-                                }
-
-                                #tblCustomerCrmListWithDate .colTaskName {
-                                  width: 18% !important;
-                                }
-
-                                #tblCustomerCrmListWithDate .colTaskDesc {
-                                  width: 30% !important;
-                                }
-
-                                #tblCustomerCrmListWithDate .colCompletedBy {
-                                  width: 15% !important;
-                                }
-
-                                #tblCustomerCrmListWithDate .colCompleteTask {
-                                  width: 12% !important;
-                                }
-                              </style>
+                                <div class="row d-xl-flex flex-row justify-content-xl-center">
+                                    <div class="col float-left flex-grow-1 mb-4" style="margin-bottom: 0 !important;">
+                                        <button class="btn btn-primary btnRefreshCrm" type="button" style="margin: 14px;"><i
+                                                class="la la-lightbulb-o" style="padding-right: 5px;"></i>Refresh</button>
+                                    </div>
+                                    <div class="col d-xl-flex justify-content-xl-end align-items-xl-start">
+                                        {{> export_import_print_display_button Import="hiddenButton" tablename="tblCustomerCrmListWithDate"}}
+                                    </div>
+                                </div>
 <!--                              {{> non_transactional_list tablename="tblCustomerCrmListWithDate"}}-->
                                 {{>datatablelist
                                         tablename="tblCustomerCrmListWithDate"
+                                        tableclass="tblCustomerCrmListWithDate"
                                         apiName= apiFunction
-                                        indexeddbname = 'TCRMTaskList'
+                                        indexeddbname = 'TCRMCustomerTaskList'
                                         tableheaderrecords = tableheaderrecords
-                                        exportfilename = 'Customer CRM Task List'
+                                        exportfilename = 'Customer CRM List'
                                         istransaction = true
                                         apiParams= apiParams
                                         datahandler = datahandler
@@ -1171,6 +1169,7 @@
                                         exIndexDBName = 'tprojecttaskslist'
                                         exdatahandler = exDataHandler
                                         searchAPI = searchAPI
+                                        showPlusButtonCRM = true
                                 }}
                             </div>
                             <div class="tab-pane border rounded-0" role="tabpanel" id="tab-4"
@@ -1222,22 +1221,20 @@
                                           <div
                                             class="form-group d-xl-flex flex-column flex-grow-1 justify-content-xl-start"
                                             style="margin: 4px;padding-left:4px;">
-                                            <label>Country</label>
-                                            <select class="form-control" id="sedtCountry" name="sedtCountry"
-                                              style="cursor: pointer;">
-                                              {{#each item in
-                                              countryList}}
-                                              {{#if equals item
-                                              record.scountry }}
-                                              <option value="{{record.scountry}}" selected="">
-                                                {{record.scountry}}
-                                              </option>
-                                              {{else}}
-                                              <option value="{{item}}">
-                                                {{item}}</option>
-                                              {{/if}}
-                                              {{/each}}
-                                            </select>
+                                              {{>vs1___dropdown
+                                                      data=record.scountry
+                                                      type='search'
+                                                      id='sedtCountry'
+                                                      name='sedtCountry'
+                                                      modalId= 'countryPopModal'
+                                                      list_template_name='CountryModal'
+                                                      modal_title='Country'
+                                                      innerModal=true
+                                                      label = 'Country'
+                                                      colNameForValue = 'colCountry'
+                                                      is_editable=true
+                                                      noBorder=false
+                                              }}
                                           </div>
                                         </div>
                                       </div>
@@ -1363,23 +1360,40 @@
                               <div class="row" style="margin: 12px;">
                                 <div class="col-md-2 col-6" style="padding: 0;">
                                   <div class="form-group d-xl-flex flex-column justify-content-xl-start"
-                                    style="margin: 4px;padding-right:4px;"><label class="text-nowrap">Customer
-                                      Type</label>
-
-                                    <select type="search" class="form-control" id="sltCustomerType"
-                                      name="sltCustomerType" value="{{record.clienttype}}"
-                                      style="background-color:rgb(255, 255, 255); cursor: pointer;">
-                                    </select>
+                                    style="margin: 4px;padding-right:4px;">
+                                      {{>vs1___dropdown
+                                              data=record.clienttype
+                                              type='search'
+                                              id='sltCustomerType'
+                                              name='sltCustomerType'
+                                              modalId= 'customerTypePopModal'
+                                              list_template_name='clienttypepopup'
+                                              modal_title='Customer Type'
+                                              innerModal=true
+                                              label = 'Customer Type'
+                                              colNameForValue = 'colTypeName'
+                                              is_editable=true
+                                              noBorder=false
+                                      }}
 
                                   </div>
                                 </div>
                                 <div class="col-md-2 col-6" style="padding: 0;">
                                   <div class="form-group" style="margin: 4px;padding-left:4px;">
-                                    <label>Terms</label>
-                                    <select type="search" class="form-control" id="sltTerms" name="sltTerms"
-                                      value="{{record.terms}}"
-                                      style="background-color:rgb(255, 255, 255); cursor: pointer;">
-                                    </select>
+                                      {{>vs1___dropdown
+                                              data=record.terms
+                                              type='search'
+                                              id='sltTerms'
+                                              name='sltTerms'
+                                              modalId= 'termPopModal'
+                                              list_template_name='termlistpop'
+                                              modal_title='Terms'
+                                              innerModal=true
+                                              label = 'Terms'
+                                              colNameForValue = 'colName'
+                                              is_editable=true
+                                              noBorder=false
+                                      }}
                                   </div>
                                 </div>
 
@@ -1395,15 +1409,19 @@
                                   <div class="form-group d-xl-flex flex-column justify-content-xl-start"
                                     style="margin: 4px;padding-left:4px;"><label class="text-nowrap">Credit
                                       Limit</label>
-                                    <input type="text" class="form-control pointer" id="edtCustomerCardDiscount"
-                                      name="edtCustomerCardDiscount" value="{{record.discount}}">
+                                    <input type="text" class="form-control pointer" id="edtCustomerCardCreditLimit"
+                                      name="edtCustomerCardCreditLimit" value="{{record.creditLimit}}">
                                   </div>
                                 </div>
 
-                                <div class="col-md-2 col-6" style="padding: 0; margin: 4px;margin-top: 41px;">
+                                <div class="col-md-1 col-6" style="padding: 0; margin: 4px;margin-top: 41px; margin-right: 20px;">
                                   {{> toggle_button className="chkGlobalSettings" id="customer_stop_credit_toggle"
                                   width="131px" for="customer_stop_credit_toggle" displayName="Stop Credit"}}
                                 </div>
+                                  <div class="col-6 col-md-2" style="padding: 0;" data-toggle="tooltip" title="Selection required for Foreign Customers only" data-placement="bottom">
+                                      {{> CurrencyWidget onlyCurrencyField="true" CurrentForeignExchangeCode =
+                                              record.ForeignExchangeCode}}
+                                  </div>
                               </div>
                             </div>
                             <!--
@@ -1809,13 +1827,21 @@
                                   <div id="autoUpdate" style="display: none;">
                                     <div
                                       class="form-group d-flex d-sm-flex d-xl-flex flex-column flex-grow-1 align-items-start align-items-sm-start align-items-xl-start"
-                                      style="margin: 4px;"><label class="text-nowrap">Tax
-                                        Code</label>
-                                      <select type="search" class="form-control taxCodeSelect"
-                                        value="{{record.taxcode}}"
-                                        style="width: 260px; background-color:rgb(255, 255, 255); cursor: pointer;"
-                                        id="sltTaxCode" name="sltTaxCode">
-                                      </select>
+                                      style="margin: 4px;">
+                                        {{>vs1___dropdown
+                                                data=record.taxcode
+                                                type='search'
+                                                id='sltTaxCode'
+                                                name='sltTaxCode'
+                                                modalId= 'taxCodePopModal'
+                                                list_template_name='taxratelistpop'
+                                                modal_title='Tax Code'
+                                                innerModal=true
+                                                label = 'Tax Code'
+                                                colNameForValue = 'colName'
+                                                is_editable=true
+                                                noBorder=false
+                                        }}
                                     </div>
                                   </div>
                                 </div>
@@ -1886,132 +1912,44 @@
                           style="margin: 14px;" role="button" data-toggle="modal" href="#addNewJobModal"><i
                             class="icon ion-plus" style="padding-right: 5px;"></i>New Job</button>
                       </div>
-                      <div class="col">
-                        <button id="printConfirmJob" class="btn btn-primary float-right jobprintConfirm printConfirmJob"
-                          type="button" style="margin:14px; background-color: #00A3D3; border-color: #00A3D3;">
-                          <i class="fa fa-print"
-                            style="padding-right: 5px; background-color: #00A3D3; border-color: #00A3D3;"></i>Print
-                        </button>
-                        <button class="btn btn-primary jobexport float-right" type="button"
-                          style="margin: 14px; background-color: #00A3D3; border-color: #00A3D3;" id="exportbtnJob"
-                          name="exportbtnJob">
-                          <i class="fas fa-file-export"
-                            style="padding-right: 5px; background-color: #00A3D3; border-color: #00A3D3;"></i>Export
-                        </button>
-                      </div>
+                        <div class="col d-xl-flex justify-content-xl-end align-items-xl-start">
+                            {{> export_import_print_display_button tablename="tblCustomerJobDetailsList"}}
+                        </div>
+<!--                      <div class="col">-->
+<!--                        <button id="printConfirmJob" class="btn btn-primary float-right jobprintConfirm printConfirmJob"-->
+<!--                          type="button" style="margin:14px; background-color: #00A3D3; border-color: #00A3D3;">-->
+<!--                          <i class="fa fa-print"-->
+<!--                            style="padding-right: 5px; background-color: #00A3D3; border-color: #00A3D3;"></i>Print-->
+<!--                        </button>-->
+<!--                        <button class="btn btn-primary jobexport float-right" type="button"-->
+<!--                          style="margin: 14px; background-color: #00A3D3; border-color: #00A3D3;" id="exportbtnJob"-->
+<!--                          name="exportbtnJob">-->
+<!--                          <i class="fas fa-file-export"-->
+<!--                            style="padding-right: 5px; background-color: #00A3D3; border-color: #00A3D3;"></i>Export-->
+<!--                        </button>-->
+<!--                      </div>-->
                     </div>
                     <div class="row rowB" style="margin: 14px; margin-top: 0">
-                      <div class="card-body rounded" style="padding: 0;">
-                        <div class="d-xl-flex justify-content-xl-end">
-                          <div><a class="btn btnOpenSettingsJob" role="button" data-toggle="modal" href="#myModalJob"><i
-                                class="icon ion-android-more-horizontal"></i></a>
-                            <div class="modal fade" role="dialog" tabindex="-1" id="myModalJob">
-                              <div class="modal-dialog modal-dialog-centered" role="document" style="float: right;">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h4>Display Settings</h4><button type="button" class="close" data-dismiss="modal"
-                                      aria-label="Close"><span aria-hidden="true">�</span></button>
-                                  </div>
-                                  <div class="modal-body">
-                                    <div>
-                                      {{#if tableheaderrecordsjob}}
-                                      <form class="d-xl-flex align-items-xl-center">
-                                        <div class="flex-grow-1">
-                                          <style>
-                                            .groove {
-                                              border-style: solid;
-                                              border-width: 1px;
-                                              width: 200px;
-                                              padding: 2px;
-                                              border-radius: .35rem;
-                                            }
+<!--                      <div class="card-body rounded" style="padding: 0;">-->
+<!--                        {{> non_transactional_list tablename="tblCustomerJobDetailsList"}}-->
 
-                                            .custom-control-label {
-                                              position: absolute;
-                                            }
-
-                                            .rngRange {
-                                              position: relative;
-                                              display: flex;
-                                              flex-direction: column;
-                                              width: 100%;
-                                              pointer-events: auto;
-                                              background-color: rgb(255, 255, 255);
-                                              background-clip: padding-box;
-                                              border: 1px solid rgb(133, 135, 150);
-                                              padding: 2px;
-                                              border-radius: .35rem;
-                                              color: rgb(128, 128, 128);
-                                              height: inherit !important;
-                                            }
-
-                                            @media only screen and (max-width: 480px) {
-                                              .modal.show .modal-dialog {
-                                                float: inherit !important;
-                                                left: inherit !important;
-                                                top: auto !important;
-
-                                              }
-                                            }
-                                          </style>
-                                          {{#each itemjob in
-                                          tableheaderrecordsjob}}
-                                          {{#if equals itemjob.sTitle "id"}}
-                                          {{else}}
-                                          <div id="{{itemjob.sIndex}}" class="columnSettings">
-                                            <div class="custom-control custom-switch" style="margin: 8px; float:left;">
-                                              <input class="custom-control-input chkDatatable" type="checkbox"
-                                                id="chkSalesNo-{{itemjob.sIndex}}" name="chkSalesNo-{{itemjob.sIndex}}"
-                                                checked="{{#if itemjob.sVisible}}checked{{else}}{{/if}}"
-                                                value="{{itemjob.sTitle}}">
-                                              <label class="custom-control-label"
-                                                for="chkSalesNo-{{itemjob.sIndex}}"></label>
-                                              <div contenteditable="true" class="groove divcolumn" type="text"
-                                                value="{{itemjob.sTitle}}" valueupdate="{{itemjob.sClass}}">
-                                                {{itemjob.sTitle}}
-                                              </div>
-                                            </div>
-                                            <div class="d-xl-flex align-items-xl-center divColWidth"
-                                              style="margin: 8px;">
-                                              <label class="text-nowrap"
-                                                style="padding-left: 0px;margin-top: 8px;">Width:
-                                              </label>
-                                              <input class="custom-range rngRange" type="number" style="margin: 8px;"
-                                                value="{{itemjob.sWidth}}" min="0" max="1000">
-                                            </div>
-                                          </div>
-                                          {{#if equals itemjob.sVisible true}}
-                                          <script>
-                                            $("#" + {{ itemjob.sIndex }} + ".chkDatatable").attr("checked", "checked");
-                                          </script>
-                                          {{else}}
-                                          <script>
-                                            $("#" + {{ itemjob.sIndex }} + ".chkDatatable").removeAttr("checked");
-                                          </script>
-                                          {{/if}}
-                                          {{/if}}
-                                          {{/each}}
-                                        </div>
-                                      </form>
-                                      {{/if}}
-                                    </div>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button class="btn btn-success saveTableJob" type="button"><i class="fa fa-save"
-                                        style="margin-right: 5px;"></i>Save</button>
-                                    <button class="btn btn-warning resetTableJob" data-dismiss="modal" type="reset"><i
-                                        class="fa fa-repeat" style="margin-right: 5px;"></i>Reset</button>
-                                    <button class="btn btn-secondary" data-dismiss="modal" type="button"><i
-                                        class="fa fa-remove" style="margin-right: 5px;"></i>Close</button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- End -->
-                        {{> non_transactional_list tablename="tblCustomerJobDetailsList"}}
-                      </div>
+                          {{>datatablelist
+                                  tablename="tblCustomerJobDetailsList"
+                                  tableclass="tblCustomerJobDetailsList"
+                                  apiName= apiFunction_JobDetailsList
+                                  indexeddbname = 'TJobVS1List'
+                                  tableheaderrecords = tableheaderrecords_JobDetailsList
+                                  exportfilename = 'Customer Jov VS1 List'
+                                  istransaction = false
+                                  apiParams= apiParams_JobDetailsList
+                                  datahandler = datahandler_JobDetailsList
+                                  service=service_JobDetailsList
+                                  lowercaseDataName='tjobvs1list'
+                                  exIndexDBName = 'tjobvs1list'
+                                  exdatahandler = exDataHandler_JobDetailsList
+                                  searchAPI = searchAPI_JobDetailsList
+                          }}
+<!--                      </div>-->
                     </div>
                     <!-- New Job Pop Up Start Here  -->
                     <div class="modal fade" role="dialog" tabindex="-1" id="addNewJobModal">
@@ -2099,6 +2037,23 @@
                                       <div class="form-group flex-grow-1" style="margin: 4px;"><label
                                           class="text-nowrap">Fax</label><input type="text" class="form-control"
                                           id="edtJobCustomerFax" name="edtJobCustomerFax" value="{{record.jobfax}}">
+                                      </div>
+                                      <div class="form-group flex-grow-1" style="margin: 4px;">
+                                        {{>vs1___dropdown
+                                          data='SMS'
+                                          type='search'
+                                          id='Correspondence'
+                                          name='Correspondence'
+                                          modalId= 'CorrespondencePopModal'
+                                          list_template_name='correspondence'
+                                          modal_title='Correspondence'
+                                          innerModal=true
+                                          label = 'Correspondence'
+                                          colNameForValue = 'colType'
+                                          is_editable=true
+                                          noBorder=false
+                                          custid='correspondence'
+                                        }}
                                       </div>
                                     </div>
                                   </div>
@@ -2343,13 +2298,21 @@
                                           style="margin: 12px;">
                                           <div class="col d-xl-flex align-items-xl-end">
                                             <div class="form-group d-xl-flex flex-column justify-content-xl-start"
-                                              style="margin: 4px;"><label class="text-nowrap">Customer
-                                                Type</label>
-
-                                              <select type="search" class="form-control" id="sltJobCustomerType"
-                                                name="sltJobCustomerType" value="{{record.jobclienttype}}"
-                                                style="background-color:rgb(255, 255, 255); cursor: pointer;">
-                                              </select>
+                                              style="margin: 4px;">
+                                                {{>vs1___dropdown
+                                                        data=record.jobclienttype
+                                                        type='search'
+                                                        id='sltJobCustomerType'
+                                                        name='sltJobCustomerType'
+                                                        modalId= 'customerTypePopModal'
+                                                        list_template_name='clienttypepopup'
+                                                        modal_title='Customer Type'
+                                                        innerModal=true
+                                                        label = 'Customer Type'
+                                                        colNameForValue = 'colTypeName'
+                                                        is_editable=true
+                                                        noBorder=false
+                                                }}
                                             </div>
 
                                             <div class="form-group d-xl-flex flex-column align-items-xl-start"
@@ -2362,12 +2325,21 @@
                                               </select>
                                             </div>
                                             <div class="form-group d-xl-flex flex-column justify-content-xl-start"
-                                              style="margin: 4px;"><label class="text-nowrap">Terms</label>
-
-                                              <select type="search" class="form-control" id="sltJobTerms"
-                                                name="sltJobTerms"
-                                                style="background-color:rgb(255, 255, 255); cursor: pointer;">
-                                              </select>
+                                              style="margin: 4px;">
+                                                {{>vs1___dropdown
+                                                        data=record.scountry
+                                                        type='search'
+                                                        id='sltJobTerms'
+                                                        name='sltJobTerms'
+                                                        modalId= 'termPopModal'
+                                                        list_template_name='termlistpop'
+                                                        modal_title='Terms'
+                                                        innerModal=true
+                                                        label = 'Terms'
+                                                        colNameForValue = 'colName'
+                                                        is_editable=true
+                                                        noBorder=false
+                                                }}
                                             </div>
 
                                             <div class="form-group d-xl-flex flex-column justify-content-xl-start"
@@ -2747,15 +2719,15 @@
                               style="background-color: #00A3D3; border-color: #00A3D3;"></i>Refresh</button>
                         </div>
                       </div>
-                      <div class="col">
-                        <button class="btn btn-primary float-right printConfirmTransaction" type="button"
-                          style="margin:14px; background-color: #00A3D3; border-color: #00A3D3;"><i class="fa fa-print"
-                            style="padding-right: 5px; background-color: #00A3D3; border-color: #00A3D3;"></i>Print</button>
-                        <button class="btn btn-primary export float-right" type="button"
-                          style="margin: 14px; background-color: #00A3D3; border-color: #00A3D3;"
-                          id="exportbtnTransaction" name="exportbtn"><i class="fas fa-file-export"
-                            style="padding-right: 5px; background-color: #00A3D3; border-color: #00A3D3;"></i>Export</button>
-                      </div>
+<!--                      <div class="col">-->
+<!--                        <button class="btn btn-primary float-right printConfirmTransaction" type="button"-->
+<!--                          style="margin:14px; background-color: #00A3D3; border-color: #00A3D3;"><i class="fa fa-print"-->
+<!--                            style="padding-right: 5px; background-color: #00A3D3; border-color: #00A3D3;"></i>Print</button>-->
+<!--                        <button class="btn btn-primary export float-right" type="button"-->
+<!--                          style="margin: 14px; background-color: #00A3D3; border-color: #00A3D3;"-->
+<!--                          id="exportbtnTransaction" name="exportbtn"><i class="fas fa-file-export"-->
+<!--                            style="padding-right: 5px; background-color: #00A3D3; border-color: #00A3D3;"></i>Export</button>-->
+<!--                      </div>-->
                     </div>
                     <div class="d-flex justify-content-left" style="margin-left: 14px;">
                       <div style="width: 164px;">
@@ -2770,13 +2742,63 @@
                     <div class="row rowB mt-2" style="margin: 14px; margin-top: 0">
                       <div class="card-body rounded" style="padding: 0;">
                         <!-- End -->
+                        
                         {{#if checkedAppointments}}
-                          {{> non_transactional_list tablename="tblAppointmentsByCustomer" customerId=record.id}}
+<!--                          {{> non_transactional_list tablename="tblAppointmentsByCustomer" customerId=record.id}}-->
+                            <div class="col d-xl-flex justify-content-xl-end align-items-xl-start">
+                                {{> export_import_print_display_button Import="hiddenButton" tablename="tblAppointmentsByCustomer"}}
+                            </div>
+                            <style>
+                              #tblAppointmentsByCustomer tbody tr td.colconfirm{
+                              text-align: center;
+                              vertical-align: middle;
+                              }
+                            </style>
+                            {{>datatablelist
+                                    tablename="tblAppointmentsByCustomer"
+                                    tableclass="tblAppointmentsByCustomer"
+                                    apiName= apiFunction_AppointmentsByCustomer
+                                    indexeddbname = 'TAppointmentList'
+                                    tableheaderrecords = tableheaderrecords_AppointmentsByCustomer
+                                    exportfilename = 'Appointments By Customer List'
+                                    istransaction = true
+                                    apiParams= apiParams_AppointmentsByCustomer
+                                    datahandler = datahandler_AppointmentsByCustomer
+                                    service=service_AppointmentsByCustomer
+                                    lowercaseDataName='tappointmentlist'
+                                    exIndexDBName = 'tappointmentlist'
+                                    exdatahandler = exDataHandler_AppointmentsByCustomer
+                                    searchAPI = searchAPI_AppointmentsByCustomer
+                                    contactid = contactID
+                                    orderby='[[1,"desc"]]'
+                            }}
                         {{/if}}
+                        
                         {{#if checkedSales}}
-                        <div class="mt-4">
-                          {{> non_transactional_list tablename="tblSalesListByCustomer" customerName=record.company}}
-                        </div>
+<!--                        <div class="mt-4">-->
+<!--                          {{> non_transactional_list tablename="tblSalesListByCustomer" customerName=record.company}}-->
+                            <div class="col d-xl-flex justify-content-xl-end align-items-xl-start">
+                                {{> export_import_print_display_button Import="hiddenButton" tablename="tblSalesListByCustomer"}}
+                            </div>
+                            {{>datatablelist
+                                    tablename="tblSalesListByCustomer"
+                                    tableclass="tblSalesListByCustomer"
+                                    apiName= salesApiFunction
+                                    indexeddbname = 'TSalesList'
+                                    tableheaderrecords = salesTableHeaderRecords
+                                    exportfilename = 'Setup Supplier List'
+                                    istransaction = true
+                                    apiParams= salesApiParams
+                                    datahandler = salesDataHandler
+                                    service=salesService
+                                    lowercaseDataName='tsaleslist'
+                                    exIndexDBName = 'tsaleslist'
+                                    exdatahandler = salesExDataHandler
+                                    searchAPI = salesSearchAPI
+                                    orderby='[[1,"desc"]]'
+                                    contactid = contactID
+                            }}
+<!--                        </div>-->
                         {{/if}}
                       </div>
                     </div>
@@ -2791,7 +2813,9 @@
     </div>
     {{/if}}
   </div>
-
+  <div class="modal fade customerListModal" role="dialog" tabindex="-1" id="customerListModal_job">
+    {{> customerlistpop}}
+  </div>
   <div class="modal fade" role="dialog" tabindex="-1" id="referenceLetterModal">
     <div class="modal-dialog modal-md modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -2868,13 +2892,13 @@
     </div>
   </div>
 
-  <div class="modal fade" role="dialog" tabindex="-1" id="paymentMethodModal">
+  <!-- <div class="modal fade" role="dialog" tabindex="-1" id="paymentMethodModal">
     {{> paymentmethodpop}}
   </div>
 
   <div class="modal fade" role="dialog" tabindex="-1" id="newPaymentMethodModal">
     {{> newpaymentmethodpop}}
-  </div>
+  </div> -->
 
   <div class="modal fade" role="dialog" tabindex="-1" id="termsListModal">
     {{> termlistpop}}
@@ -2884,7 +2908,7 @@
     {{> newtermspop}}
   </div>
 
-  <div class="modal fade" role="dialog" tabindex="-1" id="clienttypeListModal">
+  <!-- <div class="modal fade" role="dialog" tabindex="-1" id="clienttypeListModal">
     {{> clienttypepopup}}
   </div>
 
@@ -2896,40 +2920,25 @@
   </div>
   <div class="modal fade" role="dialog" tabindex="-1" id="statusPopModal">
     {{> statuspop}}
-  </div>
+  </div> -->
   <div class="modal fade" role="dialog" tabindex="-1" id="newStatusPopModal">
     {{> newstatuspop}}
   </div>
 
-  <div class="modal fade" role="dialog" tabindex="-1" id="customerTitlePopModal">
+  <!-- <div class="modal fade" role="dialog" tabindex="-1" id="customerTitlePopModal">
     {{> title_list_pop}}
+  </div> -->
+
+  <div class="modal fade" id="taskDetailModal_customer" tabindex="-1" role="dialog" aria-labelledby="taskNameLabel" aria-hidden="true">
+    {{> taskDetailModal}}
   </div>
-
-  <div class="modal fade" role="dialog" tabindex="-1" id="employeeListPOPModal">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable customerListModalInner" role="document"
-      style="max-width: 90vw;">
-      <div class="modal-content customerListContent">
-        <div class="modal-header">
-          <h4>Employee List</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-              aria-hidden="true">×</span></button>
-        </div>
-        <div class="modal-body mainCustomerModalBody appointmentCustomer" style="padding: 0px; overflow-x: hidden;">
-          {{> employeelistpop tablename="tblEmployeelist1"}}
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary btnSelectAllEmployee" type="button"
-            style="background-color: #00A3D3; border-color: #00A3D3;">Select All Employees</button>
-
-          <button class="btn btn-light" data-dismiss="modal" type="button">Close</button>
-        </div>
-      </div>
-    </div>
+  <!-- {{> frmappointmentpop}} temp commented out because of using all_transaction_modal-->
+  <div class="modal fade" id="newTaskModal_customer" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    {{> newTaskModal}}
   </div>
-
-  {{> taskDetailModal}}
-  {{> frmappointmentpop}}
-  {{> newTaskModal}}
-
+  <div class="modal fade" role="dialog" tabindex="-1" id="myModalClientType">
+    {{> clienttypemodal}}
+  </div>
 
   <div class="modal fade customerListCrmModal" role="dialog" tabindex="-1" id="customerListCrmModal">
     <div class="modal-dialog modal-xl modal-dialog-scrollable customerListModalInner" role="document"
@@ -2954,26 +2963,6 @@
       </div>
     </div>
   </div>
-
-  <div class="modal fade" role="dialog" tabindex="-1" id="employeeListCRMModal">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable customerListModalInner" role="document"
-      style="max-width: 90vw;">
-      <div class="modal-content customerListContent">
-        <div class="modal-header">
-          <h4>Employee List</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-              aria-hidden="true">×</span></button>
-        </div>
-        <div class="modal-body mainCustomerModalBody appointmentCustomer" style="padding: 0px; overflow-x: hidden;">
-          {{> employeelistpop tablename="tblEmployeelist2"}}
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-light" data-dismiss="modal" type="button">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {{> projectListPop}}
 
   <input type="hidden" id="assignedID" />
   <input type="hidden" id="contactID" />
